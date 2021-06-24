@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainStageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainStageController">
    <top>
       <AnchorPane prefHeight="80.0" prefWidth="950.0" styleClass="top-banner" stylesheets="@styleSheet.css" BorderPane.alignment="CENTER">
          <children>
@@ -36,6 +36,6 @@
       </AnchorPane>
    </top>
    <center>
-      <Pane fx:id="panePrimary" prefHeight="600.0" prefWidth="1050.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="panePrimary" minHeight="679.0" prefHeight="679.0" prefWidth="1050.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

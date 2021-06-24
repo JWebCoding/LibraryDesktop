@@ -11,7 +11,7 @@
 .text-field, .choice-box, .toggle-button, .button {
     -fx-background-color: #0748b0;
     -fx-text-fill: goldenrod;
-    -fx-text-inner-color: goldenrod;
+    -fx-text-inner-color: #daa520;
     -jfx-focus-color: goldenrod;
     -jfx-unfocus-color: goldenrod;
 
@@ -63,4 +63,7 @@
     -fx-font-size: 15;
 }
 
+.notification {
+	-fx-text-fill: #cb4154;
+}
 

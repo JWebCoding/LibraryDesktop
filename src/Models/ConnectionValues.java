@@ -31,6 +31,7 @@ public class ConnectionValues {
             case 5: databaseName="/author"; break;
             default:databaseName="ERROR"; break;
         }
-        URL=serverURL+databaseName+serverTimeZone;
+//        URL=serverURL+databaseName+serverTimeZone;
+        URL=serverURL+databaseName;
     }
 }
