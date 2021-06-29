@@ -538,6 +538,7 @@ public class AddBookController {
                 bidiMapAuthors.put(ID, authorFullName);
                 authors.add(authorFullName);
             }
+            System.out.println(authors);
             choiceBoxAuthor.setItems(authors);
             TextFields.bindAutoCompletion(textFieldAuthor,authors);
         }
