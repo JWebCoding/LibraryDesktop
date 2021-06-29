@@ -91,7 +91,7 @@ public class SearchBookController {
     public void searchBooks() throws SQLException {
         // Check if there is too little or too much text
         if(textFieldSearch.getText().equals("")){
-            showNotification("Enter Text");
+            showNotification("No Search Query");
         }
         else if(textFieldSearch.getText().length()>45){
             showNotification("Please keep the\n search length below\n45 characters");
@@ -109,9 +109,6 @@ public class SearchBookController {
                 case "Title":
                     selectedColumn="title";
                     break;
-                case "Author":
-                    selectedColumn="firstName";
-                    break;
                 case "Publisher":
                     selectedColumn="publisher_name";
                     break;
@@ -128,15 +125,29 @@ public class SearchBookController {
 
             // Grab the search criteria and set it to lowercase
             searchFor=textFieldSearch.getText().toLowerCase();
-
-            // Iterate through the row set and match books to the search query
-            while(bookCollection.next()){
-                // Select the contents of the current row to be searched and set it to lowercase
-                String bookAttribute=bookCollection.getString(selectedColumn).toLowerCase();
-                if(bookAttribute.contains(searchFor)){
-                    Book book=createBook();
-                    tableViewBooks.getItems().add(book);
+            if(selectedRadioButton.getText().equals("Author")) {
+            	while(bookCollection.next()){
+                    // Select the contents of the current row to be searched and set it to lowercase
+                    String firstName=bookCollection.getString("firstName").toLowerCase();
+                    String lastName=bookCollection.getString("lastName").toLowerCase();
+                    if(firstName.contains(searchFor) || lastName.contains(searchFor)){
+                    	
+                        Book book=createBook();
+                        tableViewBooks.getItems().add(book);
+                    }
                 }
+            }
+            else {
+            	// Iterate through the row set and match books to the search query
+                while(bookCollection.next()){
+                    // Select the contents of the current row to be searched and set it to lowercase
+                    String bookAttribute=bookCollection.getString(selectedColumn).toLowerCase();
+                    if(bookAttribute.contains(searchFor)){
+                        Book book=createBook();
+                        tableViewBooks.getItems().add(book);
+                    }
+                }
+            
             }
         }
     }

@@ -6,12 +6,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.event.ActionEvent;
 import org.apache.commons.collections4.BidiMap;
 import javax.sql.rowset.CachedRowSet;
 import org.apache.commons.collections4.bidimap.*;
-//import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.control.textfield.TextFields;
 import java.math.BigInteger;
 
 public class AddBookController {
@@ -79,7 +81,17 @@ public class AddBookController {
     TextField textFieldNewLanguageName;
     @FXML
     TextField textFieldNewLanguageSuffix;
-    @FXML TextField textFieldTest;
+    @FXML TextField textFieldAuthor;
+    @FXML TextField textFieldPublisher;
+    
+    @FXML Label labelNotificationTitle;
+    @FXML Label labelNotificationAuthor;
+    @FXML Label labelNotificationPublisher;
+    @FXML Label labelNotificationISBN;
+    @FXML Label labelNotificationCopyright;
+    @FXML Label labelNotificationPages;
+    @FXML Label labelNotificationGenre;
+    @FXML Label labelNotificationLanguage;
 
     // Misc elements
     @FXML
@@ -103,6 +115,9 @@ public class AddBookController {
     BidiMap<Integer, String> bidiMapNonFictionGenres = new TreeBidiMap<>();
     BidiMap<Integer, String> bidiMapLanguages = new TreeBidiMap<>();
     BidiMap<Integer, String> bidiMapSeries = new TreeBidiMap<>();
+    
+    // Arrays
+   String arrayAuthors[];
 
     public void initialize() throws Exception {
         ObservableList<String> genreTypes = FXCollections.observableArrayList("Fiction", "Non-Fiction");
@@ -117,7 +132,7 @@ public class AddBookController {
         setValues();
         populateGenreChoiceBoxes();
         closeNotification();
-//        TextFields.bindAutoCompletion(textFieldTest,"hello");
+        
     }
 
     //////////////////////////////////////////////////////////////
@@ -130,13 +145,13 @@ public class AddBookController {
         } else {
             // Get the values for the different variables.
             String title = textFieldTitle.getText();
-            Integer authorID = bidiMapAuthors.getKey(choiceBoxAuthor.getValue());
-            Integer publisherID = bidiMapPublishers.getKey(choiceBoxPublisher.getValue());
+            Integer authorID = bidiMapAuthors.getKey(textFieldAuthor.getText());
+            Integer publisherID = bidiMapPublishers.getKey(textFieldPublisher.getText());
             if(textFieldISBN.getText().equals("null")){
                 BigInteger isbn = new BigInteger("null");
             }
             BigInteger isbn = new BigInteger(textFieldISBN.getText());
-//            BigInteger isbn = BigInteger.valueOf(Integer.parseInt(textFieldISBN.getText()));
+
             Integer pages = Integer.parseInt(textFieldPages.getText());
             Integer edition;
             if (textFieldEdition.getText().isEmpty()) {
@@ -179,47 +194,59 @@ public class AddBookController {
             emptyBookInformation();
             resetTextFieldEffects();
             setValues();
-            showNotification(title + " was added successfully.", notificationGreen);
+            showNotification(title + "\nwas added successfully.", notificationGreen);
         }
     }
 
     // Ensures that the text fields in the addBook pane
     public boolean validateBookInformation() {
-        ColorAdjust colorAdjustRequired = new ColorAdjust();
-        colorAdjustRequired.setSaturation(.2);
         int errorCount = 0;
         if (textFieldTitle.getText().isBlank()) {
-            textFieldTitle.setEffect(colorAdjustRequired);
+        	labelNotificationTitle.setVisible(true);
             errorCount++;
         }
-        if (choiceBoxAuthor.getValue() == null) {
-            choiceBoxAuthor.setEffect(colorAdjustRequired);
+//        if (choiceBoxAuthor.getValue() == null) {
+//            choiceBoxAuthor.setEffect(colorAdjustRequired);
+//            errorCount++;
+//        }
+//        if (choiceBoxPublisher.getValue() == null) {
+//            choiceBoxPublisher.setEffect(colorAdjustRequired);
+//            errorCount++;
+//        }
+        if (textFieldISBN.getText().isBlank() || textFieldISBN.getText().length()>13 || textFieldISBN.getText().matches("[0-9]+")==false) {
+        	labelNotificationISBN.setVisible(true);
             errorCount++;
         }
-        if (choiceBoxPublisher.getValue() == null) {
-            choiceBoxPublisher.setEffect(colorAdjustRequired);
+        if (textFieldCopyright.getText().length()>0) {
+        	if (textFieldCopyright.getText().length()!=4 || textFieldCopyright.getText().matches("[0-9]+")==false) {
+        		labelNotificationCopyright.setVisible(true);
+                errorCount++;
+        	}
+        }
+        if (textFieldPages.getText().isBlank() || textFieldPages.getText().matches("[0-9]+")==false) {
+        	labelNotificationPages.setVisible(true);
             errorCount++;
         }
-        if (textFieldISBN.getText().isBlank()) {
-            textFieldISBN.setEffect(colorAdjustRequired);
-            errorCount++;
-        }
-        if (textFieldPages.getText().isBlank()) {
-            textFieldPages.setEffect(colorAdjustRequired);
-            errorCount++;
+        if (textFieldEdition.getText().length()>0) {
+        	if (textFieldEdition.getText().matches("[0-9]+")==false) {
+                errorCount++;
+        	}
         }
         if (choiceBoxGenreType.getValue() == null || choiceBoxGenreName.getValue()==null) {
-            choiceBoxGenreType.setEffect(colorAdjustRequired);
-            choiceBoxGenreName.setEffect(colorAdjustRequired);
+        	labelNotificationGenre.setVisible(true);
             errorCount++;
         }
         if (choiceBoxLanguage.getValue() == null) {
-            choiceBoxLanguage.setEffect(colorAdjustRequired);
+        	labelNotificationLanguage.setVisible(true);
             errorCount++;
         }
         if (choiceBoxSeries.getValue() == null) {
-            choiceBoxSeries.setEffect(colorAdjustRequired);
             errorCount++;
+        }
+        if (textFieldSeriesPart.getText().length()>0) {
+        	if (textFieldSeriesPart.getText().matches("[0-9]+")==false) {
+                errorCount++;
+        	}
         }
         if (errorCount > 0) {
             showNotification("Please fill the highlighted fields", "ff0000");
@@ -230,8 +257,8 @@ public class AddBookController {
 
     public void emptyBookInformation() {
         textFieldTitle.setText("");
-        choiceBoxAuthor.setValue("");
-        choiceBoxPublisher.setValue("");
+        textFieldAuthor.setText("");
+        textFieldPublisher.setText("");
         textFieldISBN.setText("");
         textFieldCopyright.setText("");
         textFieldPages.setText("");
@@ -283,20 +310,20 @@ public class AddBookController {
     // Validate the provided author information
     public boolean validateAuthorInformation() {
         // Validate textField Contents
-        ColorAdjust colorAdjustRequired = new ColorAdjust();
-        colorAdjustRequired.setSaturation(.2);
         int errorCount = 0;
         if (textFieldAuthorFname.getText().isEmpty()) {
-            textFieldAuthorFname.setEffect(colorAdjustRequired);
             errorCount++;
+            System.out.println("1");
         }
         if (textFieldAuthorLname.getText().isEmpty()) {
-            textFieldAuthorLname.setEffect(colorAdjustRequired);
+        	System.out.println("2");
             errorCount++;
         }
-        if (textFieldAuthorLocation.getText().isEmpty()) {
-            textFieldAuthorLocation.setEffect(colorAdjustRequired);
-            errorCount++;
+        if (!textFieldAuthorLocation.getText().isEmpty()) {
+//        	if(!textFieldAuthorLocation.getText().contains("[0-9]+")) {
+//        		System.out.println("3");
+//                errorCount++;
+//        	}
         }
         if (errorCount > 0) {
             showNotification("Please fill the highlighted fields", notificationRed);
@@ -340,7 +367,7 @@ public class AddBookController {
             textFieldPublisherName.setEffect(colorAdjustRequired);
             errorCount++;
         }
-        if (textFieldPublisherLocation.getText().isEmpty()) {
+        if (textFieldPublisherLocation.getText().isEmpty() || textFieldPublisherLocation.getText().matches("[0-9]+")) {
             textFieldPublisherLocation.setEffect(colorAdjustRequired);
             errorCount++;
         }
@@ -483,42 +510,26 @@ public class AddBookController {
         }
 
         public void resetTextFieldEffects () {
-            ColorAdjust colorAdjust = new ColorAdjust();
-            colorAdjust.setSaturation(0.0);
-            textFieldTitle.setEffect(colorAdjust);
-            choiceBoxAuthor.setEffect(colorAdjust);
-            choiceBoxPublisher.setEffect(colorAdjust);
-            textFieldISBN.setEffect(colorAdjust);
-            textFieldPages.setEffect(colorAdjust);
-            textFieldEdition.setEffect(colorAdjust);
-            choiceBoxGenreType.setEffect(colorAdjust);
-            choiceBoxGenreName.setEffect(colorAdjust);
-            choiceBoxLanguage.setEffect(colorAdjust);
-            choiceBoxSeries.setEffect(colorAdjust);
+        	labelNotificationTitle.setVisible(false);
+        	labelNotificationAuthor.setVisible(false);
+        	labelNotificationPublisher.setVisible(false);
+        	labelNotificationISBN.setVisible(false);
+        	labelNotificationCopyright.setVisible(false);
+        	labelNotificationPages.setVisible(false);
+        	labelNotificationGenre.setVisible(false);
+        	labelNotificationLanguage.setVisible(false);
 
-            textFieldAuthorFname.setEffect(colorAdjust);
-            textFieldAuthorLname.setEffect(colorAdjust);
-            textFieldAuthorLocation.setEffect(colorAdjust);
-            textFieldAuthorBirth.setEffect(colorAdjust);
-
-            textFieldPublisherName.setEffect(colorAdjust);
-            textFieldPublisherLocation.setEffect(colorAdjust);
-
-            choiceBoxNewGenreType.setEffect(colorAdjust);
-            textFieldGenreName.setEffect(colorAdjust);
-
-            textFieldNewLanguageName.setEffect(colorAdjust);
-            textFieldNewLanguageSuffix.setEffect(colorAdjust);
-
-            textFieldNewSeriesName.setEffect(colorAdjust);
         }
 
         public void createAuthorHashMap () throws Exception {
             int ID;
+            // Get the Cached Row Set for all Authors in the database
             String authorFirstName, authorLastName, authorFullName;
             CachedRowSet authorList = connectionCommands.readDatabase(0, sqlCommands.selectAllAuthor);
+            // Set the authorList array to the length of the result set so it can be filled.
+            
             ObservableList<String> authors = FXCollections.observableArrayList();
-
+            
             while (authorList.next()) {
                 ID = authorList.getInt(1);
                 authorFirstName = authorList.getString(2);
@@ -526,9 +537,9 @@ public class AddBookController {
                 authorFullName = (authorFirstName + " " + authorLastName);
                 bidiMapAuthors.put(ID, authorFullName);
                 authors.add(authorFullName);
-                bidiMapAuthors.put(ID, authorFullName);
             }
             choiceBoxAuthor.setItems(authors);
+            TextFields.bindAutoCompletion(textFieldAuthor,authors);
         }
 
         public void createPublisherHashMap () throws Exception {
@@ -544,6 +555,7 @@ public class AddBookController {
                 publishers.add(publisherName);
             }
             choiceBoxPublisher.setItems(publishers);
+            TextFields.bindAutoCompletion(textFieldPublisher,publishers);
         }
 
         public void createGenreHashMap () throws Exception {
