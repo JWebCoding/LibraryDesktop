@@ -6,5 +6,6 @@ Overview
 
 Major libraries used.
   Java databse connector (JDBC) https://dev.mysql.com/downloads/
+  
   JavaFX https://gluonhq.com/products/javafx/
   
