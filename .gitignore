@@ -5,3 +5,5 @@
 /.settings/
 .classpath
 src/Models/ConnectionValues.java
+*.txt
+
