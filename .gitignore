@@ -3,3 +3,5 @@
 /out/
 /.idea/
 /.settings/
+.classpath
+src/Models/ConnectionValues.java
