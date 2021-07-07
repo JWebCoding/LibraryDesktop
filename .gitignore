@@ -4,7 +4,8 @@
 /.idea/
 /.settings/
 .classpath
+/.classpath
+.classpath/
+/.classpath/
 src/Models/ConnectionValues.java
 *.txt
-
-.classpath
