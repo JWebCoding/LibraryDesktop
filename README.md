@@ -1,13 +1,19 @@
 # LibraryDesktop
 
-Overview
+Overview:
 
   This program's primary purpose is to streamline the process of adding books to a relational database of books that i happen to own. 
   The end goal is to make the process of mainting a complete record of my personal collection much easier than it currently is. 
 
-Major libraries used.
+Major libraries used:
 
   Java databse connector (JDBC) https://dev.mysql.com/downloads/
   
   JavaFX https://gluonhq.com/products/javafx/
   
+
+VM Arguments:
+
+--module-path C:\JavaExtras\javafx-sdk-16\lib 
+--add-modules=javafx.controls,javafx.fxml 
+--add-opens=javafx.base/com.sun.javafx.event=ALL-UNNAMED
