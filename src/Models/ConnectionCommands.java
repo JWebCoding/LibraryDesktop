@@ -41,7 +41,7 @@ public class ConnectionCommands {
 
     public void writeDataBase(int tableID,String query) throws Exception{
         try{
-            ConnectionValues connectionValues=new ConnectionValues(tableID);
+//            ConnectionValues connectionValues=new ConnectionValues(tableID);
             Class.forName("com.mysql.cj.jdbc.Driver");
             String username="jweber";
             String password="Mcpoj-117";
@@ -55,7 +55,7 @@ public class ConnectionCommands {
         } catch (Exception e){
             throw e;
         }finally {
-            System.out.println("Done");
+            
         }
     }
 }

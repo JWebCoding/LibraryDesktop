@@ -6,9 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import org.apache.commons.collections4.BidiMap;
 import javax.sql.rowset.CachedRowSet;
@@ -538,7 +535,6 @@ public class AddBookController {
                 bidiMapAuthors.put(ID, authorFullName);
                 authors.add(authorFullName);
             }
-            System.out.println(authors);
             choiceBoxAuthor.setItems(authors);
             TextFields.bindAutoCompletion(textFieldAuthor,authors);
         }
@@ -601,8 +597,6 @@ public class AddBookController {
             }
             choiceBoxSeries.setItems(series);
         }
-
-
 
 ////////////////////////////////////////////////////////////
         // Misc methods
