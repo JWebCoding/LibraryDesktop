@@ -6,59 +6,56 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="563.0" styleClass="background" stylesheets="@styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.StatisticsController">
+<AnchorPane prefHeight="450.0" prefWidth="563.0" styleClass="background" stylesheets="@styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.detailsController">
    <children>
-      <Label layoutX="231.0" layoutY="24.0" styleClass="headerLabel" text="Details">
+      <TextField disable="true" editable="false" layoutX="51.0" layoutY="29.0" visible="false" />
+      <Label layoutX="241.0" layoutY="24.0" styleClass="headerLabel" text="Details">
          <font>
             <Font name="Serif Bold" size="24.0" />
          </font>
       </Label>
 
       <Label layoutX="72.0" layoutY="89.0" styleClass="standardLabel" text="Title" />
-      <TextField layoutX="108.0" layoutY="89.0" prefHeight="25.0" prefWidth="172.0" />
+      <TextField fx:id="textFieldTitle" editable="false" layoutX="108.0" layoutY="89.0" prefHeight="25.0" prefWidth="203.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="62.0" layoutY="124.0" styleClass="standardLabel" text="Series" />
-      <TextField layoutX="108.0" layoutY="124.0" />
+      <TextField fx:id="textFieldSeries" editable="false" layoutX="108.0" layoutY="124.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="265.0" layoutY="124.0" styleClass="standardLabel" text="Series Part" />
-      <TextField layoutX="343.0" layoutY="124.0" />
+      <TextField fx:id="textFieldSeriesPart" editable="false" layoutX="343.0" layoutY="124.0" style="-fx-text-fill: goldenrod;" />
 
-      <Label layoutX="289.0" layoutY="90.0" styleClass="standardLabel" text="Author" />
-      <TextField layoutX="343.0" layoutY="89.0" />
+      <Label layoutX="322.0" layoutY="89.0" styleClass="standardLabel" text="Author" />
+      <TextField fx:id="textFieldAuthor" editable="false" layoutX="375.0" layoutY="87.0" prefHeight="25.0" prefWidth="120.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="96.0" layoutY="243.0" styleClass="standardLabel" text="Publisher" />
 
       <Label layoutX="125.0" layoutY="208.0" styleClass="standardLabel" text="ISBN" />
-      <TextField layoutX="163.0" layoutY="211.0" />
+      <TextField fx:id="textFieldISBN" editable="false" layoutX="163.0" layoutY="211.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="322.0" layoutY="211.0" styleClass="standardLabel" text="Copyright" />
-      <TextField layoutX="398.0" layoutY="211.0" prefHeight="25.0" prefWidth="47.0" />
+      <TextField fx:id="textFieldCopyRight" editable="false" layoutX="398.0" layoutY="211.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="62.0" layoutY="159.0" styleClass="standardLabel" text="Genre" />
-      <TextField layoutX="343.0" layoutY="330.0" prefHeight="25.0" prefWidth="47.0" />
+      <TextField fx:id="textFieldFinished" editable="false" layoutX="343.0" layoutY="330.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="159.0" layoutY="330.0" styleClass="standardLabel" text="Format" />
-      <TextField layoutX="343.0" layoutY="295.0" prefHeight="25.0" prefWidth="78.0" />
+      <TextField fx:id="textFieldLanguage" editable="false" layoutX="343.0" layoutY="295.0" prefHeight="25.0" prefWidth="78.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="119.0" layoutY="297.0" styleClass="standardLabel" text="Page Count" />
 
       <Label layoutX="270.0" layoutY="297.0" styleClass="standardLabel" text="Language" />
-      <TextField layoutX="211.0" layoutY="330.0" prefHeight="25.0" prefWidth="39.0" />
+      <TextField fx:id="textFieldFormat" editable="false" layoutX="211.0" layoutY="330.0" prefHeight="25.0" prefWidth="39.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="269.0" layoutY="330.0" styleClass="standardLabel" text="Finished?" />
-      <TextField layoutX="207.0" layoutY="295.0" prefHeight="25.0" prefWidth="47.0" />
+      <TextField fx:id="textFieldPageCount" editable="false" layoutX="207.0" layoutY="295.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
+      <TextField fx:id="textFieldPublisher" editable="false" layoutX="163.0" layoutY="246.0" style="-fx-text-fill: goldenrod;" />
+      <TextField fx:id="textFieldGenre" editable="false" layoutX="108.0" layoutY="159.0" style="-fx-text-fill: goldenrod;" />
 
-      <Button layoutX="175.0" layoutY="384.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="65.0" text="Close">
+      <Button fx:id="buttonClose" layoutX="248.0" layoutY="384.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="65.0" text="Close">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <TextField layoutX="108.0" layoutY="159.0" />
-
-      <Button layoutX="323.0" layoutY="384.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="65.0" text="Edit">
-         <font>
-            <Font size="15.0" />
-         </font></Button>
-      <TextField layoutX="163.0" layoutY="246.0" />
+      <Button fx:id="buttonSetFinished" layoutX="396.0" layoutY="330.0" mnemonicParsing="false" onAction="#setBookToFinished" text="Set To Finished" />
 
    </children>
 </AnchorPane>
