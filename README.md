@@ -7,13 +7,14 @@ Overview:
   
   The program is currently in a beta state and doesn't have the statistics page available just yet. The rest of the code works and is stable.
 
+---------------------------
 Major libraries used:
 
   JavaFX https://gluonhq.com/products/javafx/
   
   The other libraires are added through maven and can be found in the pom.xml file.
   
-
+--------------------------
 VM Arguments:
 
 --module-path C:\JavaExtras\javafx-sdk-16\lib 
