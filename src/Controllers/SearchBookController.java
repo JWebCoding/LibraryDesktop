@@ -33,6 +33,7 @@ public class SearchBookController {
 
     @FXML TextField textFieldSearch;
     @FXML Label labelNotification;
+    @FXML Label labelBookNumber;
 
     @FXML ToggleGroup toggleSearchButtons;
     
@@ -59,6 +60,7 @@ public class SearchBookController {
 
         getBookCollectionData();
         fillTable();
+        setBookNumberLabel();
     }
 
     // Get an up to date copy of the MySQL book database
@@ -85,14 +87,22 @@ public class SearchBookController {
 
         return new Book(id,title,series,seriesPart,firstName,lastName,publisher,isbn,year,genre);
     }
+    
+    // Fill the BookNumber label
+    public void setBookNumberLabel() {
+    	String numOfBooks= String.valueOf(Book.getBookNum());
+    	labelBookNumber.setText(numOfBooks);
+    }
 
     // Fill the search table with book information
     public void fillTable() throws Exception {
         tableViewBooks.getItems().clear();
+        Book.incrementBookNum();
         bookCollection.first();
         Book bookOne=createBook();
         tableViewBooks.getItems().add(bookOne);
         while (bookCollection.next()){
+        	Book.incrementBookNum();
             Book book=createBook();
             tableViewBooks.getItems().add(book);
         }
@@ -190,21 +200,39 @@ public class SearchBookController {
         getBookCollectionData();
         fillTable();
     }
-
-    public void showNotification(String notification){
-        labelNotification.setText(notification);
-        labelNotification.setVisible(true);
-    }
-
-    public void hideNotification(){
-        labelNotification.setText("");
-        labelNotification.setVisible(false);
-    }
-
-    public void printTest(int num){
-        System.out.println("TEST"+num);
-    }
     
+    public void showBooksRead() {
+    	try {
+    		tableViewBooks.getItems().clear();
+			bookCollection.first();
+			while(bookCollection.next()) {
+				int bookRead=bookCollection.getInt("finished");
+				if(bookRead==1) {
+					Book book=createBook();
+                    tableViewBooks.getItems().add(book);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    public void showBooksNotRead() {
+    	try {
+    		tableViewBooks.getItems().clear();
+			bookCollection.first();
+			while(bookCollection.next()) {
+				int bookRead=bookCollection.getInt("finished");
+				if(bookRead==0) {
+					Book book=createBook();
+                    tableViewBooks.getItems().add(book);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     public void openScreenDetails() throws IOException {
     	if(tableViewBooks.getSelectionModel().getSelectedItem()!=null) {
 	    	Parent root;
@@ -226,4 +254,21 @@ public class SearchBookController {
     	}
     	
     }
+
+    public void showNotification(String notification){
+        labelNotification.setText(notification);
+        labelNotification.setVisible(true);
+    }
+
+    public void hideNotification(){
+        labelNotification.setText("");
+        labelNotification.setVisible(false);
+    }
+
+    public void printTest(int num){
+        System.out.println("TEST "+num);
+    }
+    
+    
+  
 }
