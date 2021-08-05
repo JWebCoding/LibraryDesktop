@@ -70,6 +70,12 @@ public class Book {
     public static int getBookID() {
     	return bookID;
     }
+    public static void incrementBookNum() {
+    	numOfBooks++;
+    }
+    public static int getBookNum() {
+    	return numOfBooks;
+    }
     
     public void setId(int id) {this.id=id;}
     public void setTitle(String title){ this.title=title; }
