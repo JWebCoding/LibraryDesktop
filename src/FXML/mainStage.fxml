@@ -23,6 +23,11 @@
                <font>
                   <Font name="Arundina Serif Bold" size="13.0" />
                </font></Button>
+            <Button fx:id="buttonClose" disable="true" layoutX="945.0" layoutY="15.0" mnemonicParsing="false" onAction="#closeProgram" prefHeight="50.0" prefWidth="91.0" styleClass="top-banner-button" text="Close" visible="false">
+               <font>
+                  <Font name="Arundina Serif Bold" size="13.0" />
+               </font>
+            </Button>
             <Button fx:id="buttonLogout" layoutX="945.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenLogin" prefHeight="50.0" prefWidth="91.0" styleClass="top-banner-button" text="Logout">
                <font>
                   <Font name="Arundina Serif Bold" size="13.0" />

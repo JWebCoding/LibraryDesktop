@@ -1,11 +1,11 @@
 package Controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-
 import java.io.IOException;
 
 public class MainStageController {
@@ -15,6 +15,7 @@ public class MainStageController {
     @FXML Button buttonLibraryStats;
     @FXML Button buttonSearchEdit;
     @FXML Button buttonLogout;
+    @FXML Button buttonClose;
     @FXML Pane panePrimary;
     @FXML Label labelTitle;
 
@@ -61,6 +62,18 @@ public class MainStageController {
         Pane paneLogin=FXMLLoader.load(getClass().getResource("/FXML/login.fxml"));
         panePrimary.getChildren().clear();
         panePrimary.getChildren().add(paneLogin);
+    }
+    
+    public void showLoginButton() {
+    	buttonClose.setVisible(false);
+    	buttonClose.setDisable(true);
+    	buttonLogout.setVisible(true);
+    	buttonLogout.setDisable(false);
+    }
+    
+    
+    public void closeProgram() {
+    	Platform.exit();
     }
     
 }
