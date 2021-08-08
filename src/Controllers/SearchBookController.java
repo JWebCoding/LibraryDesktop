@@ -47,6 +47,7 @@ public class SearchBookController {
 
 
     public void initialize() throws Exception{
+    	connectionCommands.getConnectionSettings();
     	tableColumnId.setCellValueFactory(new PropertyValueFactory("id"));
         tableColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
         tableColumnSeries.setCellValueFactory(new PropertyValueFactory("series"));
@@ -65,7 +66,7 @@ public class SearchBookController {
 
     // Get an up to date copy of the MySQL book database
     public void getBookCollectionData() throws Exception{
-        bookCollection=connectionCommands.readDatabase(0,sql.selectTableBookInfo);
+        bookCollection=connectionCommands.readDatabase(sql.selectTableBookInfo);
     }
 
     // Construct an instance of the Book class

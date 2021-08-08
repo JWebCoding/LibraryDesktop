@@ -117,6 +117,7 @@ public class AddBookController {
    String arrayAuthors[];
 
     public void initialize() throws Exception {
+    	connectionCommands.getConnectionSettings();
         ObservableList<String> genreTypes = FXCollections.observableArrayList("Fiction", "Non-Fiction");
         choiceBoxNewGenreType.setItems(genreTypes);
         choiceBoxGenreType.setItems(genreTypes);
@@ -187,7 +188,7 @@ public class AddBookController {
             }
 
             query = String.format(sqlCommands.insetIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, finished, seriesID);
-            connectionCommands.writeDataBase(0, query);
+            connectionCommands.writeDatabase(query);
             emptyBookInformation();
             resetTextFieldEffects();
             setValues();
@@ -287,7 +288,7 @@ public class AddBookController {
 
             // Create query and write new author to database
             query = String.format(sqlCommands.insertIntoAuthor, authorFirstName, authorLastName, authorLocation, authorYearBirth, authorYearDeath);
-            connectionCommands.writeDataBase(0, query);
+            connectionCommands.writeDatabase(query);
             showNotification(authorFirstName + " " + authorLastName + " has been added.", notificationGreen);
 
             // Reset the contents of the textFields and displays a successful notification
@@ -340,7 +341,7 @@ public class AddBookController {
 
             // Create query and insert into the database
             query = String.format(sqlCommands.insertIntoPublisher, publisherName, publisherLocation);
-            connectionCommands.writeDataBase(0, query);
+            connectionCommands.writeDatabase(query);
             showNotification(publisherName + " has been added.", notificationGreen);
 
             // Reset Publisher
@@ -391,7 +392,7 @@ public class AddBookController {
 
             // Create query and insert into the database
             query = String.format(sqlCommands.insertIntoGenre, genreName, genreType);
-            connectionCommands.writeDataBase(0, query);
+            connectionCommands.writeDatabase(query);
             showNotification(genreName + " has been added.", notificationGreen);
 
             // Reset Publisher
@@ -436,7 +437,7 @@ public class AddBookController {
 
             // Create query and insert into the database
             query=(String.format(sqlCommands.insertIntoSeries,seriesName));
-            connectionCommands.writeDataBase(0,query);
+            connectionCommands.writeDatabase(query);
             createSeriesHashMap();
             showNotification(seriesName+" was added.",notificationGreen);
 
@@ -464,7 +465,7 @@ public class AddBookController {
             String languageSuffix=textFieldNewLanguageSuffix.getText();
 
             query=String.format(sqlCommands.insertIntoLanguage,languageName,languageSuffix);
-            connectionCommands.writeDataBase(0,query);
+            connectionCommands.writeDatabase(query);
             createLanguageHashMap();
             showNotification(languageName+" was added",notificationGreen);
 
@@ -522,7 +523,7 @@ public class AddBookController {
             int ID;
             // Get the Cached Row Set for all Authors in the database
             String authorFirstName, authorLastName, authorFullName;
-            CachedRowSet authorList = connectionCommands.readDatabase(0, sqlCommands.selectAllAuthor);
+            CachedRowSet authorList = connectionCommands.readDatabase(sqlCommands.selectAllAuthor);
             // Set the authorList array to the length of the result set so it can be filled.
             
             ObservableList<String> authors = FXCollections.observableArrayList();
@@ -542,7 +543,7 @@ public class AddBookController {
         public void createPublisherHashMap () throws Exception {
             int ID;
             String publisherName;
-            CachedRowSet publisherList = connectionCommands.readDatabase(0, sqlCommands.selectAllPublisher);
+            CachedRowSet publisherList = connectionCommands.readDatabase(sqlCommands.selectAllPublisher);
             ObservableList<String> publishers = FXCollections.observableArrayList();
 
             while (publisherList.next()) {
@@ -558,7 +559,7 @@ public class AddBookController {
         public void createGenreHashMap () throws Exception {
             int ID;
             String genreName;
-            CachedRowSet genreList = connectionCommands.readDatabase(0, sqlCommands.selectAllGenre);
+            CachedRowSet genreList = connectionCommands.readDatabase(sqlCommands.selectAllGenre);
 
             while (genreList.next()) {
                 ID = genreList.getInt(1);
@@ -571,7 +572,7 @@ public class AddBookController {
         public void createLanguageHashMap () throws Exception {
             int ID;
             String languageName;
-            CachedRowSet languageList = connectionCommands.readDatabase(0, sqlCommands.selectAllLanguage);
+            CachedRowSet languageList = connectionCommands.readDatabase(sqlCommands.selectAllLanguage);
             ObservableList<String> languages = FXCollections.observableArrayList();
 
             while (languageList.next()) {
@@ -586,7 +587,7 @@ public class AddBookController {
         public void createSeriesHashMap () throws Exception {
             int ID;
             String seriesName;
-            CachedRowSet seriesList = connectionCommands.readDatabase(0, sqlCommands.selectAllSeries);
+            CachedRowSet seriesList = connectionCommands.readDatabase(sqlCommands.selectAllSeries);
             ObservableList<String> series = FXCollections.observableArrayList();
 
             while (seriesList.next()) {

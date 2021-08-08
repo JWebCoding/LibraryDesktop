@@ -32,12 +32,13 @@ public class detailsController {
 	CachedRowSet bookQuery=null;
 	
 	public void initialize() throws Exception{
+		connectionCommands.getConnectionSettings();
 		fillTextfields();
 	}
 	
     public void getBookData() throws Exception{
     	String searchQuery=String.format(sqlCommands.selectSpecificBook,Book.getBookID());
-    	bookQuery=connectionCommands.readDatabase(0,searchQuery);
+    	bookQuery=connectionCommands.readDatabase(searchQuery);
     }
 
     public Book createBook() throws Exception {
@@ -103,7 +104,7 @@ public class detailsController {
     public void setBookToFinished() throws Exception {
     	try {
     		String updateQuery=String.format(sqlCommands.updateBookToFinished, Book.getBookID());
-    		connectionCommands.writeDataBase(0, updateQuery);
+    		connectionCommands.writeDatabase(updateQuery);
     	} catch(Exception e) {
     		System.out.println("Error!\nClass: detailsController\nMethod: setBookToFinished"+e);
     	} finally {

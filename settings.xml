@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <serverURL>jdbc:mysql://localhost:3306/library</serverURL>
+  <serverTimeZone>?serverTimezone=CST</serverTimeZone>
+  <username>jweber</username>
+  <password>Mcpoj-117</password>
+</settings>
