@@ -76,6 +76,9 @@ public class Book {
     public static int getBookNum() {
     	return numOfBooks;
     }
+    public static void resetBookNum() {
+    	numOfBooks=0;
+    }
     
     public void setId(int id) {this.id=id;}
     public void setTitle(String title){ this.title=title; }

@@ -47,6 +47,7 @@ public class SearchBookController {
 
 
     public void initialize() throws Exception{
+    	Book.resetBookNum();
     	connectionCommands.getConnectionSettings();
     	tableColumnId.setCellValueFactory(new PropertyValueFactory("id"));
         tableColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
