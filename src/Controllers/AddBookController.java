@@ -289,7 +289,7 @@ public class AddBookController {
             // Create query and write new author to database
             query = String.format(sqlCommands.insertIntoAuthor, authorFirstName, authorLastName, authorLocation, authorYearBirth, authorYearDeath);
             connectionCommands.writeDatabase(query);
-            showNotification(authorFirstName + " " + authorLastName + " has been added.", notificationGreen);
+            showNotification(authorFirstName + " " + authorLastName + "\nhas been added.", notificationGreen);
 
             // Reset the contents of the textFields and displays a successful notification
             textFieldAuthorFname.setText("");
@@ -342,7 +342,7 @@ public class AddBookController {
             // Create query and insert into the database
             query = String.format(sqlCommands.insertIntoPublisher, publisherName, publisherLocation);
             connectionCommands.writeDatabase(query);
-            showNotification(publisherName + " has been added.", notificationGreen);
+            showNotification(publisherName + "\nhas been added.", notificationGreen);
 
             // Reset Publisher
             textFieldPublisherName.setText("");
@@ -393,7 +393,7 @@ public class AddBookController {
             // Create query and insert into the database
             query = String.format(sqlCommands.insertIntoGenre, genreName, genreType);
             connectionCommands.writeDatabase(query);
-            showNotification(genreName + " has been added.", notificationGreen);
+            showNotification(genreName + "\nhas been added.", notificationGreen);
 
             // Reset Publisher
             textFieldGenreName.setText("");
@@ -439,7 +439,7 @@ public class AddBookController {
             query=(String.format(sqlCommands.insertIntoSeries,seriesName));
             connectionCommands.writeDatabase(query);
             createSeriesHashMap();
-            showNotification(seriesName+" was added.",notificationGreen);
+            showNotification(seriesName+"\nwas added.",notificationGreen);
 
             // Reset series box
             textFieldNewSeriesName.setText("");
@@ -467,7 +467,7 @@ public class AddBookController {
             query=String.format(sqlCommands.insertIntoLanguage,languageName,languageSuffix);
             connectionCommands.writeDatabase(query);
             createLanguageHashMap();
-            showNotification(languageName+" was added",notificationGreen);
+            showNotification(languageName+"\nwas added",notificationGreen);
 
             textFieldNewLanguageName.setText("");
             textFieldNewLanguageSuffix.setText("");
