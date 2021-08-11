@@ -3,3 +3,13 @@ List of things I'd like to add.
 1 - MarcXML Record import. 
 
 2 - Statistics page.
+  Unsure what statistics will be measured but it may be fun to experiment with
+
+3 - Improved error handling
+  Try/Catch statements are a good start but more will need to be done.
+  
+4 - UI improvements
+  Too many to list
+  - Clean up buttons on search pane
+  - Adjust layout and notifications on AddBookController
+  - etc etc
