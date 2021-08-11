@@ -153,7 +153,7 @@ public class ConnectionCommands {
 		try {
 			int row=preparedStatement.executeUpdate();
 		} catch(Exception e) {
-			System.err.println("Unable to create execute update query.");
+			System.err.println("Unable to execute update query.");
 			e.printStackTrace();
 		}
 		
