@@ -57,7 +57,7 @@ public class detailsController {
         genre=bookQuery.getString("genre_name");
         format=bookQuery.getInt("format");
         edition=bookQuery.getInt("edition");
-        language=bookQuery.getString("language");
+        language=bookQuery.getString("language_name");
         finished=bookQuery.getInt("finished");
         pageCount=bookQuery.getInt("pages");
         

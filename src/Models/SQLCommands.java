@@ -10,9 +10,10 @@ public class SQLCommands {
     public String selectAllUser="select * from library.user;";
     public String selectAllLanguage="select * from library.language order by language_name;";
     // Primary queries
-    public String selectTableBookInfo="select bookID,title,series_name,series_part,firstName,lastName,publisher_name,isbn,edition,copyright,genre_name,format,pages,language,finished from book join publisher p on book.publisherID = p.publisherID join author a on book.authorID = a.authorID join series s on book.seriesID = s.seriesID join genre g on book.genreID = g.genreID;";
+    public String selectTableBookInfo="select bookID,title,series_name,series_part,firstName,lastName,publisher_name,isbn,edition,copyright,genre_name,format,pages,language_name,finished from book join language l on book.languageID=l.languageID join publisher p on book.publisherID = p.publisherID join author a on book.authorID = a.authorID join series s on book.seriesID = s.seriesID join genre g on book.genreID = g.genreID;";
+    
     public String selectNewAuthorID="select authorID from author where firstName='%s' and lastName='%s' and nation='%s';";
-    public String selectSpecificBook="select bookID,title,series_name,series_part,firstName,lastName,publisher_name,isbn,edition,copyright,genre_name,format,pages,language,finished from book join publisher p on book.publisherID = p.publisherID join author a on book.authorID = a.authorID join series s on book.seriesID = s.seriesID join genre g on book.genreID = g.genreID where bookID='%s';";
+    public String selectSpecificBook="select bookID,title,series_name,series_part,firstName,lastName,publisher_name,isbn,edition,copyright,genre_name,format,pages,language_name,finished from book join language l on book.languageID=l.languageID join publisher p on book.publisherID = p.publisherID join author a on book.authorID = a.authorID join series s on book.seriesID = s.seriesID join genre g on book.genreID = g.genreID where bookID='%s';";
     // Insert statements
     public String insertIntoAuthor="insert into library.author (firstName, lastName, nation, birth, death) values ('%s','%s','%s',%d,%d);";
     public String insertIntoPublisher="insert into library.publisher (publisher_name, publisher_location) values ('%s','%s');";
