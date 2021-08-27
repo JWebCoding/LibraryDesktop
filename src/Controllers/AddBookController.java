@@ -188,11 +188,16 @@ public class AddBookController {
             }
 
             query = String.format(sqlCommands.insetIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, finished, seriesID);
-            connectionCommands.writeDatabase(query);
-            emptyBookInformation();
-            resetTextFieldEffects();
-            setValues();
-            showNotification(title + "\nwas added successfully.", notificationGreen);
+            try {
+            	connectionCommands.writeDatabase(query);
+            } catch(Exception e) {
+            	System.err.print("Unable to add book");
+            } finally {
+            	emptyBookInformation();
+                resetTextFieldEffects();
+                setValues();
+                showNotification(title + "\nwas added successfully.", notificationGreen);
+            }
         }
     }
 
@@ -276,7 +281,10 @@ public class AddBookController {
             // Pulls the proper data into a the appropriate variables
             String authorFirstName = textFieldAuthorFname.getText();
             String authorLastName = textFieldAuthorLname.getText();
-            String authorLocation = textFieldAuthorLocation.getText();
+            String authorLocation = null;
+            if (!textFieldAuthorLocation.getText().isEmpty()) {
+            	authorLocation = textFieldAuthorLocation.getText();
+            }
             Integer authorYearBirth = null;
             Integer authorYearDeath = null;
             if (!textFieldAuthorBirth.getText().isEmpty()) {
@@ -337,7 +345,10 @@ public class AddBookController {
         } else {
             // Create the relevant variables
             String publisherName = textFieldPublisherName.getText();
-            String publisherLocation = textFieldPublisherLocation.getText();
+            String publisherLocation = null;
+            if (!textFieldPublisherLocation.getText().isEmpty()) {
+            	publisherLocation = textFieldPublisherLocation.getText();
+            }
 
             // Create query and insert into the database
             query = String.format(sqlCommands.insertIntoPublisher, publisherName, publisherLocation);
@@ -363,10 +374,6 @@ public class AddBookController {
         int errorCount = 0;
         if (textFieldPublisherName.getText().isEmpty()) {
             textFieldPublisherName.setEffect(colorAdjustRequired);
-            errorCount++;
-        }
-        if (textFieldPublisherLocation.getText().isEmpty() || textFieldPublisherLocation.getText().matches("[0-9]+")) {
-            textFieldPublisherLocation.setEffect(colorAdjustRequired);
             errorCount++;
         }
         if (errorCount > 0) {
