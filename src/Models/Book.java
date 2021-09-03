@@ -16,7 +16,6 @@ public class Book {
     int edition;
     int pageCount;
     String language;
-    String finished;
 
     public Book(int id,String title,String series,Integer seriesPart,String firstName,String lastName,String publisher,String isbn,int copyright,String genre){
         this.id=id;
@@ -31,7 +30,7 @@ public class Book {
     }
 
     // Constructor for all parts of a book. Use if detailed information is needed
-    public Book(int id,String title,String series,Integer seriesPart,String firstName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int finished,int pageCount){
+    public Book(int id,String title,String series,Integer seriesPart,String firstName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount){
         this.id=id;
         this.title=title;
         this.series=series;
@@ -44,7 +43,6 @@ public class Book {
         this.edition=edition;
         this.language=language;
         this.format=determineFormat(format);
-        this.finished=determineFinished(finished);
         this.pageCount=pageCount;
     }
     // Empty Constructor
@@ -53,11 +51,6 @@ public class Book {
     private String determineFormat(int format){
         if(format==0){ return "P"; }
         else{ return "H"; }
-    }
-
-    private String determineFinished(int finished){
-        if(finished==0){ return "No"; }
-        else { return "Yes"; }
     }
 
     public String toString(){
@@ -90,7 +83,6 @@ public class Book {
     public void setLanguage(String language){ this.language=language;}
     public void setFormat(String format){ this.format=format; }
     public void setSeries(String series){ this.series=series; }
-    public void setFinished(String finished){ this.finished=finished; }
 
     public int getId() { return id; }
     public String getTitle(){ return title; }
@@ -104,6 +96,5 @@ public class Book {
     public String getFormat(){ return format; }
     public String getSeries(){ return series; }
     public Integer getSeriesPart() {return seriesPart;}
-    public String getFinished(){ return finished; }
     public int getPageCount() { return pageCount; }
 }

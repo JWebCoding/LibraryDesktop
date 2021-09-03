@@ -180,14 +180,8 @@ public class AddBookController {
             } else {
                 format = 0;
             }
-            Integer finished = null;
-            if (toggleButtonYes.isSelected()) {
-                finished = 1;
-            } else {
-                finished = 0;
-            }
 
-            query = String.format(sqlCommands.insetIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, finished, seriesID);
+            query = String.format(sqlCommands.insetIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, seriesID);
             try {
             	connectionCommands.writeDatabase(query);
             } catch(Exception e) {
@@ -208,14 +202,6 @@ public class AddBookController {
         	labelNotificationTitle.setVisible(true);
             errorCount++;
         }
-//        if (choiceBoxAuthor.getValue() == null) {
-//            choiceBoxAuthor.setEffect(colorAdjustRequired);
-//            errorCount++;
-//        }
-//        if (choiceBoxPublisher.getValue() == null) {
-//            choiceBoxPublisher.setEffect(colorAdjustRequired);
-//            errorCount++;
-//        }
         if (textFieldISBN.getText().isBlank() || textFieldISBN.getText().length()>13 || textFieldISBN.getText().matches("[0-9]+")==false) {
         	labelNotificationISBN.setVisible(true);
             errorCount++;
@@ -324,12 +310,6 @@ public class AddBookController {
         if (textFieldAuthorLname.getText().isEmpty()) {
         	System.out.println("2");
             errorCount++;
-        }
-        if (!textFieldAuthorLocation.getText().isEmpty()) {
-//        	if(!textFieldAuthorLocation.getText().contains("[0-9]+")) {
-//        		System.out.println("3");
-//                errorCount++;
-//        	}
         }
         if (errorCount > 0) {
             showNotification("Please fill the highlighted fields", notificationRed);
@@ -509,8 +489,6 @@ public class AddBookController {
             choiceBoxNewGenreType.setValue("Non-Fiction");
             toggleButtonHardcover.setSelected(true);
             toggleButtonPaperback.setSelected(false);
-            toggleButtonYes.setSelected(true);
-            toggleButtonNo.setSelected(false);
             choiceBoxSeries.setValue("");
         }
 

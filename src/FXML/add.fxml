@@ -38,20 +38,14 @@
             <ChoiceBox fx:id="choiceBoxGenreType" layoutX="77.0" layoutY="343.0" onAction="#populateGenreChoiceBoxes" prefHeight="26.0" prefWidth="101.0" />
             <ChoiceBox fx:id="choiceBoxGenreName" layoutX="77.0" layoutY="377.0" prefHeight="26.0" prefWidth="187.0" />
             <ChoiceBox fx:id="choiceBoxLanguage" layoutX="77.0" layoutY="425.0" prefHeight="26.0" prefWidth="101.0" />
-            <ChoiceBox fx:id="choiceBoxSeries" layoutX="77.0" layoutY="512.0" prefHeight="26.0" prefWidth="187.0" />
-            <TextField fx:id="textFieldSeriesPart" layoutX="77.0" layoutY="554.0" prefHeight="26.0" prefWidth="36.0" style="-fx-text-fill: goldenrod;" />
+            <ChoiceBox fx:id="choiceBoxSeries" layoutX="79.0" layoutY="468.0" prefHeight="26.0" prefWidth="187.0" />
+            <TextField fx:id="textFieldSeriesPart" layoutX="79.0" layoutY="510.0" prefHeight="26.0" prefWidth="36.0" style="-fx-text-fill: goldenrod;" />
             <ToggleButton fx:id="toggleButtonPaperback" layoutX="138.0" layoutY="182.0" mnemonicParsing="false" prefWidth="32.0">
                <toggleGroup>
                   <ToggleGroup fx:id="toggleGroupFormat" />
                </toggleGroup>
             </ToggleButton>
             <ToggleButton fx:id="toggleButtonHardcover" layoutX="106.0" layoutY="182.0" mnemonicParsing="false" prefWidth="32.0" selected="true" toggleGroup="$toggleGroupFormat" />
-            <ToggleButton fx:id="toggleButtonNo" layoutX="123.0" layoutY="474.0" mnemonicParsing="false" prefWidth="32.0">
-               <toggleGroup>
-                  <ToggleGroup fx:id="toggleGroupFinished" />
-               </toggleGroup>
-            </ToggleButton>
-            <ToggleButton fx:id="toggleButtonYes" layoutX="91.0" layoutY="474.0" mnemonicParsing="false" prefWidth="32.0" selected="true" toggleGroup="$toggleGroupFinished" />
             <Label layoutX="27.0" layoutY="346.0" text="Genre*">
                 <font>
                   <Font name="Arundina Serif" size="15.0" />
@@ -112,23 +106,13 @@
                   <Font name="Arundina Serif" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="167.0" layoutY="477.0" text="Not Finished">
+            <Label layoutX="34.0" layoutY="471.0" text="Series">
                <font>
                   <Font name="Arundina Serif" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="26.0" layoutY="476.0" text="Finished">
-               <font>
-                  <Font name="Arundina Serif" size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="32.0" layoutY="515.0" text="Series">
-               <font>
-                  <Font name="Arundina Serif" size="15.0" />
-               </font>
-            </Label>
-            <Button fx:id="buttonAddBook" layoutX="81.0" layoutY="599.0" mnemonicParsing="false" onAction="#addBook" text="Add Book" />
-            <Label fx:id="labelPart" layoutX="45.0" layoutY="557.0" text="Part">
+            <Button fx:id="buttonAddBook" layoutX="83.0" layoutY="555.0" mnemonicParsing="false" onAction="#addBook" text="Add Book" />
+            <Label fx:id="labelPart" layoutX="47.0" layoutY="513.0" text="Part">
                <font>
                   <Font size="15.0" />
                </font></Label>

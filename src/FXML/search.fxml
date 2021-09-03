@@ -72,13 +72,11 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="buttonResetColumns" layoutX="125.0" layoutY="360.0" mnemonicParsing="false" onAction="#resetColumnWidths" text="Reset Columns" />
-      <Label fx:id="labelNotification" alignment="CENTER" layoutX="100.0" layoutY="400.0" text="Label" textAlignment="CENTER" visible="false" />
-      <Button fx:id="buttonResetTable" layoutX="125.0" layoutY="324.0" mnemonicParsing="false" onAction="#resetTableContents" text="Reset Table" />
-      <Button fx:id="buttonRefresh" layoutX="168.0" layoutY="638.0" mnemonicParsing="false" onAction="#refreshTable" text="Refresh" />
-      <Label fx:id="labelBookNumber" layoutX="168.0" layoutY="454.0" text="Label" />
-      <Label layoutX="13.0" layoutY="454.0" text="Number of Books in System:" />
-      <Button fx:id="buttonBooksRead" layoutX="13.0" layoutY="324.0" mnemonicParsing="false" onAction="#showBooksRead" text="Books Read" />
-      <Button fx:id="booksNotRead" layoutX="13.0" layoutY="360.0" mnemonicParsing="false" onAction="#showBooksNotRead" text="Books not Read" />
+      <Button fx:id="buttonResetColumns" layoutX="100.0" layoutY="308.0" mnemonicParsing="false" onAction="#resetColumnWidths" text="Reset Columns" />
+      <Label fx:id="labelNotification" alignment="CENTER" layoutX="86.0" layoutY="422.0" text="Label" textAlignment="CENTER" visible="false" />
+      <Button fx:id="buttonResetTable" layoutX="6.0" layoutY="308.0" mnemonicParsing="false" onAction="#resetTableContents" text="Reset Table" />
+      <Button fx:id="buttonRefresh" layoutX="9.0" layoutY="348.0" mnemonicParsing="false" onAction="#refreshTable" text="Refresh" />
+      <Label fx:id="labelBookNumber" layoutX="164.0" layoutY="383.0" text="Label" />
+      <Label layoutX="9.0" layoutY="383.0" text="Number of Books in System:" />
    </children>
 </Pane>

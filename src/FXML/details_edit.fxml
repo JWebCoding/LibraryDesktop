@@ -36,7 +36,6 @@
       <TextField fx:id="textFieldCopyRight" editable="false" layoutX="398.0" layoutY="211.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="62.0" layoutY="159.0" styleClass="standardLabel" text="Genre" />
-      <TextField fx:id="textFieldFinished" editable="false" layoutX="343.0" layoutY="330.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="159.0" layoutY="330.0" styleClass="standardLabel" text="Format" />
       <TextField fx:id="textFieldLanguage" editable="false" layoutX="343.0" layoutY="295.0" prefHeight="25.0" prefWidth="78.0" style="-fx-text-fill: goldenrod;" />
@@ -45,17 +44,14 @@
 
       <Label layoutX="270.0" layoutY="297.0" styleClass="standardLabel" text="Language" />
       <TextField fx:id="textFieldFormat" editable="false" layoutX="211.0" layoutY="330.0" prefHeight="25.0" prefWidth="39.0" style="-fx-text-fill: goldenrod;" />
-
-      <Label layoutX="269.0" layoutY="330.0" styleClass="standardLabel" text="Finished?" />
       <TextField fx:id="textFieldPageCount" editable="false" layoutX="207.0" layoutY="295.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
       <TextField fx:id="textFieldPublisher" editable="false" layoutX="163.0" layoutY="246.0" style="-fx-text-fill: goldenrod;" />
       <TextField fx:id="textFieldGenre" editable="false" layoutX="108.0" layoutY="159.0" style="-fx-text-fill: goldenrod;" />
 
-      <Button fx:id="buttonClose" layoutX="248.0" layoutY="384.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="65.0" text="Close">
+      <Button fx:id="buttonClose" layoutX="248.0" layoutY="384.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="65.0" text="Close" visible="false">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button fx:id="buttonSetFinished" layoutX="396.0" layoutY="330.0" mnemonicParsing="false" onAction="#setBookToFinished" text="Set To Finished" />
 
    </children>
 </AnchorPane>

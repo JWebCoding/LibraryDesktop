@@ -4,6 +4,8 @@ import Models.Book;
 import Models.ConnectionCommands;
 import Models.SQLCommands;
 import javax.sql.rowset.CachedRowSet;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -15,7 +17,6 @@ public class detailsController {
 	@FXML TextField textFieldAuthor;
 	@FXML TextField textFieldISBN;
 	@FXML TextField textFieldCopyRight;
-	@FXML TextField textFieldFinished;
 	@FXML TextField textFieldLanguage;
 	@FXML TextField textFieldFormat;
 	@FXML TextField textFieldPageCount;
@@ -58,10 +59,9 @@ public class detailsController {
         format=bookQuery.getInt("format");
         edition=bookQuery.getInt("edition");
         language=bookQuery.getString("language_name");
-        finished=bookQuery.getInt("finished");
         pageCount=bookQuery.getInt("pages");
         
-        return new Book(id,title,series,seriesPart,firstName,lastName,publisher,isbn,year,genre,edition,language,format,finished,pageCount);
+        return new Book(id,title,series,seriesPart,firstName,lastName,publisher,isbn,year,genre,edition,language,format,pageCount);
     }
     
     public void fillTextfields() throws Exception {
@@ -74,7 +74,6 @@ public class detailsController {
     	textFieldPublisher.setText(book.getPublisher());
     	textFieldISBN.setText(book.getIsbn());
     	textFieldCopyRight.setText(String.valueOf(book.getCopyright()));
-    	textFieldFinished.setText(book.getTitle());
     	textFieldPageCount.setText(String.valueOf(book.getPageCount()));
     	textFieldLanguage.setText(book.getLanguage());
     	textFieldGenre.setText(book.getGenre());
@@ -85,12 +84,6 @@ public class detailsController {
     		textFieldFormat.setText("H");
     	} else {
     		textFieldFormat.setText("P");
-    	}
-    	// Finished
-    	if(finished==1) {
-    		textFieldFinished.setText("Yes");
-    	} else {
-    		textFieldFinished.setText("No");
     	}
     	// Series Part
     	if(book.getSeriesPart()==null) {
@@ -111,6 +104,7 @@ public class detailsController {
     		fillTextfields();
     	}
     }
+    
     
 //    public void editTextfields() {
 //    	// Hide the edit button and show the save button.
