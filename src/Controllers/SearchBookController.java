@@ -40,7 +40,7 @@ public class SearchBookController {
     @FXML Button buttonEditBook;
 
     // Declare variables
-    String title,firstName,lastName,isbn,series,publisher,genre,language,searchText,notification;
+    String title,firstName,middleName,lastName,isbn,series,publisher,genre,language,searchText,notification;
     int id,year,format,edition,finished;
     Integer seriesPart;
     CachedRowSet bookCollection=null;
@@ -81,13 +81,14 @@ public class SearchBookController {
         	seriesPart=null;
         }
         firstName=bookCollection.getString("firstName");
+        middleName=bookCollection.getString("middleName");
         lastName=bookCollection.getString("lastName");
         publisher=bookCollection.getString("publisher_name");
         isbn=bookCollection.getString("isbn");
         year=bookCollection.getInt("copyright");
         genre=bookCollection.getString("genre_name");
 
-        return new Book(id,title,series,seriesPart,firstName,lastName,publisher,isbn,year,genre);
+        return new Book(id,title,series,seriesPart,firstName,middleName,lastName,publisher,isbn,year,genre);
     }
     
     // Fill the BookNumber label
@@ -203,37 +204,16 @@ public class SearchBookController {
         fillTable();
     }
     
-    public void showBooksRead() {
-    	try {
-    		tableViewBooks.getItems().clear();
-			bookCollection.first();
-			while(bookCollection.next()) {
-				int bookRead=bookCollection.getInt("finished");
-				if(bookRead==1) {
-					Book book=createBook();
-                    tableViewBooks.getItems().add(book);
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-    public void showBooksNotRead() {
-    	try {
-    		tableViewBooks.getItems().clear();
-			bookCollection.first();
-			while(bookCollection.next()) {
-				int bookRead=bookCollection.getInt("finished");
-				if(bookRead==0) {
-					Book book=createBook();
-                    tableViewBooks.getItems().add(book);
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void removeBook() {
+    	if(tableViewBooks.getSelectionModel().getSelectedItem()==null) {
+    		showNotification("Please select a book to be deleted.");
+    	}else {
+    		Book removedBook=tableViewBooks.getSelectionModel().getSelectedItem();
+        	String query=String.format(sql.removeBookFromDatabase,removedBook.getId());
+        	connectionCommands.writeDatabase(query);
+        	showNotification(removedBook.getTitle()+"\ndeleted from system.");
+    	}
+    	
     }
     public void openScreenDetails() throws IOException {
     	if(tableViewBooks.getSelectionModel().getSelectedItem()!=null) {

@@ -29,7 +29,7 @@
       <Pane layoutX="6.0" layoutY="66.0" prefHeight="242.0" prefWidth="224.0">
          <children>
             <Button fx:id="buttonEditBook" layoutY="201.0" mnemonicParsing="false" onAction="#openScreenDetails" text="See Book Details" />
-            <Button fx:id="buttonRemoveBook" layoutX="112.0" layoutY="201.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Remove Book" />
+            <Button fx:id="buttonRemoveBook" layoutX="112.0" layoutY="201.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Remove Book" onAction="#removeBook"/>
             <RadioButton fx:id="radioButtonTitle" layoutX="26.0" layoutY="53.0" mnemonicParsing="false" selected="true" text="Title">
                <toggleGroup>
                   <ToggleGroup fx:id="toggleSearchButtons" />
