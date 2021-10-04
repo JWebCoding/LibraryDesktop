@@ -10,9 +10,9 @@ List of things I'd like to add.
   
 4 - UI improvements
   Too many to list
-  ~~- Clean up buttons on search pane~~
+  - ~~Clean up buttons on search pane~~
   - Adjust layout and notifications on AddBookController
-  ~~- Add optiional middle name section for authors~~
+  - ~~Add optiional middle name section for authors~~
   - etc etc
 
 ~~5 - Delete button for search page~~
