@@ -53,6 +53,8 @@ public class AddBookController {
     @FXML
     TextField textFieldAuthorLname;
     @FXML
+    TextField textFieldAuthorMname;
+    @FXML
     TextField textFieldAuthorFname;
     @FXML
     TextField textFieldAuthorLocation;
@@ -143,6 +145,7 @@ public class AddBookController {
         } else {
             // Get the values for the different variables.
             String title = textFieldTitle.getText();
+            title=checkForApostrophes(title);
             Integer authorID = bidiMapAuthors.getKey(textFieldAuthor.getText());
             Integer publisherID = bidiMapPublishers.getKey(textFieldPublisher.getText());
             if(textFieldISBN.getText().equals("null")){
@@ -266,6 +269,7 @@ public class AddBookController {
         } else {
             // Pulls the proper data into a the appropriate variables
             String authorFirstName = textFieldAuthorFname.getText();
+            String authorMiddleName=textFieldAuthorMname.getText();
             String authorLastName = textFieldAuthorLname.getText();
             String authorLocation = null;
             if (!textFieldAuthorLocation.getText().isEmpty()) {
@@ -281,12 +285,13 @@ public class AddBookController {
             }
 
             // Create query and write new author to database
-            query = String.format(sqlCommands.insertIntoAuthor, authorFirstName, authorLastName, authorLocation, authorYearBirth, authorYearDeath);
+            query = String.format(sqlCommands.insertIntoAuthor, authorFirstName, authorMiddleName, authorLastName, authorLocation, authorYearBirth, authorYearDeath);
             connectionCommands.writeDatabase(query);
-            showNotification(authorFirstName + " " + authorLastName + "\nhas been added.", notificationGreen);
+            showNotification(authorFirstName + " "+authorMiddleName+" " + authorLastName + "\nhas been added.", notificationGreen);
 
             // Reset the contents of the textFields and displays a successful notification
             textFieldAuthorFname.setText("");
+            textFieldAuthorMname.setText("");
             textFieldAuthorLname.setText("");
             textFieldAuthorLocation.setText("");
             textFieldAuthorBirth.setText("");
@@ -325,6 +330,7 @@ public class AddBookController {
         } else {
             // Create the relevant variables
             String publisherName = textFieldPublisherName.getText();
+            publisherName=checkForApostrophes(publisherName);
             String publisherLocation = null;
             if (!textFieldPublisherLocation.getText().isEmpty()) {
             	publisherLocation = textFieldPublisherLocation.getText();
@@ -389,6 +395,7 @@ public class AddBookController {
 
             // Reset the contents of choiceBoxGenreName
             choiceBoxGenreName.getItems().clear();
+            bidiMapFictionGenres.clear();
             resetTextFieldEffects();
 
             // Refresh genre hashmap
@@ -582,6 +589,21 @@ public class AddBookController {
                 series.add(seriesName);
             }
             choiceBoxSeries.setItems(series);
+        }
+        // Check to ensure that an apostraphe in the title is properly formatted
+        public String checkForApostrophes(String text) {
+        	String string=text;
+    		int location=0;
+    		
+    		if(string.contains("'")) {
+    			location=string.indexOf("'");
+    		}
+
+    		StringBuilder sb=new StringBuilder(string);
+    		sb.insert(location, "'");
+    		string=sb.toString();
+        	
+        	return string;
         }
 
 ////////////////////////////////////////////////////////////

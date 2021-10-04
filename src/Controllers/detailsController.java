@@ -27,7 +27,7 @@ public class detailsController {
 	
 	ConnectionCommands connectionCommands=new ConnectionCommands();
 	SQLCommands sqlCommands=new SQLCommands();
-	String title,firstName,lastName,isbn,series,publisher,genre,language,searchText,notification;
+	String title,firstName,middleName,lastName,isbn,series,publisher,genre,language,searchText,notification;
     int id,year,format,edition,finished,pageCount;
     Integer seriesPart;
 	CachedRowSet bookQuery=null;
@@ -51,6 +51,7 @@ public class detailsController {
         seriesPart=bookQuery.getInt("series_part");
         if(seriesPart==0) {seriesPart=null;}
         firstName=bookQuery.getString("firstName");
+        middleName=bookQuery.getString("middleName");
         lastName=bookQuery.getString("lastName");
         publisher=bookQuery.getString("publisher_name");
         isbn=bookQuery.getString("isbn");
@@ -61,7 +62,7 @@ public class detailsController {
         language=bookQuery.getString("language_name");
         pageCount=bookQuery.getInt("pages");
         
-        return new Book(id,title,series,seriesPart,firstName,lastName,publisher,isbn,year,genre,edition,language,format,pageCount);
+        return new Book(id,title,series,seriesPart,firstName,middleName,lastName,publisher,isbn,year,genre,edition,language,format,pageCount);
     }
     
     public void fillTextfields() throws Exception {

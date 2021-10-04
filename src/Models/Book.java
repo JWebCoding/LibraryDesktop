@@ -17,12 +17,16 @@ public class Book {
     int pageCount;
     String language;
 
-    public Book(int id,String title,String series,Integer seriesPart,String firstName,String lastName,String publisher,String isbn,int copyright,String genre){
+    public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre){
         this.id=id;
         this.title=title;
         this.series=series;
         this.seriesPart=seriesPart;
-        this.author=firstName+" "+lastName;
+        if(middleName==null) {
+        	this.author=firstName+" "+lastName;
+        } else {
+        	this.author=firstName+" "+middleName+" "+lastName;
+        }
         this.publisher=publisher;
         this.isbn=isbn;
         this.copyright=copyright;
@@ -30,12 +34,17 @@ public class Book {
     }
 
     // Constructor for all parts of a book. Use if detailed information is needed
-    public Book(int id,String title,String series,Integer seriesPart,String firstName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount){
+    public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount){
         this.id=id;
         this.title=title;
         this.series=series;
         this.seriesPart=seriesPart;
-        this.author=firstName+" "+lastName;
+        if(middleName==null) {
+        	this.author=firstName+" "+lastName;
+        } else {
+        	this.author=firstName+" "+middleName+" "+lastName;
+        }
+        
         this.publisher=publisher;
         this.isbn=isbn;
         this.copyright=copyright;
