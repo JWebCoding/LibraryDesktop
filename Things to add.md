@@ -16,9 +16,9 @@ List of things I'd like to add.
   - etc etc
 
 ~~5 - Delete button for search page~~
-  ~~Simple button for deleting selected books from the database.~~
+  - ~~Simple button for deleting selected books from the database.~~
   **Completed**
   
 ~~6 - Apostraphes in titles~~
-  ~~Currently, adding titles with aposraphes retuurns errors. Add the ability to include apostraphes.~~
+  - ~~Currently, adding titles with aposraphes retuurns errors. Add the ability to include apostraphes.~~
   **Completed**
