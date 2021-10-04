@@ -212,6 +212,11 @@ public class SearchBookController {
         	String query=String.format(sql.removeBookFromDatabase,removedBook.getId());
         	connectionCommands.writeDatabase(query);
         	showNotification(removedBook.getTitle()+"\ndeleted from system.");
+        	try {
+				fillTable();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
     	}
     	
     }
