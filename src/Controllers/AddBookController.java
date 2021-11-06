@@ -1,21 +1,21 @@
 package Controllers;
 import Models.ConnectionCommands;
 import Models.SQLCommands;
+import Models.BookAttributes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.paint.Color;
-import org.apache.commons.collections4.BidiMap;
 import javax.sql.rowset.CachedRowSet;
-import org.apache.commons.collections4.bidimap.*;
 import org.controlsfx.control.textfield.TextFields;
 import java.math.BigInteger;
 
 public class AddBookController {
     ConnectionCommands connectionCommands = new ConnectionCommands();
     SQLCommands sqlCommands = new SQLCommands();
+    BookAttributes bookAttributes=new BookAttributes();
     //Book Information pane elements
     @FXML
     TextField textFieldTitle;
@@ -102,19 +102,6 @@ public class AddBookController {
     String query;
     String notificationGreen="#00ff00",notificationRed="#ff0000";
 
-    // Lists
-    ObservableList<String> FictionGenres = FXCollections.observableArrayList();
-    ObservableList<String> NonFictionGenres = FXCollections.observableArrayList();
-    ObservableList<String> blankList=FXCollections.observableArrayList();
-
-    // Hashmaps
-    BidiMap<Integer, String> bidiMapAuthors = new TreeBidiMap<>();
-    BidiMap<Integer, String> bidiMapPublishers = new TreeBidiMap<>();
-    BidiMap<Integer, String> bidiMapFictionGenres = new TreeBidiMap<>();
-    BidiMap<Integer, String> bidiMapNonFictionGenres = new TreeBidiMap<>();
-    BidiMap<Integer, String> bidiMapLanguages = new TreeBidiMap<>();
-    BidiMap<Integer, String> bidiMapSeries = new TreeBidiMap<>();
-    
     // Arrays
    String arrayAuthors[];
 
@@ -132,7 +119,6 @@ public class AddBookController {
         setValues();
         populateGenreChoiceBoxes();
         closeNotification();
-        
     }
 
     //////////////////////////////////////////////////////////////
@@ -146,13 +132,13 @@ public class AddBookController {
             // Get the values for the different variables.
             String title = textFieldTitle.getText();
             title=checkForApostrophes(title);
-            Integer authorID = bidiMapAuthors.getKey(textFieldAuthor.getText());
-            Integer publisherID = bidiMapPublishers.getKey(textFieldPublisher.getText());
+            Integer authorID = bookAttributes.bidiMapAuthors.getKey(textFieldAuthor.getText());
+            Integer publisherID = bookAttributes.bidiMapPublishers.getKey(textFieldPublisher.getText());
             if(textFieldISBN.getText().equals("null")){
                 BigInteger isbn = new BigInteger("null");
             }
             BigInteger isbn = new BigInteger(textFieldISBN.getText());
-
+            
             Integer pages = Integer.parseInt(textFieldPages.getText());
             Integer edition;
             if (textFieldEdition.getText().isEmpty()) {
@@ -164,13 +150,13 @@ public class AddBookController {
             // Acquire genreID value
             Integer genreID=0;
             if(choiceBoxGenreType.getValue().equals("Fiction")){
-                genreID = bidiMapFictionGenres.getKey(choiceBoxGenreName.getValue());
+                genreID = bookAttributes.bidiMapFictionGenres.getKey(choiceBoxGenreName.getValue());
             }
             else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
-                genreID=bidiMapNonFictionGenres.getKey(choiceBoxGenreName.getValue());
+                genreID=bookAttributes.bidiMapNonFictionGenres.getKey(choiceBoxGenreName.getValue());
             }
-            Integer languageID = bidiMapLanguages.getKey(choiceBoxLanguage.getValue());
-            Integer seriesID = bidiMapSeries.getKey(choiceBoxSeries.getValue());
+            Integer languageID = bookAttributes.bidiMapLanguages.getKey(choiceBoxLanguage.getValue());
+            Integer seriesID = bookAttributes.bidiMapSeries.getKey(choiceBoxSeries.getValue());
             Integer seriesPart;
             if (textFieldSeriesPart.getText().isEmpty()) {
                 seriesPart = null;
@@ -395,7 +381,7 @@ public class AddBookController {
 
             // Reset the contents of choiceBoxGenreName
             choiceBoxGenreName.getItems().clear();
-            bidiMapFictionGenres.clear();
+            bookAttributes.bidiMapFictionGenres.clear();
             resetTextFieldEffects();
 
             // Refresh genre hashmap
@@ -482,12 +468,12 @@ public class AddBookController {
 ////////////////////////////////////////////////////////////
         // Methods to run during initialization
         public void populateGenreChoiceBoxes () {
-            // The values in the choice box are set to null in the addNewGenre function.
+            // The values are set to null in the addNewGenre function.
             if(choiceBoxGenreType.getValue().equals("Fiction")){
-                choiceBoxGenreName.setItems(FictionGenres);
+                choiceBoxGenreName.setItems(bookAttributes.FictionGenres);
             }
             else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
-                choiceBoxGenreName.setItems(NonFictionGenres);
+                choiceBoxGenreName.setItems(bookAttributes.NonFictionGenres);
             }
         }
 
@@ -514,38 +500,44 @@ public class AddBookController {
         public void createAuthorHashMap () throws Exception {
             int ID;
             // Get the Cached Row Set for all Authors in the database
-            String authorFirstName, authorLastName, authorFullName;
+            String authorFirstName,authorMiddleName, authorLastName, authorFullName;
             CachedRowSet authorList = connectionCommands.readDatabase(sqlCommands.selectAllAuthor);
             // Set the authorList array to the length of the result set so it can be filled.
             
-            ObservableList<String> authors = FXCollections.observableArrayList();
+//            ObservableList<String> authors = FXCollections.observableArrayList();
             
             while (authorList.next()) {
                 ID = authorList.getInt(1);
                 authorFirstName = authorList.getString(2);
-                authorLastName = authorList.getString(3);
-                authorFullName = (authorFirstName + " " + authorLastName);
-                bidiMapAuthors.put(ID, authorFullName);
-                authors.add(authorFullName);
+                authorMiddleName=authorList.getString(3);
+                authorLastName = authorList.getString(4);
+                if(authorMiddleName==null) {
+                	authorFullName = (authorFirstName +" "+ authorLastName);
+                } else {
+                	authorFullName = (authorFirstName +" "+ authorMiddleName +" "+ authorLastName);
+                }
+                
+                bookAttributes.bidiMapAuthors.put(ID, authorFullName);
+                bookAttributes.authors.add(authorFullName);
             }
-            choiceBoxAuthor.setItems(authors);
-            TextFields.bindAutoCompletion(textFieldAuthor,authors);
+            choiceBoxAuthor.setItems(bookAttributes.authors);
+            TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.authors);
         }
 
         public void createPublisherHashMap () throws Exception {
             int ID;
             String publisherName;
             CachedRowSet publisherList = connectionCommands.readDatabase(sqlCommands.selectAllPublisher);
-            ObservableList<String> publishers = FXCollections.observableArrayList();
+//            ObservableList<String> publishers = FXCollections.observableArrayList();
 
             while (publisherList.next()) {
                 ID = publisherList.getInt(1);
                 publisherName = publisherList.getString(2);
-                bidiMapPublishers.put(ID, publisherName);
-                publishers.add(publisherName);
+                bookAttributes.bidiMapPublishers.put(ID, publisherName);
+                bookAttributes.publishers.add(publisherName);
             }
-            choiceBoxPublisher.setItems(publishers);
-            TextFields.bindAutoCompletion(textFieldPublisher,publishers);
+            choiceBoxPublisher.setItems(bookAttributes.publishers);
+            TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.publishers);
         }
 
         public void createGenreHashMap () throws Exception {
@@ -556,8 +548,8 @@ public class AddBookController {
             while (genreList.next()) {
                 ID = genreList.getInt(1);
                 genreName = genreList.getString(2);
-                if(genreList.getInt(3)==0){ bidiMapFictionGenres.put(ID,genreName); FictionGenres.add(genreName); }
-                else if(genreList.getInt(3)==1){ bidiMapNonFictionGenres.put(ID,genreName); NonFictionGenres.add(genreName); }
+                if(genreList.getInt(3)==0){ bookAttributes.bidiMapFictionGenres.put(ID,genreName); bookAttributes.FictionGenres.add(genreName); }
+                else if(genreList.getInt(3)==1){ bookAttributes.bidiMapNonFictionGenres.put(ID,genreName); bookAttributes.NonFictionGenres.add(genreName); }
             }
         }
 
@@ -565,30 +557,30 @@ public class AddBookController {
             int ID;
             String languageName;
             CachedRowSet languageList = connectionCommands.readDatabase(sqlCommands.selectAllLanguage);
-            ObservableList<String> languages = FXCollections.observableArrayList();
+//            ObservableList<String> languages = FXCollections.observableArrayList();
 
             while (languageList.next()) {
                 ID = languageList.getInt(1);
                 languageName = languageList.getString(2);
-                bidiMapLanguages.put(ID, languageName);
-                languages.add(languageName);
+                bookAttributes.bidiMapLanguages.put(ID, languageName);
+                bookAttributes.languages.add(languageName);
             }
-            choiceBoxLanguage.setItems(languages);
+            choiceBoxLanguage.setItems(bookAttributes.languages);
         }
 
         public void createSeriesHashMap () throws Exception {
             int ID;
             String seriesName;
             CachedRowSet seriesList = connectionCommands.readDatabase(sqlCommands.selectAllSeries);
-            ObservableList<String> series = FXCollections.observableArrayList();
+//            ObservableList<String> series = FXCollections.observableArrayList();
 
             while (seriesList.next()) {
                 ID = seriesList.getInt(1);
                 seriesName = seriesList.getString(2);
-                bidiMapSeries.put(ID, seriesName);
-                series.add(seriesName);
+                bookAttributes.bidiMapSeries.put(ID, seriesName);
+                bookAttributes.series.add(seriesName);
             }
-            choiceBoxSeries.setItems(series);
+            choiceBoxSeries.setItems(bookAttributes.series);
         }
         // Check to ensure that an apostraphe in the title is properly formatted
         public String checkForApostrophes(String text) {
