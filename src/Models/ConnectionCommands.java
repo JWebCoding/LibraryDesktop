@@ -103,7 +103,7 @@ public class ConnectionCommands {
 					System.err.println("Unable to establish a connection to the server.");
 				}
 				else {
-					System.err.println("Connection to MYSQL server established!");
+//					System.err.println("Connection to MYSQL server established!");
 				}
 			}
 		}

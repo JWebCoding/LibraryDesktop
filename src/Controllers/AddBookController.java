@@ -1,6 +1,7 @@
 package Controllers;
 import Models.ConnectionCommands;
 import Models.SQLCommands;
+import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import Models.BookAttributes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -104,82 +105,106 @@ public class AddBookController {
 
     // Arrays
    String arrayAuthors[];
+   
+   // TESTING LIST
+   ObservableList<String> tempAuthorList=FXCollections.observableArrayList();
+   ObservableList<String> tempPublisherList=FXCollections.observableArrayList();
+   ObservableList<String> tempFictionGenreList=FXCollections.observableArrayList();
+   ObservableList<String> tempNonFictionGenreList=FXCollections.observableArrayList();
+   ObservableList<String> tempSeriesList=FXCollections.observableArrayList();
+   ObservableList<String> tempLanguageList=FXCollections.observableArrayList();
+   ObservableList<String> blankList=FXCollections.observableArrayList();
 
     public void initialize() throws Exception {
+    	
+    	
     	connectionCommands.getConnectionSettings();
         ObservableList<String> genreTypes = FXCollections.observableArrayList("Fiction", "Non-Fiction");
         choiceBoxNewGenreType.setItems(genreTypes);
         choiceBoxGenreType.setItems(genreTypes);
-
         createAuthorHashMap();
-        createPublisherHashMap();
+        createPublisherHashMap();      
         createGenreHashMap();
         createLanguageHashMap();
         createSeriesHashMap();
         setValues();
         populateGenreChoiceBoxes();
         closeNotification();
+        
+        bookAttributes.obvListAuthors.addAll(tempAuthorList);
+        bookAttributes.obvListPublishers.addAll(tempPublisherList);
+        bookAttributes.obvListFictionGenres.addAll(tempFictionGenreList);
+        bookAttributes.obvListNonFictionGenres.addAll(tempNonFictionGenreList); 
+        bookAttributes.obvListLanguages.addAll(tempLanguageList);     
+        bookAttributes.obvListSeries.addAll(tempSeriesList);
+        
     }
 
     //////////////////////////////////////////////////////////////
     //  Methods for adding new items to the database
     // Add new books to the database
     public void addBook() throws Exception {
+    	Integer authorID,publisherID,pages,edition,copyright,genreID=0,languageID,seriesID,seriesPart,format=null;
+    	String title;
+    	
         // Check if all fields have content
         if (!validateBookInformation()) {
             showNotification("Please fill the highlighted fields", notificationGreen);
         } else {
             // Get the values for the different variables.
-            String title = textFieldTitle.getText();
+            title = textFieldTitle.getText();
             title=checkForApostrophes(title);
-            Integer authorID = bookAttributes.bidiMapAuthors.getKey(textFieldAuthor.getText());
-            Integer publisherID = bookAttributes.bidiMapPublishers.getKey(textFieldPublisher.getText());
+            authorID = bookAttributes.bidiMapAuthors.getKey(textFieldAuthor.getText());
+            publisherID = bookAttributes.bidiMapPublishers.getKey(textFieldPublisher.getText());
+            pages = Integer.parseInt(textFieldPages.getText());
+            copyright = Integer.parseInt(textFieldCopyright.getText());
+            languageID = bookAttributes.bidiMapLanguages.getKey(choiceBoxLanguage.getValue());
+            seriesID = bookAttributes.bidiMapSeries.getKey(choiceBoxSeries.getValue());
+            
+            // If statements for the values that need them
             if(textFieldISBN.getText().equals("null")){
                 BigInteger isbn = new BigInteger("null");
             }
             BigInteger isbn = new BigInteger(textFieldISBN.getText());
             
-            Integer pages = Integer.parseInt(textFieldPages.getText());
-            Integer edition;
-            if (textFieldEdition.getText().isEmpty()) {
-                edition = null;
-            } else {
-                edition = Integer.parseInt(textFieldEdition.getText());
-            }
-            Integer copyright = Integer.parseInt(textFieldCopyright.getText());
             // Acquire genreID value
-            Integer genreID=0;
             if(choiceBoxGenreType.getValue().equals("Fiction")){
                 genreID = bookAttributes.bidiMapFictionGenres.getKey(choiceBoxGenreName.getValue());
             }
             else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
                 genreID=bookAttributes.bidiMapNonFictionGenres.getKey(choiceBoxGenreName.getValue());
             }
-            Integer languageID = bookAttributes.bidiMapLanguages.getKey(choiceBoxLanguage.getValue());
-            Integer seriesID = bookAttributes.bidiMapSeries.getKey(choiceBoxSeries.getValue());
-            Integer seriesPart;
+            
+            if (textFieldEdition.getText().isEmpty()) {
+                edition = null;
+            } else {
+                edition = Integer.parseInt(textFieldEdition.getText());
+            }
+            
             if (textFieldSeriesPart.getText().isEmpty()) {
                 seriesPart = null;
             } else {
                 seriesPart = Integer.parseInt(textFieldSeriesPart.getText());
             }
-            Integer format = null;
+            
             if (toggleButtonHardcover.isSelected()) {
                 format = 1;
             } else {
                 format = 0;
             }
 
-            query = String.format(sqlCommands.insetIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, seriesID);
+            query = String.format(sqlCommands.insertIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, seriesID);
+            System.out.println(query);
             try {
             	connectionCommands.writeDatabase(query);
-            } catch(Exception e) {
-            	System.err.print("Unable to add book");
-            } finally {
             	emptyBookInformation();
                 resetTextFieldEffects();
                 setValues();
                 showNotification(title + "\nwas added successfully.", notificationGreen);
+            } catch(Exception e) {
+            	System.err.print("Unable to add book");
+            } finally {
+            	
             }
         }
     }
@@ -251,18 +276,23 @@ public class AddBookController {
     // Add new author to database
     public void addNewAuthor() throws Exception {
         if (!validateAuthorInformation()) {
-            System.out.print("");
+        	
         } else {
-            // Pulls the proper data into a the appropriate variables
-            String authorFirstName = textFieldAuthorFname.getText();
-            String authorMiddleName=textFieldAuthorMname.getText();
-            String authorLastName = textFieldAuthorLname.getText();
-            String authorLocation = null;
+        	String authorFirstName,authorMiddleName,authorLastName,authorLocation = null;
+        	Integer authorYearBirth = null,authorYearDeath = null;
+            // Pulls the proper data into the appropriate variables
+            authorFirstName = textFieldAuthorFname.getText();
+            if(textFieldAuthorMname.getText()=="") {
+            	authorMiddleName="NULL";
+            } else {
+            	authorMiddleName=("'"+textFieldAuthorMname.getText()+"'");
+            }
+            authorLastName = textFieldAuthorLname.getText();
+           
             if (!textFieldAuthorLocation.getText().isEmpty()) {
             	authorLocation = textFieldAuthorLocation.getText();
             }
-            Integer authorYearBirth = null;
-            Integer authorYearDeath = null;
+            
             if (!textFieldAuthorBirth.getText().isEmpty()) {
                 authorYearDeath = Integer.parseInt(textFieldAuthorBirth.getText());
             }
@@ -273,7 +303,12 @@ public class AddBookController {
             // Create query and write new author to database
             query = String.format(sqlCommands.insertIntoAuthor, authorFirstName, authorMiddleName, authorLastName, authorLocation, authorYearBirth, authorYearDeath);
             connectionCommands.writeDatabase(query);
-            showNotification(authorFirstName + " "+authorMiddleName+" " + authorLastName + "\nhas been added.", notificationGreen);
+            if(authorMiddleName=="NULL") {
+            	showNotification(authorFirstName + " " + authorLastName + "\nhas been added.", notificationGreen);
+            } else {
+            	showNotification(authorFirstName + " " +authorMiddleName + " " + authorLastName + "\nhas been added.", notificationGreen);
+            }
+            
 
             // Reset the contents of the textFields and displays a successful notification
             textFieldAuthorFname.setText("");
@@ -296,10 +331,8 @@ public class AddBookController {
         int errorCount = 0;
         if (textFieldAuthorFname.getText().isEmpty()) {
             errorCount++;
-            System.out.println("1");
         }
         if (textFieldAuthorLname.getText().isEmpty()) {
-        	System.out.println("2");
             errorCount++;
         }
         if (errorCount > 0) {
@@ -312,7 +345,6 @@ public class AddBookController {
     // Add new publisher to database
     public void addNewPublisher() throws Exception {
         if (!validatePublisherInformation()) {
-            System.out.print("");
         } else {
             // Create the relevant variables
             String publisherName = textFieldPublisherName.getText();
@@ -421,7 +453,7 @@ public class AddBookController {
             createSeriesHashMap();
             showNotification(seriesName+"\nwas added.",notificationGreen);
 
-            // Reset series box
+            // Reset obvListSeries box
             textFieldNewSeriesName.setText("");
             resetTextFieldEffects();
         }
@@ -470,10 +502,10 @@ public class AddBookController {
         public void populateGenreChoiceBoxes () {
             // The values are set to null in the addNewGenre function.
             if(choiceBoxGenreType.getValue().equals("Fiction")){
-                choiceBoxGenreName.setItems(bookAttributes.FictionGenres);
+                choiceBoxGenreName.setItems(tempFictionGenreList);
             }
             else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
-                choiceBoxGenreName.setItems(bookAttributes.NonFictionGenres);
+                choiceBoxGenreName.setItems(tempNonFictionGenreList);
             }
         }
 
@@ -498,14 +530,18 @@ public class AddBookController {
         }
 
         public void createAuthorHashMap () throws Exception {
+        	String authorFirstName,authorMiddleName, authorLastName, authorFullName;
             int ID;
+            
             // Get the Cached Row Set for all Authors in the database
-            String authorFirstName,authorMiddleName, authorLastName, authorFullName;
             CachedRowSet authorList = connectionCommands.readDatabase(sqlCommands.selectAllAuthor);
-            // Set the authorList array to the length of the result set so it can be filled.
             
-//            ObservableList<String> authors = FXCollections.observableArrayList();
+            // Clear the contents of the relvant hash-maps, observable lists and choice-boxes.
+            bookAttributes.bidiMapAuthors.clear();
+            bookAttributes.obvListAuthors.clear();
+            choiceBoxAuthor.setItems(blankList);
             
+            // Combine the sperate parts of the names from the cached rowset
             while (authorList.next()) {
                 ID = authorList.getInt(1);
                 authorFirstName = authorList.getString(2);
@@ -516,40 +552,58 @@ public class AddBookController {
                 } else {
                 	authorFullName = (authorFirstName +" "+ authorMiddleName +" "+ authorLastName);
                 }
-                
+                // Add the obvListAuthors to the hashmap and list
                 bookAttributes.bidiMapAuthors.put(ID, authorFullName);
-                bookAttributes.authors.add(authorFullName);
+                tempAuthorList.add(authorFullName);
             }
-            choiceBoxAuthor.setItems(bookAttributes.authors);
-            TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.authors);
+            // Set the contents of the choice box and auto-complete field
+            choiceBoxAuthor.setItems(tempAuthorList);
+            TextFields.bindAutoCompletion(textFieldAuthor,tempAuthorList);
         }
 
         public void createPublisherHashMap () throws Exception {
             int ID;
             String publisherName;
+            
+            // Get the Cached Row Set for all Authors in the database
             CachedRowSet publisherList = connectionCommands.readDatabase(sqlCommands.selectAllPublisher);
-//            ObservableList<String> publishers = FXCollections.observableArrayList();
-
+            
+            // Clear the contents of the relvant hash-maps, observable lists and choice-boxes.
+            bookAttributes.bidiMapPublishers.clear();
+            bookAttributes.obvListPublishers.clear();
+            choiceBoxPublisher.setItems(blankList);
+            
+            // Get the contents of 
             while (publisherList.next()) {
                 ID = publisherList.getInt(1);
                 publisherName = publisherList.getString(2);
                 bookAttributes.bidiMapPublishers.put(ID, publisherName);
-                bookAttributes.publishers.add(publisherName);
+                tempPublisherList.add(publisherName);
             }
-            choiceBoxPublisher.setItems(bookAttributes.publishers);
-            TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.publishers);
+            
+            // Set the contents of the choice box and auto-complete field
+            choiceBoxPublisher.setItems(tempPublisherList);
+            TextFields.bindAutoCompletion(textFieldPublisher,tempPublisherList);
         }
 
         public void createGenreHashMap () throws Exception {
             int ID;
             String genreName;
             CachedRowSet genreList = connectionCommands.readDatabase(sqlCommands.selectAllGenre);
-
+            // Clear the contents of the relvant hash-maps, observable lists and choice-boxes.
+            bookAttributes.bidiMapFictionGenres.clear();
+            bookAttributes.bidiMapNonFictionGenres.clear();
+            bookAttributes.obvListFictionGenres.clear();
+            bookAttributes.obvListNonFictionGenres.clear();
+            tempFictionGenreList.clear();
+            tempNonFictionGenreList.clear();
+            choiceBoxGenreName.setItems(blankList);
+            
             while (genreList.next()) {
                 ID = genreList.getInt(1);
                 genreName = genreList.getString(2);
-                if(genreList.getInt(3)==0){ bookAttributes.bidiMapFictionGenres.put(ID,genreName); bookAttributes.FictionGenres.add(genreName); }
-                else if(genreList.getInt(3)==1){ bookAttributes.bidiMapNonFictionGenres.put(ID,genreName); bookAttributes.NonFictionGenres.add(genreName); }
+                if(genreList.getInt(3)==0){ bookAttributes.bidiMapFictionGenres.put(ID,genreName); tempFictionGenreList.add(genreName); }
+                else if(genreList.getInt(3)==1){ bookAttributes.bidiMapNonFictionGenres.put(ID,genreName); tempNonFictionGenreList.add(genreName); }
             }
         }
 
@@ -557,30 +611,40 @@ public class AddBookController {
             int ID;
             String languageName;
             CachedRowSet languageList = connectionCommands.readDatabase(sqlCommands.selectAllLanguage);
-//            ObservableList<String> languages = FXCollections.observableArrayList();
-
+         // Clear the contents of the relvant hash-maps, observable lists and choice-boxes.
+            bookAttributes.bidiMapLanguages.clear();
+            bookAttributes.obvListLanguages.clear();
+            tempLanguageList.clear();
+            choiceBoxLanguage.setItems(blankList);
+            
             while (languageList.next()) {
                 ID = languageList.getInt(1);
                 languageName = languageList.getString(2);
                 bookAttributes.bidiMapLanguages.put(ID, languageName);
-                bookAttributes.languages.add(languageName);
+                tempLanguageList.add(languageName);
             }
-            choiceBoxLanguage.setItems(bookAttributes.languages);
+            choiceBoxLanguage.setItems(tempLanguageList);
         }
 
         public void createSeriesHashMap () throws Exception {
+        	
             int ID;
             String seriesName;
             CachedRowSet seriesList = connectionCommands.readDatabase(sqlCommands.selectAllSeries);
-//            ObservableList<String> series = FXCollections.observableArrayList();
-
+            System.out.println(seriesList);
+            bookAttributes.bidiMapSeries.clear();
+            bookAttributes.obvListSeries.clear();
+            tempSeriesList.clear();
+            choiceBoxSeries.setItems(blankList);
+            
             while (seriesList.next()) {
                 ID = seriesList.getInt(1);
                 seriesName = seriesList.getString(2);
                 bookAttributes.bidiMapSeries.put(ID, seriesName);
-                bookAttributes.series.add(seriesName);
+                tempSeriesList.add(seriesName);
             }
-            choiceBoxSeries.setItems(bookAttributes.series);
+            
+            choiceBoxSeries.setItems(tempSeriesList);
         }
         // Check to ensure that an apostraphe in the title is properly formatted
         public String checkForApostrophes(String text) {
@@ -589,12 +653,10 @@ public class AddBookController {
     		
     		if(string.contains("'")) {
     			location=string.indexOf("'");
+    			StringBuilder sb=new StringBuilder(string);
+        		sb.insert(location, "'");
+        		string=sb.toString();
     		}
-
-    		StringBuilder sb=new StringBuilder(string);
-    		sb.insert(location, "'");
-    		string=sb.toString();
-        	
         	return string;
         }
 

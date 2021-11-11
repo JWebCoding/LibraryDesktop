@@ -7,6 +7,7 @@ import Models.SQLCommands;
 import java.math.BigInteger;
 import javax.sql.rowset.CachedRowSet;
 import org.controlsfx.control.textfield.TextFields;
+import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 import javafx.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,10 +65,10 @@ public class detailsController {
 	public void populateGenreChoiceBoxes () {
         // The values in the choice box are set to null in the addNewGenre function.
         if(choiceBoxGenreType.getValue().equals("Fiction")){
-            choiceBoxGenreName.setItems(bookAttributes.FictionGenres);
+            choiceBoxGenreName.setItems(bookAttributes.obvListFictionGenres);
         }
         else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
-            choiceBoxGenreName.setItems(bookAttributes.NonFictionGenres);
+            choiceBoxGenreName.setItems(bookAttributes.obvListNonFictionGenres);
         }
     }
 	
@@ -129,16 +130,16 @@ public class detailsController {
     	}
     	
     	// Fill the choice boxes and auto-complete fields
-    	TextFields.bindAutoCompletion(textFieldSeries,bookAttributes.series);
-    	TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.authors);
-    	TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.publishers);
+    	TextFields.bindAutoCompletion(textFieldSeries,bookAttributes.obvListSeries);
+    	TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.obvListAuthors);
+    	TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.obvListPublishers);
     	
     	if(genreType==0) {
     		choiceBoxGenreType.setValue("Fiction");
-    		choiceBoxGenreName.setItems(bookAttributes.FictionGenres);
+    		choiceBoxGenreName.setItems(bookAttributes.obvListFictionGenres);
     	} else {
     		choiceBoxGenreType.setValue("Non-Fiction");
-    		choiceBoxGenreName.setItems(bookAttributes.NonFictionGenres);
+    		choiceBoxGenreName.setItems(bookAttributes.obvListNonFictionGenres);
     	}
     	
     	
@@ -269,6 +270,7 @@ public class detailsController {
     private String getNewBookInformation() {
     	// Get the updated information for the book
     	int authorID,publisherID,genreID,languageID,seriesID;
+    	title=textFieldTitle.getText();
     	authorID=bookAttributes.bidiMapAuthors.getKey(textFieldAuthor.getText());
     	publisherID=bookAttributes.bidiMapPublishers.getKey(textFieldPublisher.getText());
     	languageID=bookAttributes.bidiMapLanguages.getKey(textFieldLanguage.getText());
@@ -281,7 +283,6 @@ public class detailsController {
     	BigInteger isbn = new BigInteger(textFieldISBN.getText());
     	year=Integer.parseInt(textFieldCopyRight.getText());
     	pageCount=Integer.parseInt(textFieldPageCount.getText());
-    	seriesPart=Integer.parseInt(textFieldSeriesPart.getText());
     	if(textFieldSeriesPart.getText()!="") {
     		seriesPart=Integer.parseInt(textFieldSeriesPart.getText());
     	} else {
@@ -292,9 +293,12 @@ public class detailsController {
     	} else {
     		format=0;
     	}
+    	String query;
     	
-    	// Create an update query and return the result.
-    	String query=String.format(sqlCommands.updateBookInformation, authorID,publisherID,title,year,isbn,genreID,seriesID,seriesPart,format,pageCount,languageID,id );
+    	// Create an update query and return the result.	
+		query=String.format(sqlCommands.updateBookInformation, authorID,publisherID,title,year,isbn,genreID,seriesID,seriesPart,format,pageCount,languageID,id);
+
+
     	return query;
     }
     

@@ -6,3 +6,5 @@
 .idea
 /classes/
 LibraryDesktopApp.iml
+.settings/org.eclipse.jdt.core.prefs
+LibraryDesktopApp.iml
