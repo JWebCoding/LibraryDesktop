@@ -12,7 +12,7 @@ List of things I'd like to add.
   Too many to list
   - ~~Clean up buttons on search pane~~
   - Adjust layout and notifications on AddBookController
-  - ~~Add optiional middle name section for authors~~
+  - ~~Add optiional middle name section for obvListAuthors~~
   - etc etc
 
 ~~5 - Delete button for search page~~
