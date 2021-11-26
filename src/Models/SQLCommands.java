@@ -5,6 +5,8 @@ public class SQLCommands {
     public String selectAllBook="select * from library.book order by name;";
     public String selectAllAuthor="select * from library.author order by firstname;";
     public String selectAllGenre="select * from library.genre order by genre_name;";
+    public String selectFictionGenre="select * from library.genre where genre_type=0 order by genre_name;";
+    public String selectNonFictionGenre="select * from library.genre where genre_type=1 order by genre_name;";
     public String selectAllPublisher="select * from library.publisher order by publisher_name;";
     public String selectAllSeries="select * from library.series order by series_name;";
     public String selectAllUser="select * from library.user;";
