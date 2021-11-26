@@ -15,6 +15,8 @@ public class ConnectionCommands {
 	Statement statement=null;
 	PreparedStatement preparedStatement =null;
 	
+	ConnectionSettings connectionSettings=new ConnectionSettings();
+	
 	String serverURL;
 	String serverTimeZone;
 	String URL2;
@@ -68,14 +70,14 @@ public class ConnectionCommands {
 				}
 				// Assign the paramater to its appropriate setting.
 				switch (setting) {
-				case "serverURL": URL=param;
+				case "serverURL": connectionSettings.setURL(param);
 					URL2=URL;
 					break;
-				case "serverTimeZone": serverTimeZone=param;
+				case "serverTimeZone": connectionSettings.setServerTimeZone(param);
 					break;
-				case "username": username=param;
+				case "username": connectionSettings.setUsername(param);
 					break;
-				case "password": password=param;
+				case "password": connectionSettings.setPassword(param);
 					break;
 				default:
 					break;
@@ -88,7 +90,9 @@ public class ConnectionCommands {
 	
 	private void createServerConnection() {
 		// Create a connection to the server and test its validity
-		
+		URL=connectionSettings.getURL();
+		username=connectionSettings.getUsername();
+		password=connectionSettings.getPassword();
 		// Check if the connection values exist.
 		if(URL!=null||serverTimeZone!=""||username!=""||password!="") {
 			// Attempt to create a connection
@@ -103,7 +107,7 @@ public class ConnectionCommands {
 					System.err.println("Unable to establish a connection to the server.");
 				}
 				else {
-//					System.err.println("Connection to MYSQL server established!");
+
 				}
 			}
 		}
