@@ -7,17 +7,14 @@ import Models.SQLCommands;
 import java.math.BigInteger;
 import javax.sql.rowset.CachedRowSet;
 import org.controlsfx.control.textfield.TextFields;
-import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 import javafx.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.stage.*;
-import javafx.stage.Stage;
 
-public class detailsController {
+public class DetailsController {
 	
 	@FXML TextField textFieldTitle;
 	@FXML TextField textFieldSeries;
@@ -57,9 +54,14 @@ public class detailsController {
 	public void initialize() throws Exception{
 		ObservableList<String> genreTypes = FXCollections.observableArrayList("Fiction", "Non-Fiction");
 		choiceBoxGenreType.setItems(genreTypes);
-		connectionCommands.getConnectionSettings();
+		bookAttributes.createAuthorHashMap();
+		bookAttributes.createPublisherHashMap();
+		bookAttributes.createFictionHashMap();
+		bookAttributes.createNonFictionHashMap();
+		bookAttributes.createLanguageHashMap();
+		bookAttributes.createSeriesHashMap();
 		fillTextfields();
-//		populateGenreChoiceBoxes();
+		populateGenreChoiceBoxes();
 	}
 	
 	public void populateGenreChoiceBoxes () {
@@ -102,8 +104,9 @@ public class detailsController {
     }
     
     public void fillTextfields() throws Exception {
+    	genreType=null;
     	Book book = createBook();
-    	
+
     	// Fill in the majority of text boxes
     	textFieldTitle.setText(book.getTitle());
     	textFieldSeries.setText(book.getSeries());
@@ -133,16 +136,12 @@ public class detailsController {
     	TextFields.bindAutoCompletion(textFieldSeries,bookAttributes.obvListSeries);
     	TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.obvListAuthors);
     	TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.obvListPublishers);
-    	
+    	System.out.println(genreType);
     	if(genreType==0) {
     		choiceBoxGenreType.setValue("Fiction");
-    		choiceBoxGenreName.setItems(bookAttributes.obvListFictionGenres);
     	} else {
     		choiceBoxGenreType.setValue("Non-Fiction");
-    		choiceBoxGenreName.setItems(bookAttributes.obvListNonFictionGenres);
     	}
-    	
-    	
     }
     
     public void editTextfields() {
@@ -189,11 +188,9 @@ public class detailsController {
     	
     	//Set the "Format" buttons to the correct value
     	if(format==1) {
-    		System.out.println("Hard");
     		toggleButtonHardcover.setSelected(true);
     		toggleButtonPaperback.setSelected(false);
     	} else {
-    		System.out.println("Paper");
     		toggleButtonHardcover.setSelected(false);
     		toggleButtonPaperback.setSelected(true);
     	}
@@ -307,9 +304,5 @@ public class detailsController {
         labelNotification.setText(notification);
         labelNotification.setVisible(true);
     }
-//    @FXML
-//    public void closePane() {
-//    	Stage stage=(stage) buttonClose.getScene().getWindow();
-//    	stage.close();
-//    }
+
 }
