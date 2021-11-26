@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
-<AnchorPane prefHeight="450.0" prefWidth="563.0" styleClass="background" stylesheets="@styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.detailsController">
+<AnchorPane prefHeight="450.0" prefWidth="563.0" styleClass="background" stylesheets="@styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DetailsController">
    <children>
       <TextField editable="false" layoutX="7.0" layoutY="2.0" prefHeight="25.0" prefWidth="29.0" visible="false" />
       <Label layoutX="241.0" layoutY="24.0" styleClass="headerLabel" text="Details">
