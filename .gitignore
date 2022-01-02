@@ -1,10 +1,7 @@
-/target/
-.classpath
-.gitignore
 /misc/
-.project
-.idea
+/target/
 /classes/
-LibraryDesktopApp.iml
+.gitignore
+.idea
 .settings/org.eclipse.jdt.core.prefs
 LibraryDesktopApp.iml
