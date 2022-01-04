@@ -293,6 +293,7 @@ public class AddBookController {
 
             // Refresh the author hashmap & clear the fields
             bookAttributes.createAuthorHashMap();
+            bindTextfieldSuggestions();
             emptyAuthorFields();
         }
     }
@@ -342,6 +343,7 @@ public class AddBookController {
 
             // Refresh the publisher hashmap & clear the fields
             bookAttributes.createPublisherHashMap();
+            bindTextfieldSuggestions();
             emptyPublisherInformation();
         }
     }
@@ -388,7 +390,7 @@ public class AddBookController {
             showNotification(genreName + "\nhas been added.", notificationGreen);
 
             // Refresh genre hashmap
-            if(genreType==0) {
+            if(genreType==1) {
             	bookAttributes.createNonFictionHashMap();
             } else {
             	bookAttributes.createFictionHashMap();
@@ -421,9 +423,9 @@ public class AddBookController {
 
     private void emptyGenreInformation() {
     	textFieldGenreName.setText("");
-        choiceBoxNewGenreType.setValue("");
+        choiceBoxNewGenreType.setValue("Non-Fiction");
         query = "";
-        choiceBoxGenreName.getItems().clear();
+//        choiceBoxGenreName.getItems().clear();
         resetTextFieldEffects();
     }
     
@@ -441,6 +443,7 @@ public class AddBookController {
             // Reset obvListSeries box
             bookAttributes.createSeriesHashMap();
             emptySeriesInformation();
+            setChoiceBoxContents();
         }
     }
 
