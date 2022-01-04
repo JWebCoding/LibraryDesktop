@@ -30,7 +30,6 @@ public class BookAttributes {
     	// Declare Variables
     	String authorFirstName,authorMiddleName, authorLastName, authorFullName;
         int ID;
-        long start=0, end=0;
         ObservableList<String> tempAuthorList=FXCollections.observableArrayList();
         // Get the Cached Row Set for all Authors in the database
         CachedRowSet authorList = connectionCommands.readDatabase(sqlCommands.selectAllAuthor);
@@ -41,7 +40,6 @@ public class BookAttributes {
         
         // Combine the sperate parts of the names from the cached rowset
         try {
-        	start=System.currentTimeMillis();
         	while (authorList.next()) {
         		// Get the ID and name of the author
                 ID = authorList.getInt(1);
@@ -59,7 +57,6 @@ public class BookAttributes {
                 
         	}
         	obvListAuthors.addAll(tempAuthorList);
-        	end=System.currentTimeMillis();
                 
         } catch(Exception e) {
         	printRowSetErrorMessage("authorList", e);
@@ -69,7 +66,6 @@ public class BookAttributes {
     
     public void createPublisherHashMap() {
     	int ID;
-    	long start=0, end=0;
         String publisherName;
         ObservableList<String> tempPublisherList=FXCollections.observableArrayList();
         // Get the Cached Row Set for all Authors in the database
@@ -80,7 +76,6 @@ public class BookAttributes {
         obvListPublishers.clear();
         
         try {
-        	start=System.currentTimeMillis();
         	// Get the contents of publisherName
             while (publisherList.next()) {
                 ID = publisherList.getInt(1);
@@ -92,7 +87,6 @@ public class BookAttributes {
                 
             }
             obvListPublishers.addAll(tempPublisherList);
-            end=System.currentTimeMillis();
             
         } catch(Exception e) {
         	printRowSetErrorMessage("publisherList", e);
@@ -127,12 +121,13 @@ public class BookAttributes {
     public void createNonFictionHashMap() {
     	int ID;
         String genreName;
-        CachedRowSet nonFictionGenreList = connectionCommands.readDatabase(sqlCommands.selectNonFictionGenre);
 
         // Clear the contents of the relvant hash-maps and observable lists.
         bidiMapNonFictionGenres.clear();
         obvListNonFictionGenres.clear();
-        
+
+        CachedRowSet nonFictionGenreList = connectionCommands.readDatabase(sqlCommands.selectNonFictionGenre);
+
         try {
         	// Get the contents of fictionGenreList
         	while (nonFictionGenreList.next()) {
