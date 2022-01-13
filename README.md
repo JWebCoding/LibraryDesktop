@@ -3,9 +3,11 @@
 Overview:
 
   This program's primary purpose is to streamline the process of adding books to a relational database of books that i happen to own. 
-  The end goal is to make the process of mainting a complete record of my personal collection much easier than it currently is. 
+  The end goal is to make the process of maintaining a complete record of my personal collection much easier than it currently is. 
   
-  The program is currently in a beta state and doesn't have the statistics page available just yet. The rest of the code works and is stable.
+  The program is currently in a feature complete state* but doesn't have the statistics page available just yet. The rest of the code works and is stable.
+
+  By this, the author means that the program currently meets the pre-established goals that were in mind when intial work began. More features are in mind but most work on the application form now on will be bug fixes.
 
 ---------------------------
 Major libraries used:
