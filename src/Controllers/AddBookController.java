@@ -93,6 +93,8 @@ public class AddBookController {
     @FXML Label labelNotificationGenre;
     @FXML Label labelNotificationLanguage;
 
+    @FXML CheckBox checkBoxSaveData;
+
     // Misc elements
     @FXML
     Label labelNotification;
@@ -181,9 +183,11 @@ public class AddBookController {
             query = String.format(sqlCommands.insertIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, seriesID);
             try {
             	connectionCommands.writeDatabase(query);
-            	emptyBookInformation();
+                if(!checkBoxSaveData.isSelected()){
+                    emptyBookInformation();
+                    setValues();
+                }
                 resetTextFieldEffects();
-                setValues();
                 showNotification(title + "\nwas added successfully.", notificationGreen);
             } catch(Exception e) {
             	System.err.print("Unable to add book");
@@ -195,11 +199,11 @@ public class AddBookController {
 
     private boolean validateBookInformation() {
         int errorCount = 0;
-        if (textFieldTitle.getText().isBlank()) {
+        if (textFieldTitle.getText().isEmpty()) {
         	labelNotificationTitle.setVisible(true);
             errorCount++;
         }
-        if (textFieldISBN.getText().isBlank() || textFieldISBN.getText().length()>13 || textFieldISBN.getText().matches("[0-9]+")==false) {
+        if (textFieldISBN.getText().isEmpty() || textFieldISBN.getText().length()>13 || textFieldISBN.getText().matches("[0-9]+")==false) {
         	labelNotificationISBN.setVisible(true);
             errorCount++;
         }
@@ -209,7 +213,7 @@ public class AddBookController {
                 errorCount++;
         	}
         }
-        if (textFieldPages.getText().isBlank() || textFieldPages.getText().matches("[0-9]+")==false) {
+        if (textFieldPages.getText().isEmpty() || textFieldPages.getText().matches("[0-9]+")==false) {
         	labelNotificationPages.setVisible(true);
             errorCount++;
         }
