@@ -5,3 +5,4 @@
 .idea
 .settings/org.eclipse.jdt.core.prefs
 LibraryDesktopApp.iml
+src/META-INF/MANIFEST.MF
