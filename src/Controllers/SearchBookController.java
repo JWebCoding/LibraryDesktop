@@ -229,7 +229,7 @@ public class SearchBookController {
 	    		root=FXMLLoader.load(getClass().getClassLoader().getResource("FXML/details_edit.fxml"));
 	    		Stage detailStage=new Stage();
 	    		detailStage.setTitle("Book Details");
-	    		detailStage.setScene(new Scene(root,563,450));
+	    		detailStage.setScene(new Scene(root,563,539));
 	    		detailStage.show();
 	    	} catch(IOException e){
 	    		e.printStackTrace();

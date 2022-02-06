@@ -16,6 +16,7 @@ public class Book {
     int edition;
     int pageCount;
     String language;
+    String notes;
 
     public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre){
         this.id=id;
@@ -34,7 +35,7 @@ public class Book {
     }
 
     // Constructor for all parts of a book. Use if detailed information is needed
-    public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount){
+    public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount,String notes){
         this.id=id;
         this.title=title;
         this.series=series;
@@ -44,7 +45,6 @@ public class Book {
         } else {
         	this.author=firstName+" "+middleName+" "+lastName;
         }
-        
         this.publisher=publisher;
         this.isbn=isbn;
         this.copyright=copyright;
@@ -53,6 +53,7 @@ public class Book {
         this.language=language;
         this.format=determineFormat(format);
         this.pageCount=pageCount;
+        this.notes=notes;
     }
     // Empty Constructor
     public Book(){ }
@@ -92,6 +93,7 @@ public class Book {
     public void setLanguage(String language){ this.language=language;}
     public void setFormat(String format){ this.format=format; }
     public void setSeries(String series){ this.series=series; }
+    public void setNotes(String notes){ this.notes=notes;}
 
     public int getId() { return id; }
     public String getTitle(){ return title; }
@@ -106,4 +108,5 @@ public class Book {
     public String getSeries(){ return series; }
     public Integer getSeriesPart() {return seriesPart;}
     public int getPageCount() { return pageCount; }
+    public String getNotes() { return notes; }
 }

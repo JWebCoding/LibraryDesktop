@@ -27,11 +27,11 @@ public class DetailsController {
 	@FXML TextField textFieldPageCount;
 	@FXML TextField textFieldPublisher;
 	@FXML TextField textFieldGenre;
+	@FXML TextArea textAreaNotes;
 	@FXML Button buttonEdit;
 	@FXML Button buttonSave;
 	@FXML Button buttonClose;
 	@FXML Button buttonDiscard;
-	@FXML Button buttonSetFinished;
 	@FXML Label labelNotification;
 	@FXML
 	ToggleButton toggleButtonPaperback;
@@ -45,8 +45,8 @@ public class DetailsController {
 	ConnectionCommands connectionCommands=new ConnectionCommands();
 	SQLCommands sqlCommands=new SQLCommands();
 	BookAttributes bookAttributes=new BookAttributes();
-	String title,firstName,middleName,lastName,isbn,series,publisher,genre,language,searchText,notification;
-    String tempTitle,tempAuthor,tempISBN,tempYear,tempPageCount,tempGenre,tempSeries,tempSeriesPart,tempPublisher,tempLanguage;
+	String title,firstName,middleName,lastName,isbn,series,publisher,genre,language,notes,searchText,notification;
+    String tempTitle,tempAuthor,tempISBN,tempYear,tempPageCount,tempGenre,tempSeries,tempSeriesPart,tempPublisher,tempLanguage,tempNotes;
     String notificationGreen="#00ff00",notificationRed="#ff0000";
     Integer id,year,format,edition,finished,pageCount,genreType,seriesPart;
 	CachedRowSet bookQuery=null;
@@ -99,8 +99,9 @@ public class DetailsController {
         edition=bookQuery.getInt("edition");
         language=bookQuery.getString("language_name");
         pageCount=bookQuery.getInt("pages");
+		notes=bookQuery.getString("notes");
         
-        return new Book(id,title,series,seriesPart,firstName,middleName,lastName,publisher,isbn,year,genre,edition,language,format,pageCount);
+        return new Book(id,title,series,seriesPart,firstName,middleName,lastName,publisher,isbn,year,genre,edition,language,format,pageCount,notes);
     }
     
     public void fillTextfields() throws Exception {
@@ -117,6 +118,7 @@ public class DetailsController {
     	textFieldPageCount.setText(String.valueOf(book.getPageCount()));
     	textFieldLanguage.setText(book.getLanguage());
     	textFieldGenre.setText(book.getGenre());
+		textAreaNotes.setText(book.getNotes());
     	
     	//Logic for the format, finished and series part textboxes.
     	// Format
@@ -162,6 +164,7 @@ public class DetailsController {
     	textFieldCopyRight.setEditable(true);
     	textFieldPageCount.setEditable(true);
     	textFieldLanguage.setEditable(true);
+		textAreaNotes.setEditable(true);
     	
     	// Changes the visibility of certain objects
     	textFieldGenre.setVisible(false);
@@ -185,6 +188,7 @@ public class DetailsController {
     	}
     	tempISBN=textFieldISBN.getText();
     	tempPageCount=textFieldPageCount.getText();
+		tempNotes=textAreaNotes.getText();
     	
     	//Set the "Format" buttons to the correct value
     	if(format==1) {
@@ -209,18 +213,18 @@ public class DetailsController {
     	} catch(Exception e) {
     		System.err.println("Error! Unable to update book information!\nError occured in... \nClass: detailsController\nMethod: Save Changes"+e);
     	} finally {
-    		
+			// Re-fill the texfields so that they now contain the most up to date data from the server.
+			try {
+				fillTextfields();
+				showNotification("Book info saved!", notificationGreen);
+			} catch(Exception e) {
+				showNotification("Book info not saved!", notificationRed);
+				System.err.println("Error! Unable to fill book information!\nError occured in... \nClass: detailsController\nMethod: Save Changes"+e);
+			} finally {
+
+			}
     	}
-    	// Re-fill the texfields so that they now contain the most up to date data from the server.
-    	try {
-    		fillTextfields();
-    		showNotification("Book info saved!", notificationGreen);
-    	} catch(Exception e) {
-    		showNotification("Book info not saved!", notificationRed);
-    		System.err.println("Error! Unable to fill book information!\nError occured in... \nClass: detailsController\nMethod: Save Changes"+e);
-    	} finally {
-    		
-    	}
+
     }
     
     public void discardChanges() {
@@ -236,6 +240,7 @@ public class DetailsController {
     	textFieldCopyRight.setText(tempYear);
     	textFieldPageCount.setText(tempPageCount);
     	textFieldLanguage.setText(tempLanguage);
+		textAreaNotes.setText(tempNotes);
     }
     
     private void setFieldsToNotEditable() {
@@ -255,6 +260,7 @@ public class DetailsController {
     	textFieldCopyRight.setEditable(false);
     	textFieldPageCount.setEditable(false);
     	textFieldLanguage.setEditable(false);
+		textAreaNotes.setEditable(false);
     	// Changes the visibility of certain objects
     	textFieldGenre.setVisible(true);
     	choiceBoxGenreName.setVisible(false);
@@ -280,6 +286,7 @@ public class DetailsController {
     	BigInteger isbn = new BigInteger(textFieldISBN.getText());
     	year=Integer.parseInt(textFieldCopyRight.getText());
     	pageCount=Integer.parseInt(textFieldPageCount.getText());
+		notes=textAreaNotes.getText();
     	if(textFieldSeriesPart.getText()!="") {
     		seriesPart=Integer.parseInt(textFieldSeriesPart.getText());
     	} else {
@@ -293,8 +300,7 @@ public class DetailsController {
     	String query;
     	
     	// Create an update query and return the result.	
-		query=String.format(sqlCommands.updateBookInformation, authorID,publisherID,title,year,isbn,genreID,seriesID,seriesPart,format,pageCount,languageID,id);
-
+		query=String.format(sqlCommands.updateBookInformation, authorID,publisherID,title,year,isbn,genreID,seriesID,seriesPart,format,pageCount,languageID,notes,id);
 
     	return query;
     }

@@ -17,6 +17,15 @@
 
 }
 
+.text-area, .content {
+        -fx-background-color: #0748b0;
+        -fx-text-fill: goldenrod;
+        -fx-text-inner-color: #daa520;
+        -jfx-focus-color: goldenrod;
+        -jfx-unfocus-color: goldenrod;
+        -fx-border-radius: 60px;
+}
+
 #checkbox {
     -fx-color: #0748b0;
     -fx-inner-border: #0748b0;
