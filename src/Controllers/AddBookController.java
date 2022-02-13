@@ -104,9 +104,6 @@ public class AddBookController {
     // Declare variables
     String query;
     String notificationGreen="#00ff00",notificationRed="#ff0000";
-
-    // Arrays
-   String arrayAuthors[];
    
     public void initialize() throws Exception {
     	
@@ -132,7 +129,7 @@ public class AddBookController {
 
     public void addBook() throws Exception {
     	Integer authorID,publisherID,pages,edition,copyright,genreID=0,languageID,seriesID,seriesPart,format=null;
-    	String title;
+    	String title,notes;
     	
         // Check if all fields have content
         if (!validateBookInformation()) {
@@ -147,7 +144,7 @@ public class AddBookController {
             copyright = Integer.parseInt(textFieldCopyright.getText());
             languageID = bookAttributes.bidiMapLanguages.getKey(choiceBoxLanguage.getValue());
             seriesID = bookAttributes.bidiMapSeries.getKey(choiceBoxSeries.getValue());
-            
+            notes="";
             // If statements for the values that need them
             if(textFieldISBN.getText().equals("null")){
                 BigInteger isbn = new BigInteger("null");
@@ -180,7 +177,7 @@ public class AddBookController {
                 format = 0;
             }
 
-            query = String.format(sqlCommands.insertIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, seriesID);
+            query = String.format(sqlCommands.insertIntoBook, authorID, publisherID, title, copyright, isbn, edition, genreID, seriesPart, format, pages, languageID, seriesID, notes);
             try {
             	connectionCommands.writeDatabase(query);
                 if(!checkBoxSaveData.isSelected()){
