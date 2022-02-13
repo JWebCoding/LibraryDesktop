@@ -208,6 +208,7 @@ public class DetailsController {
     	textFieldGenre.setText(choiceBoxGenreName.getValue());
     	String updateQuery=getNewBookInformation();
     	// Attempt to write the new values to the database
+		System.out.println(updateQuery);
     	try {
     		connectionCommands.writeDatabase(updateQuery);
     	} catch(Exception e) {
@@ -274,6 +275,7 @@ public class DetailsController {
     	// Get the updated information for the book
     	int authorID,publisherID,genreID,languageID,seriesID;
     	title=textFieldTitle.getText();
+		title=checkForApostrophes(title);
     	authorID=bookAttributes.bidiMapAuthors.getKey(textFieldAuthor.getText());
     	publisherID=bookAttributes.bidiMapPublishers.getKey(textFieldPublisher.getText());
     	languageID=bookAttributes.bidiMapLanguages.getKey(textFieldLanguage.getText());
@@ -287,11 +289,11 @@ public class DetailsController {
     	year=Integer.parseInt(textFieldCopyRight.getText());
     	pageCount=Integer.parseInt(textFieldPageCount.getText());
 		notes=textAreaNotes.getText();
-    	if(textFieldSeriesPart.getText()!="") {
-    		seriesPart=Integer.parseInt(textFieldSeriesPart.getText());
-    	} else {
-    		seriesPart=null;
-    	}
+		if (textFieldSeriesPart.getText().isEmpty()) {
+			seriesPart = null;
+		} else {
+			seriesPart = Integer.parseInt(textFieldSeriesPart.getText());
+		}
     	if(toggleButtonHardcover.isSelected()) {
     		format=1;
     	} else {
@@ -304,6 +306,18 @@ public class DetailsController {
 
     	return query;
     }
+	private String checkForApostrophes(String text) {
+		String string=text;
+		int location=0;
+
+		if(string.contains("'")) {
+			location=string.indexOf("'");
+			StringBuilder sb=new StringBuilder(string);
+			sb.insert(location, "'");
+			string=sb.toString();
+		}
+		return string;
+	}
     
     public void showNotification(String notification,String color) {
     	labelNotification.setTextFill(Color.web(color));

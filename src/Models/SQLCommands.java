@@ -22,10 +22,10 @@ public class SQLCommands {
     public String insertIntoGenre="insert into library.genre (genre_name, genre_type) values ('%s',%d);";
     public String insertIntoSeries="insert into library.series (series_name) values ('%s');";
     public String insertIntoLanguage="insert into library.language (language_Name, language_suffix) values ('%s','%s');";
-    public String insertIntoBook="insert into library.book (authorID, publisherID, title, copyright, isbn, edition, genreID, series_part, format, pages, languageID, seriesID) VALUES (%d,%d,'%s',%d,%d,%d,%d,%d,%d,%d,%d,%d);";
+    public String insertIntoBook="insert into library.book (authorID, publisherID, title, copyright, isbn, edition, genreID, series_part, format, pages, languageID, seriesID, notes) VALUES (%d,%d,'%s',%d,%d,%d,%d,%d,%d,%d,%d,%d,'%s');";
     public String updateBookToFinished="update library.book set finished = 1 where bookID= '%s';";
     // Remove statements
     public String removeBookFromDatabase="Delete from library.book where bookID='%s';";
     // Update statements
-    public String updateBookInformation="update library.book set authorID='%d', publisherID='%d', title='%s', copyright='%d', isbn='%d', genreID='%d',seriesID='%d',series_part=%d,format='%d',pages='%d',languageID='%d',notes='%s' where bookID='%d';";
+    public String updateBookInformation="update library.book set authorID=%d, publisherID=%d, title='%s', copyright=%d, isbn=%d, genreID=%d, seriesID=%d, series_part=%d, format=%d, pages=%d, languageID=%d, notes='%s' where bookID=%d;";
 }
