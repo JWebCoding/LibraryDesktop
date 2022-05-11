@@ -1,6 +1,5 @@
 List of things I'd like to add.
 
-=====================
 == Very Important! ==
 =====================
 This entire program is in need of a full architectural re-work. This will happen before any other additions are made.
