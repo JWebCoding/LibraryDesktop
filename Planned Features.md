@@ -1,5 +1,11 @@
 List of things I'd like to add.
 
+== Very Important! ==
+=====================
+This entire program is in need of a full architectural re-work. This will happen before any other additions are made.
+Current priority is on the website though research is being done into how to properly structure this application.
+=====================
+
 1 - MarcXML Record import. 
 
 2 - Statistics page.
