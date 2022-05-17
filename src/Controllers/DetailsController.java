@@ -87,9 +87,9 @@ public class DetailsController {
         series=bookQuery.getString("series_name");
         seriesPart=bookQuery.getInt("series_part");
         if(seriesPart==0) {seriesPart=null;}
-        firstName=bookQuery.getString("firstName");
-        middleName=bookQuery.getString("middleName");
-        lastName=bookQuery.getString("lastName");
+        firstName=bookQuery.getString("first_name");
+        middleName=bookQuery.getString("middle_name");
+        lastName=bookQuery.getString("last_name");
         publisher=bookQuery.getString("publisher_name");
         isbn=bookQuery.getString("isbn");
         year=bookQuery.getInt("copyright");

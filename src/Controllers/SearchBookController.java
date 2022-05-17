@@ -79,9 +79,9 @@ public class SearchBookController {
         if(seriesPart==0) {
         	seriesPart=null;
         }
-        firstName=bookCollection.getString("firstName");
-        middleName=bookCollection.getString("middleName");
-        lastName=bookCollection.getString("lastName");
+        firstName=bookCollection.getString("first_name");
+        middleName=bookCollection.getString("middle_name");
+        lastName=bookCollection.getString("last_name");
         publisher=bookCollection.getString("publisher_name");
         isbn=bookCollection.getString("isbn");
         year=bookCollection.getInt("copyright");
