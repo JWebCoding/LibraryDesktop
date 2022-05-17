@@ -1,8 +1,11 @@
 /misc/
+/bin/
 /target/
 /classes/
 .gitignore
 .idea
 .settings/org.eclipse.jdt.core.prefs
+.classpath
+.project
 LibraryDesktopApp.iml
 src/META-INF/MANIFEST.MF
