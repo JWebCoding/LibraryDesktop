@@ -1,4 +1,4 @@
-package Models;
+package models;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
@@ -13,7 +13,6 @@ public class ConnectionCommands {
 	CachedRowSet cachedRowSet=null;
 	ResultSet resultSet=null;
 	Statement statement=null;
-	PreparedStatement preparedStatement =null;
 	
 	ConnectionSettings connectionSettings=new ConnectionSettings();
 	
@@ -125,37 +124,27 @@ public class ConnectionCommands {
 		}
 	}
 	
-	private void createCachedRowSet() {
+	private void createCachedRowSet(CallableStatement callableStatement) throws SQLException {
 		// Create a resultSet from the preparedStatement and populate a cached rowset with the data.
 		try {
-			resultSet=preparedStatement.executeQuery();
+			resultSet=callableStatement.executeQuery();
 			RowSetFactory factory = RowSetProvider.newFactory();
 			cachedRowSet = factory.createCachedRowSet();
 			cachedRowSet.populate(resultSet);
 		} catch(Exception e) {
-			System.err.println("Unable to create a CachedRowSet.");
+			throw new SQLException(e);
 		}
-		
-	}
-	
-	private void createPreparedStatement(String query) {
-		try {
-			preparedStatement=connection.prepareStatement(query);
-		} catch(Exception e) {
-			System.err.println("Unable to create PreparedStatement.");
-		}
-		
+
 	}
 	
 	public void testServerConnection() {
 		createServerConnection();
 	}
 	
-	public void writeDatabase(String query) {
+	public void writeDatabase(CallableStatement query) {
 		createServerConnection();
-		createPreparedStatement(query);
 		try {
-			int row=preparedStatement.executeUpdate();
+			query.executeUpdate();
 		} catch(Exception e) {
 			System.err.println("Unable to execute update query.");
 			e.printStackTrace();
@@ -163,10 +152,9 @@ public class ConnectionCommands {
 		
 	}
 	
-	public CachedRowSet readDatabase(String query) {
+	public CachedRowSet readDatabase(CallableStatement query) throws SQLException {
 		createServerConnection();
-		createPreparedStatement(query);
-		createCachedRowSet();
+		createCachedRowSet(query);
 		return cachedRowSet;
 	}
 	
