@@ -1,4 +1,4 @@
-package Models;
+package models;
 
 public class Book {
 	static int bookID;
@@ -18,6 +18,7 @@ public class Book {
     String language;
     String notes;
 
+    // Basic constructor with standard arguments. May be obsolete but withholding judgment for now.
     public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre){
         this.id=id;
         this.title=title;
@@ -34,7 +35,7 @@ public class Book {
         this.genre=genre;
     }
 
-    // Constructor for all parts of a book. Use if detailed information is needed
+    // Constructor for all parts of a book. Use for the detailed information modal
     public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount,String notes){
         this.id=id;
         this.title=title;

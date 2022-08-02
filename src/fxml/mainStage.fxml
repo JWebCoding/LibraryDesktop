@@ -7,19 +7,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainStageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainStageController">
    <top>
       <AnchorPane prefHeight="80.0" prefWidth="950.0" styleClass="top-banner" stylesheets="@styleSheet.css" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="buttonAddBooks" layoutX="434.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenAdd" prefHeight="50.0" prefWidth="125.0" styleClass="top-banner-button" text="Add Books">
+            <Button fx:id="buttonAddBooks" layoutX="604.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenAdd" prefHeight="50.0" prefWidth="125.0" styleClass="top-banner-button" text="Add Books">
                <font>
                   <Font name="SansSerif Regular" size="13.0" />
                </font></Button>
-            <Button fx:id="buttonLibraryStats" layoutX="771.0" layoutY="15.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="168.0" styleClass="top-banner-button" text="Library Statistics" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="Arundina Serif Bold" size="13.0" />
-               </font></Button>
-            <Button fx:id="buttonSearchEdit" layoutX="565.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenSearch" prefHeight="50.0" prefWidth="200.0" styleClass="top-banner-button" text="Search Books &amp; Edit" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="buttonSearchEdit" layoutX="737.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenSearch" prefHeight="50.0" prefWidth="200.0" styleClass="top-banner-button" text="Search Books &amp; Edit" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Arundina Serif Bold" size="13.0" />
                </font></Button>

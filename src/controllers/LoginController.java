@@ -1,11 +1,11 @@
-package Controllers;
+package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
 
-import Models.ConnectionCommands;
+import models.ConnectionCommands;
 
 public class LoginController {
     MainStageController mainStageController=MainStageController.getInstance();
