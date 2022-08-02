@@ -1,13 +1,14 @@
-package Models;
+package models;
 import org.apache.commons.collections4.bidimap.*;
 import javax.sql.rowset.CachedRowSet;
 import org.apache.commons.collections4.BidiMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+
 public class BookAttributes {
-	ConnectionCommands connectionCommands =new ConnectionCommands();
-	SQLCommands sqlCommands = new SQLCommands();
+    QueryFactory queryFactory = new QueryFactory();
 	
 	// Lists
     public ObservableList<String> obvListAuthors = FXCollections.observableArrayList();
@@ -16,7 +17,6 @@ public class BookAttributes {
 	public ObservableList<String> obvListNonFictionGenres = FXCollections.observableArrayList();
     public ObservableList<String> obvListLanguages = FXCollections.observableArrayList();
     public ObservableList<String> obvListSeries = FXCollections.observableArrayList();
-    public ObservableList<String> obvListEmptyList = FXCollections.observableArrayList();
 
     // Hashmaps
     public BidiMap<Integer, String> bidiMapAuthors = new TreeBidiMap<>();
@@ -26,23 +26,23 @@ public class BookAttributes {
     public BidiMap<Integer, String> bidiMapLanguages = new TreeBidiMap<>();
     public BidiMap<Integer, String> bidiMapSeries = new TreeBidiMap<>();
     
-    public void createAuthorHashMap() {
+    public void createAuthorHashMap() throws SQLException {
     	// Declare Variables
     	String authorFirstName,authorMiddleName, authorLastName, authorFullName;
-        int ID;
+        int id;
         ObservableList<String> tempAuthorList=FXCollections.observableArrayList();
         // Get the Cached Row Set for all Authors in the database
-        CachedRowSet authorList = connectionCommands.readDatabase(sqlCommands.selectAllAuthor);
+        CachedRowSet authorList = queryFactory.readFromDatabase("author");
 
-        // Clear the contents of the relvant hash-maps and observable lists.
+        // Clear the contents of the relevant hash-maps and observable lists.
         bidiMapAuthors.clear();
         obvListAuthors.clear();
         
-        // Combine the sperate parts of the names from the cached rowset
+        // Combine the seperate parts of the names from the cached rowset
         try {
         	while (authorList.next()) {
-        		// Get the ID and name of the author
-                ID = authorList.getInt(1);
+        		// Get the id and name of the author
+                id = authorList.getInt(1);
                 authorFirstName = authorList.getString(2);
                 authorMiddleName=authorList.getString(3);
                 authorLastName = authorList.getString(4);
@@ -53,23 +53,22 @@ public class BookAttributes {
                 }
                 // Add author to hashmap and list
                 tempAuthorList.add(authorFullName);
-                bidiMapAuthors.put(ID, authorFullName);
+                bidiMapAuthors.put(id, authorFullName);
                 
         	}
         	obvListAuthors.addAll(tempAuthorList);
                 
         } catch(Exception e) {
         	printRowSetErrorMessage("authorList", e);
-        } 
-//        System.out.println(end-start);
+        }
     }
     
-    public void createPublisherHashMap() {
-    	int ID;
+    public void createPublisherHashMap() throws SQLException {
+    	int id;
         String publisherName;
         ObservableList<String> tempPublisherList=FXCollections.observableArrayList();
         // Get the Cached Row Set for all Authors in the database
-        CachedRowSet publisherList = connectionCommands.readDatabase(sqlCommands.selectAllPublisher);
+        CachedRowSet publisherList = queryFactory.readFromDatabase("publisher");
 
         // Clear the contents of the relvant hash-maps, observable lists and choice-boxes.
         bidiMapPublishers.clear();
@@ -78,12 +77,12 @@ public class BookAttributes {
         try {
         	// Get the contents of publisherName
             while (publisherList.next()) {
-                ID = publisherList.getInt(1);
+                id = publisherList.getInt(1);
                 publisherName = publisherList.getString(2);
                 
                 // Add publisher to hashmap and list
                 tempPublisherList.add(publisherName);
-                bidiMapPublishers.put(ID, publisherName);
+                bidiMapPublishers.put(id, publisherName);
                 
             }
             obvListPublishers.addAll(tempPublisherList);
@@ -91,62 +90,48 @@ public class BookAttributes {
         } catch(Exception e) {
         	printRowSetErrorMessage("publisherList", e);
         }
-//        System.out.println(end-start);
     }
-    
-    public void createFictionHashMap() {
-    	int ID;
+
+    public void createGenreHashMaps() throws SQLException {
+        int id;
+        int genreType;
         String genreName;
-        CachedRowSet fictionGenreList = connectionCommands.readDatabase(sqlCommands.selectFictionGenre);
+
+        CachedRowSet genreList = queryFactory.readFromDatabase("genre");
 
         // Clear the contents of the relvant hash-maps and observable lists.
         bidiMapFictionGenres.clear();
         obvListFictionGenres.clear();
-        
-        try {
-        	// Get the contents of fictionGenreList
-        	while (fictionGenreList.next()) {
-                ID = fictionGenreList.getInt(1);
-                genreName = fictionGenreList.getString(2);
-                
-                // Add genre to hashmap and list
-                bidiMapFictionGenres.put(ID,genreName); 
-                obvListFictionGenres.add(genreName);
-        	}
-        } catch(Exception e) {
-        	printRowSetErrorMessage("fictionGenreList", e);
-        }
-    }
-    
-    public void createNonFictionHashMap() {
-    	int ID;
-        String genreName;
-
-        // Clear the contents of the relvant hash-maps and observable lists.
         bidiMapNonFictionGenres.clear();
         obvListNonFictionGenres.clear();
 
-        CachedRowSet nonFictionGenreList = connectionCommands.readDatabase(sqlCommands.selectNonFictionGenre);
-
-        try {
-        	// Get the contents of fictionGenreList
-        	while (nonFictionGenreList.next()) {
-                ID = nonFictionGenreList.getInt(1);
-                genreName = nonFictionGenreList.getString(2);
-                
-                // Add genre to hashmap and list
-                bidiMapNonFictionGenres.put(ID,genreName); 
-                obvListNonFictionGenres.add(genreName);
-        	}
-        } catch(Exception e) {
-        	printRowSetErrorMessage("nonFictionGenreList", e);
+        // Iterate through the cachedRowSet and put each genre into it's respective map and list.
+        try{
+            while (genreList.next()){
+                id = genreList.getInt("genreid");
+                genreType = genreList.getInt("genre_type");
+                genreName = genreList.getString("genre_name");
+                // Non-fiction=1 and Fiction=0
+                if(genreType==1){
+                    // Add genre to hashmap and list
+                    bidiMapNonFictionGenres.put(id,genreName);
+                    obvListNonFictionGenres.add(genreName);
+                } else {
+                    // Add genre to hashmap and list
+                    bidiMapFictionGenres.put(id,genreName);
+                    obvListFictionGenres.add(genreName);
+                }
+            }
+        } catch(Exception e){
+            printRowSetErrorMessage("fictionGenreList", e);
         }
     }
     
-    public void createLanguageHashMap() {
-    	int ID;
+    
+    public void createLanguageHashMap() throws SQLException {
+    	int id;
         String languageName;
-        CachedRowSet languageList = connectionCommands.readDatabase(sqlCommands.selectAllLanguage);
+        CachedRowSet languageList = queryFactory.readFromDatabase("language");
 
         // Clear the contents of the relvant hash-maps and observable lists.
         bidiMapLanguages.clear();
@@ -155,11 +140,11 @@ public class BookAttributes {
         try {
         	// Get the contents of language list
         	while (languageList.next()) {
-                ID = languageList.getInt(1);
+                id = languageList.getInt(1);
                 languageName = languageList.getString(2);
                 
                 
-                bidiMapLanguages.put(ID, languageName);
+                bidiMapLanguages.put(id, languageName);
                 obvListLanguages.add(languageName);
             }
         } catch(Exception e) {
@@ -167,19 +152,19 @@ public class BookAttributes {
         }     
     }
     
-    public void createSeriesHashMap() {
-    	int ID;
+    public void createSeriesHashMap() throws SQLException {
+    	int id;
         String seriesName;
-        CachedRowSet seriesList = connectionCommands.readDatabase(sqlCommands.selectAllSeries);
+        CachedRowSet seriesList = queryFactory.readFromDatabase("series");
         bidiMapSeries.clear();
         obvListSeries.clear();
 
         try {
         	while (seriesList.next()) {
-                ID = seriesList.getInt(1);
+                id = seriesList.getInt(1);
                 seriesName = seriesList.getString(2);
                 
-                bidiMapSeries.put(ID, seriesName);
+                bidiMapSeries.put(id, seriesName);
                 obvListSeries.add(seriesName);
         	}
         } catch(Exception e) {
@@ -193,55 +178,27 @@ public class BookAttributes {
     }
     
     private void printLists(int selection) {
-    	switch (selection) {
-		case 1: 
-			System.out.println(obvListAuthors.toString());
-			break;
-		case 2: 
-			System.out.println(obvListPublishers.toString());
-			break;
-		case 3: 
-			System.out.println(obvListFictionGenres.toString());
-			break;
-		case 4: 
-			System.out.println(obvListNonFictionGenres.toString());
-			break;
-		case 5: 
-			System.out.println(obvListLanguages.toString());
-			break;
-		case 6: 
-			System.out.println(obvListSeries.toString());
-			break;
-		
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + selection);
-		}
+        switch (selection) {
+            case 1 -> System.out.println(obvListAuthors.toString());
+            case 2 -> System.out.println(obvListPublishers.toString());
+            case 3 -> System.out.println(obvListFictionGenres.toString());
+            case 4 -> System.out.println(obvListNonFictionGenres.toString());
+            case 5 -> System.out.println(obvListLanguages.toString());
+            case 6 -> System.out.println(obvListSeries.toString());
+            default -> throw new IllegalArgumentException("Unexpected value: " + selection);
+        }
     }
     
     private void printHashMap(int selection) {
-    	switch (selection) {
-		case 1: 
-			System.out.println(bidiMapAuthors.toString());
-			break;
-		case 2: 
-			System.out.println(bidiMapPublishers.toString());
-			break;
-		case 3: 
-			System.out.println(bidiMapFictionGenres.toString());
-			break;
-		case 4: 
-			System.out.println(bidiMapFictionGenres.toString());
-			break;
-		case 5: 
-			System.out.println(bidiMapLanguages.toString());
-			break;
-		case 6: 
-			System.out.println(bidiMapSeries.toString());
-			break;
-		
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + selection);
-		}
+        switch (selection) {
+            case 1 -> System.out.println(bidiMapAuthors.toString());
+            case 2 -> System.out.println(bidiMapPublishers.toString());
+            case 3 -> System.out.println(bidiMapNonFictionGenres.toString());
+            case 4 -> System.out.println(bidiMapFictionGenres.toString());
+            case 5 -> System.out.println(bidiMapLanguages.toString());
+            case 6 -> System.out.println(bidiMapSeries.toString());
+            default -> throw new IllegalArgumentException("Unexpected value: " + selection);
+        }
     }
     
 }
