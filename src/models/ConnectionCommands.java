@@ -4,15 +4,15 @@ import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 import java.io.*;
+import java.util.Objects;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
 public class ConnectionCommands {
-    // Vairables
+    // Variables
 	Connection connection=null;
 	CachedRowSet cachedRowSet=null;
 	ResultSet resultSet=null;
-	Statement statement=null;
 	
 	ConnectionSettings connectionSettings=new ConnectionSettings();
 	
@@ -26,7 +26,7 @@ public class ConnectionCommands {
 	public void getConnectionSettings() {
 		// Get the connection values and chek if they exist.
 		Document document = null;
-		NodeList nodeList=null;
+		NodeList nodeList;
 		Element element=null;
 		String[] settingsArray=new String[]{"serverURL","serverTimeZone","username","password"};
 		
@@ -63,23 +63,21 @@ public class ConnectionCommands {
 				param=element.getElementsByTagName(setting).item(0).getTextContent();
 				
 				// Check if the given parameter is empty
-				if(param=="") {
+				if(Objects.equals(param, "")) {
 					String errorMessage=String.format("\nERROR!\nThe following setting: '%s' is empty. Please Check the file: 'settings.xml' for errors.",setting);
 					System.err.println(errorMessage);
 				}
 				// Assign the paramater to its appropriate setting.
 				switch (setting) {
-				case "serverURL": connectionSettings.setURL(param);
-					URL2=URL;
-					break;
-				case "serverTimeZone": connectionSettings.setServerTimeZone(param);
-					break;
-				case "username": connectionSettings.setUsername(param);
-					break;
-				case "password": connectionSettings.setPassword(param);
-					break;
-				default:
-					break;
+					case "serverURL" -> {
+						connectionSettings.setURL(param);
+						URL2 = URL;
+					}
+					case "serverTimeZone" -> connectionSettings.setServerTimeZone(param);
+					case "username" -> connectionSettings.setUsername(param);
+					case "password" -> connectionSettings.setPassword(param);
+					default -> {
+					}
 				}
 			}
 		} catch(Exception e) {
@@ -104,9 +102,6 @@ public class ConnectionCommands {
 				// Determine if the connection will work and close it if not..
 				if(connection==null) {
 					System.err.println("Unable to establish a connection to the server.");
-				}
-				else {
-
 				}
 			}
 		}
@@ -156,13 +151,5 @@ public class ConnectionCommands {
 		createServerConnection();
 		createCachedRowSet(query);
 		return cachedRowSet;
-	}
-	
-	// Testing methods
-	private void testPrintString(String string) {
-		System.out.println(string);
-	}
-	private void testPrintInt(Connection connection2) {
-		System.out.println(connection2);
 	}
 }
