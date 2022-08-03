@@ -3,8 +3,8 @@ package models;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 public class QueryFactory {
     ConnectionCommands connectionCommands = new ConnectionCommands();
@@ -36,17 +36,32 @@ public class QueryFactory {
 
     // Generate queries for writing to the database.
     private CallableStatement generateQuery(String queryType, String elementType, ArrayList<Object> parameters) throws SQLException {
+        // Create a connection
+        connectionCommands.getConnectionSettings();
+        connectionCommands.testServerConnection();
         // Get the exact name of the stored procedure to be called.
         String procedureName = determineProcedureName(queryType,elementType);
         // Create the new statement
-        CallableStatement newStatement = connectionCommands.connection.prepareCall("{"+procedureName+"}");
+        CallableStatement newStatement = connectionCommands.connection.prepareCall("{ call "+procedureName+"}");
+
         // Add the parameters from the array list to the new statement.
         int parameterCount = determineParameterCount(procedureName);
         for(int i=0;i<parameterCount;i++){
-            if(parameters.get(i).getClass() == Integer.class){
+            Object newParameter=parameters.get(i).getClass();
+                // If the parameter is either an Integer or int
+            if(newParameter == Integer.class || newParameter == int.class){
                 newStatement.setInt(i+1, (Integer) parameters.get(i));
-            } else if(parameters.get(i).getClass() == String.class){
-                newStatement.setString(i+1, (String) parameters.get(i));
+                // If the parameter is a String
+            } else if(newParameter == Long.class){
+                newStatement.setLong(i+1, (Long) parameters.get(i));
+                // if the Parameter is Long
+            } else if(newParameter == String.class){
+                if (parameters.get(i).equals("")){
+                    newStatement.setNull(i+1, Types.VARCHAR);
+                } else {
+                    newStatement.setString(i+1,(String) parameters.get(i));
+                }
+
             }
         }
         return newStatement;
@@ -54,16 +69,19 @@ public class QueryFactory {
 
     // Generate queries for reading from the database.
     private CallableStatement generateQuery(String queryType, String elementType) throws SQLException {
+        // Create a connection
+        connectionCommands.getConnectionSettings();
+        connectionCommands.testServerConnection();
         // Get the exact name of the stored procedure to be called.
         String procedureName = determineProcedureName(queryType,elementType);
         // Create the new statement
-        return connectionCommands.connection.prepareCall("{"+procedureName+"}");
+        return connectionCommands.connection.prepareCall("{ call "+procedureName+"}");
     }
 
     private int determineParameterCount(String procedureName){
         // Return the number of parameters needed in the statement.
         int count=0;
-        for(int i=5;i<procedureName.length();i++){
+        for(int i=0;i<procedureName.length();i++){
             Character character=procedureName.charAt(i);
             if(character.equals('?')){
                 count++;
@@ -87,7 +105,7 @@ public class QueryFactory {
             };
         }else if(queryType.equals("insert")){
             return switch (elementType) {
-                case "author" -> "CreateNewAuthor(?, ?)";
+                case "author" -> "CreateNewAuthor(?, ?, ?)";
                 case "book" -> "CreateNewBook(?,?,?,?,?,?,?,?,?,?,?,?)";
                 case "genre" -> "CreateNewGenre(?, ?)";
                 case "language" -> "CreateNewLanguage(?, ?)";
