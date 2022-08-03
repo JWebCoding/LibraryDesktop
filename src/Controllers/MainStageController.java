@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -12,12 +12,13 @@ public class MainStageController {
     static MainStageController instance=null;
 
     @FXML Button buttonAddBooks;
-    @FXML Button buttonLibraryStats;
     @FXML Button buttonSearchEdit;
     @FXML Button buttonLogout;
     @FXML Button buttonClose;
     @FXML Pane panePrimary;
     @FXML Label labelTitle;
+
+    FXMLLoader loader=new FXMLLoader();
 
     public void initialize() throws IOException {
         instance=this;
@@ -31,15 +32,14 @@ public class MainStageController {
     public void openScreenAdd() throws IOException {
         buttonAddBooks.setVisible(true);
         buttonSearchEdit.setVisible(true);
-        buttonLibraryStats.setVisible(true);
         buttonLogout.setVisible(true);
         labelTitle.setVisible(true);
 
         buttonAddBooks.setDisable(true);
         buttonSearchEdit.setDisable(false);
-        buttonLibraryStats.setDisable(false);
 
-        Pane paneAdd=FXMLLoader.load(getClass().getResource("/FXML/add.fxml"));
+        loader.setLocation(getClass().getResource("/fxml/add.fxml"));
+        Pane paneAdd= loader.load();
         panePrimary.getChildren().clear();
         panePrimary.getChildren().add(paneAdd);
     }
@@ -47,8 +47,8 @@ public class MainStageController {
     public void openScreenSearch() throws IOException {
         buttonAddBooks.setDisable(false);
         buttonSearchEdit.setDisable(true);
-        buttonLibraryStats.setDisable(false);
-        Pane paneSearch=FXMLLoader.load(getClass().getResource("/FXML/search.fxml"));
+        loader.setLocation(getClass().getResource("/fxml/search.fxml"));
+        Pane paneSearch=loader.load();
         panePrimary.getChildren().clear();
         panePrimary.getChildren().add(paneSearch);
     }
@@ -56,10 +56,10 @@ public class MainStageController {
     public void openScreenLogin() throws IOException {
         buttonAddBooks.setVisible(false);
         buttonSearchEdit.setVisible(false);
-        buttonLibraryStats.setVisible(false);
         buttonLogout.setVisible(false);
         labelTitle.setVisible(false);
-        Pane paneLogin=FXMLLoader.load(getClass().getResource("/FXML/login.fxml"));
+        loader.setLocation(getClass().getResource("/fxml/login.fxml"));
+        Pane paneLogin=loader.load();
         panePrimary.getChildren().clear();
         panePrimary.getChildren().add(paneLogin);
     }
