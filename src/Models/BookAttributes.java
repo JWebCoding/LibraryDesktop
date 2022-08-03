@@ -94,7 +94,7 @@ public class BookAttributes {
 
     public void createGenreHashMaps() throws SQLException {
         int id;
-        int genreType;
+        boolean genreType;
         String genreName;
 
         CachedRowSet genreList = queryFactory.readFromDatabase("genre");
@@ -108,11 +108,11 @@ public class BookAttributes {
         // Iterate through the cachedRowSet and put each genre into it's respective map and list.
         try{
             while (genreList.next()){
-                id = genreList.getInt("genreid");
-                genreType = genreList.getInt("genre_type");
+                id = genreList.getInt("genreID");
+                genreType = genreList.getBoolean("genre_type");
                 genreName = genreList.getString("genre_name");
                 // Non-fiction=1 and Fiction=0
-                if(genreType==1){
+                if(genreType){
                     // Add genre to hashmap and list
                     bidiMapNonFictionGenres.put(id,genreName);
                     obvListNonFictionGenres.add(genreName);
@@ -133,7 +133,7 @@ public class BookAttributes {
         String languageName;
         CachedRowSet languageList = queryFactory.readFromDatabase("language");
 
-        // Clear the contents of the relvant hash-maps and observable lists.
+        // Clear the contents of the relevant hash-maps and observable lists.
         bidiMapLanguages.clear();
         obvListLanguages.clear();
         
