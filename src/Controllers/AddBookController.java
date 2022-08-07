@@ -69,7 +69,7 @@ public class AddBookController {
     String query;
     String notificationGreen="#00ff00",notificationRed="#ff0000";
 
-    // This is the hash map that will be used to pass collections of elements to the other classes.
+    // This is the array list that will be used to pass collections of elements to the other classes.
     ArrayList<Object> elementsArrayList= new ArrayList<>();
    
     public void initialize() throws Exception {
