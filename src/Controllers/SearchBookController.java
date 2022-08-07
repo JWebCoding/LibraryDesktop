@@ -1,8 +1,6 @@
-package Controllers;
+package controllers;
 
-import Models.Book;
-import Models.ConnectionCommands;
-import Models.SQLCommands;
+import models.Book;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,16 +8,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import models.QueryFactory;
 import javax.sql.rowset.CachedRowSet;
-
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SearchBookController {
+    QueryFactory queryFactory = new QueryFactory();
 
-    ConnectionCommands connectionCommands=new ConnectionCommands();
-    SQLCommands sql =new SQLCommands();
     @FXML TableView<Book> tableViewBooks;
     @FXML TableColumn<Book,String> tableColumnTitle;
     @FXML TableColumn<Book,String> tableColumnAuthor;
@@ -40,9 +37,10 @@ public class SearchBookController {
     @FXML Button buttonEditBook;
 
     // Declare variables
-    String title,firstName,middleName,lastName,isbn,series,publisher,genre,language,searchText,notification;
-    int id,year,format,edition,finished;
+    String title,firstName,middleName,lastName,isbn,series,publisher,genre;
+    int id,year;
     Integer seriesPart;
+    ArrayList<Object> elementsArrayList= new ArrayList<>();
     CachedRowSet bookCollection=null;
 
 
@@ -64,13 +62,18 @@ public class SearchBookController {
         setBookNumberLabel();
     }
 
-    // Get an up to date copy of the MySQL book database
-    public void getBookCollectionData() throws Exception{
-        bookCollection=connectionCommands.readDatabase(sql.selectTableBookInfo);
+    // Get an up-to-date copy of the MySQL book database
+    private void getBookCollectionData() throws Exception{
+        try{
+            bookCollection=queryFactory.readFromDatabase("book");
+        } catch (Exception e){
+            throw new Exception(e);
+        }
+
     }
 
     // Construct an instance of the Book class
-    public Book createBook() throws SQLException {
+    private Book createBook() throws SQLException {
 
         id=bookCollection.getInt("bookID");
         title=bookCollection.getString("title");
@@ -91,13 +94,13 @@ public class SearchBookController {
     }
     
     // Fill the BookNumber label
-    public void setBookNumberLabel() {
+    private void setBookNumberLabel() {
     	String numOfBooks= String.valueOf(Book.getBookNum());
     	labelBookNumber.setText(numOfBooks);
     }
 
     // Fill the search table with book information
-    public void fillTable() throws Exception {
+    private void fillTable() throws SQLException {
         tableViewBooks.getItems().clear();
         Book.incrementBookNum();
         bookCollection.first();
@@ -122,28 +125,18 @@ public class SearchBookController {
         else {
             String searchFor,selectedColumn="";
 
-            // Reset the table and cachedrowset
+            // Reset the table and cached row set
             tableViewBooks.getItems().clear();
             bookCollection.first();
 
             // Determine which button is selected and set the search text to the appropriate column
             RadioButton selectedRadioButton= (RadioButton) toggleSearchButtons.getSelectedToggle();
-            switch (selectedRadioButton.getText()){
-                case "Title":
-                    selectedColumn="title";
-                    break;
-                case "Publisher":
-                    selectedColumn="publisher_name";
-                    break;
-                case "ISBN":
-                    selectedColumn="isbn";
-                    break;
-                case "Genre":
-                    selectedColumn="genre_name";
-                    break;
-                case "Series Name":
-                    selectedColumn="series_name";
-                    break;
+            switch (selectedRadioButton.getText()) {
+                case "Title" -> selectedColumn = "title";
+                case "Publisher" -> selectedColumn = "publisher_name";
+                case "ISBN" -> selectedColumn = "isbn";
+                case "Genre" -> selectedColumn = "genre_name";
+                case "Series Name" -> selectedColumn = "series_name";
             }
 
             // Grab the search criteria and set it to lowercase
@@ -170,7 +163,6 @@ public class SearchBookController {
                         tableViewBooks.getItems().add(book);
                     }
                 }
-            
             }
         }
     }
@@ -188,7 +180,7 @@ public class SearchBookController {
             tableColumnTitle.setPrefWidth(161);
     	}
     	catch(Exception e) {
-        	e.printStackTrace();
+        	throw new Exception(e);
         } 
     } 
 
@@ -203,22 +195,24 @@ public class SearchBookController {
         fillTable();
     }
     
-    public void removeBook() {
+    public void removeBook() throws Exception {
     	if(tableViewBooks.getSelectionModel().getSelectedItem()==null) {
     		showNotification("Please select a book to be deleted.");
     	}else {
-    		Book removedBook=tableViewBooks.getSelectionModel().getSelectedItem();
-        	String query=String.format(sql.removeBookFromDatabase,removedBook.getId());
-        	connectionCommands.writeDatabase(query);
-        	showNotification(removedBook.getTitle()+"\ndeleted from system.");
-        	try {
-				fillTable();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+            try{
+                Book removedBook=tableViewBooks.getSelectionModel().getSelectedItem();
+                elementsArrayList.add(removedBook.getId());
+                queryFactory.writeToDatabase("delete","book",elementsArrayList);
+                showNotification(removedBook.getTitle()+"\ndeleted from system.");
+            } catch (Exception e) {
+                throw new SQLException(e);
+            } finally {
+                elementsArrayList.clear();
+                refreshTable();
+            }
     	}
-    	
     }
+
     public void openScreenDetails() throws IOException {
     	if(tableViewBooks.getSelectionModel().getSelectedItem()!=null) {
 	    	Parent root;
@@ -232,7 +226,7 @@ public class SearchBookController {
 	    		detailStage.setScene(new Scene(root,563,539));
 	    		detailStage.show();
 	    	} catch(IOException e){
-	    		e.printStackTrace();
+	    		throw new IOException(e);
 	    	}
     	}
     	else {
@@ -241,18 +235,14 @@ public class SearchBookController {
     	
     }
 
-    public void showNotification(String notification){
+    private void showNotification(String notification){
         labelNotification.setText(notification);
         labelNotification.setVisible(true);
     }
 
-    public void hideNotification(){
+    private void hideNotification(){
         labelNotification.setText("");
         labelNotification.setVisible(false);
-    }
-
-    public void printTest(int num){
-        System.out.println("TEST "+num);
     }
     
     
