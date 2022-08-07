@@ -9,23 +9,35 @@ import java.util.ArrayList;
 public class QueryFactory {
     ConnectionCommands connectionCommands = new ConnectionCommands();
 
+    // Use for general "select" statements
     public CachedRowSet readFromDatabase(String elementType) throws SQLException {
         String queryType="select";
         try{
             // Create the new query and then execute it
-            CallableStatement query = generateQuery(queryType,elementType.toLowerCase());
+            CallableStatement query = generateQuery(queryType,elementType);
             return connectionCommands.readDatabase(query);
         } catch (Exception e){
             throw new SQLException(e);
         }
-
-
     }
 
+    // Use for specific "select" statements
+    public CachedRowSet readFromDatabase(String elementType, ArrayList<Object> parameters) throws SQLException{
+        String queryType="select";
+        try{
+            // Create the new query and then execute it
+            CallableStatement query = generateQuery(queryType,elementType,parameters);
+            return connectionCommands.readDatabase(query);
+        } catch (Exception e){
+            throw new SQLException(e);
+        }
+    }
+
+    // Use for insert/update/delete statements.
     public boolean writeToDatabase(String queryType, String elementType, ArrayList<Object> parameters) throws SQLException {
         try{
             // Create the new query and then execute it
-            CallableStatement query = generateQuery(queryType.toLowerCase(),elementType.toLowerCase(), parameters);
+            CallableStatement query = generateQuery(queryType,elementType, parameters);
             connectionCommands.writeDatabase(query);
             // Return "true" if the write was successful so that the appropriate error message can be printed on the GUI
             return true;
@@ -35,6 +47,7 @@ public class QueryFactory {
     }
 
     // Generate queries for writing to the database.
+    // Uses an array list
     private CallableStatement generateQuery(String queryType, String elementType, ArrayList<Object> parameters) throws SQLException {
         // Create a connection
         connectionCommands.getConnectionSettings();
@@ -43,7 +56,6 @@ public class QueryFactory {
         String procedureName = determineProcedureName(queryType,elementType);
         // Create the new statement
         CallableStatement newStatement = connectionCommands.connection.prepareCall("{ call "+procedureName+"}");
-
         // Add the parameters from the array list to the new statement.
         int parameterCount = determineParameterCount(procedureName);
         for(int i=0;i<parameterCount;i++){
@@ -68,6 +80,7 @@ public class QueryFactory {
     }
 
     // Generate queries for reading from the database.
+    // Does no require an array list
     private CallableStatement generateQuery(String queryType, String elementType) throws SQLException {
         // Create a connection
         connectionCommands.getConnectionSettings();
@@ -97,6 +110,7 @@ public class QueryFactory {
             return switch (elementType) {
                 case "author" -> "GetAllAuthors";
                 case "book" -> "GetAllBooks";
+                case "specificBook" -> "GetSpecificBook(?)";
                 case "genre" -> "GetAllGenres";
                 case "language" -> "GetAllLanguages";
                 case "publisher" -> "GetAllPublishers";
@@ -115,7 +129,13 @@ public class QueryFactory {
             };
         }else if(queryType.equals("update")){
             if(elementType.equals("book")){
-                return "EditSpecificBook(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                return "EditSpecificBook(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            } else {
+                throw new UnsupportedOperationException(defaultErrorString);
+            }
+        }else if(queryType.equals("delete")){
+            if(elementType.equals("book")){
+                return "DeleteBook(?)";
             } else {
                 throw new UnsupportedOperationException(defaultErrorString);
             }
