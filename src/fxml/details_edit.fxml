@@ -59,7 +59,7 @@
       <Label layoutX="229.0" layoutY="280.0" styleClass="standardLabel" text="Language" />
       <CustomTextField fx:id="textFieldLanguage" editable="false" layoutX="303.0" layoutY="278.0" prefHeight="25.0" prefWidth="77.0" style="-fx-text-fill: goldenrod;" />
       <TextField fx:id="textFieldPageCount" editable="false" layoutX="166.0" layoutY="278.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
-      <Button fx:id="buttonEdit" layoutX="181.0" layoutY="490.0" mnemonicParsing="false" onAction="#makeTextfieldsEditable" prefHeight="35.0" prefWidth="61.0" text="Edit" />
+      <Button fx:id="buttonEdit" layoutX="181.0" layoutY="490.0" mnemonicParsing="false" onAction="#enableFieldsEditable" prefHeight="35.0" prefWidth="61.0" text="Edit" />
       <Button fx:id="buttonSave" layoutX="181.0" layoutY="490.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="35.0" prefWidth="61.0" text="Save" visible="false" />
       <Button fx:id="buttonClose" layoutX="326.0" layoutY="490.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="35.0" prefWidth="66.0" text="Close" />
       <Button fx:id="buttonDiscard" layoutX="326.0" layoutY="490.0" mnemonicParsing="false" onAction="#discardChanges" prefHeight="35.0" prefWidth="66.0" text="Discard" visible="false" />
