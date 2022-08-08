@@ -9,7 +9,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainStageController">
    <top>
-      <AnchorPane prefHeight="80.0" prefWidth="950.0" styleClass="top-banner" stylesheets="@styleSheet.css" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="80.0" prefWidth="950.0" styleClass="top-banner" stylesheets="@stylesheets/generalStyleSheet.css" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="buttonAddBooks" layoutX="604.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenAdd" prefHeight="50.0" prefWidth="125.0" styleClass="top-banner-button" text="Add Books">
                <font>

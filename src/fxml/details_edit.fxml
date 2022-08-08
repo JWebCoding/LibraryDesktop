@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
-<AnchorPane prefHeight="539.0" prefWidth="563.0" styleClass="background" stylesheets="@styleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetailsController">
+<AnchorPane prefHeight="539.0" prefWidth="563.0" styleClass="background" stylesheets="@stylesheets/generalStyleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetailsController">
    <children>
       <Label layoutX="241.0" layoutY="24.0" styleClass="headerLabel" text="Details">
          <font>
