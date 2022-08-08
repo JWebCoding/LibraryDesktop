@@ -1,0 +1,32 @@
+/*Search table style*/
+.table-view {
+    -fx-background-color: #003899;
+}
+.table-view .column-header {
+    -fx-background-color: #003899;
+    -fx-border-color: #1a1a1a;
+}
+
+.standardLabel {
+    -fx-text-fill: goldenrod;
+    -fx-font-size: 15;
+}
+
+.notification {
+	-fx-text-fill: #cb4154;
+}
+
+.header-label{
+    -fx-font-size:20px;
+}
+
+.search-button {
+    -fx-font-size: 15px;
+    -fx-pref-width:
+}
+
+.toggle-button:selected{
+    -fx-background-color: #003899;
+    -fx-border-color: black;
+    -fx-border-radius: 3;
+}
