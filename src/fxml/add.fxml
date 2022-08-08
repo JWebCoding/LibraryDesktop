@@ -267,3 +267,4 @@
       <ChoiceBox fx:id="choiceBoxPublisher" disable="true" layoutX="696.0" layoutY="563.0" prefHeight="26.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" visible="false" />
    </children>
 </Pane>
+

@@ -27,5 +27,4 @@ public class LoginController {
         mainStageController.openScreenAdd();
         mainStageController.showLoginButton();
     }
-
 }
