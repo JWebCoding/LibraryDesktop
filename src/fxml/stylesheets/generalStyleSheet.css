@@ -18,12 +18,12 @@
 }
 
 .text-area, .content {
-        -fx-background-color: #0748b0;
-        -fx-text-fill: goldenrod;
-        -fx-text-inner-color: #daa520;
-        -jfx-focus-color: goldenrod;
-        -jfx-unfocus-color: goldenrod;
-        -fx-border-radius: 60px;
+    -fx-background-color: #0748b0;
+    -fx-text-fill: goldenrod;
+    -fx-text-inner-color: #daa520;
+    -jfx-focus-color: goldenrod;
+    -jfx-unfocus-color: goldenrod;
+    -fx-border-radius: 60px;
 }
 
 #checkbox {
@@ -56,11 +56,7 @@
 .text-field, .choice-box{
     -fx-text-fill: #131313;
 }
-.toggle-button:selected{
-    -fx-background-color: #003899;
-    -fx-border-color: black;
-    -fx-border-radius: 3;
-}
+
 .combo-box{
     -fx-background-color: #0748b0, #0748b0;
 }
@@ -84,23 +80,5 @@
 
 .separator {
     -fx-fill: #1a1a1a;
-}
-
-/*Search table style*/
-.table-view {
-    -fx-background-color: #003899;
-}
-.table-view .column-header {
-    -fx-background-color: #003899;
-    -fx-border-color: #1a1a1a;
-}
-
-.standardLabel {
-    -fx-text-fill: goldenrod;
-    -fx-font-size: 15;
-}
-
-.notification {
-	-fx-text-fill: #cb4154;
 }
 
