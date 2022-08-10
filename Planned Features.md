@@ -1,9 +1,9 @@
-##== Very Important! ==  
-##This entire program is in the middle of a full architectural re-work many of these new features are being added and others are bing altered if not discarded.  
+## == Very Important! ==  
+## This entire program is in the middle of a full architectural re-work many of these new features are being added and others are bing altered if not discarded.  
 
 ------------------
 
-###Below is a list of the new features and other changes I would like to see done in the future.  
+### Below is a list of the new features and other changes I would like to see done in the future.  
 
 1 - MarcXML Record ~~import~~ export.  
     Note: Changed idea to an export function. The immense variety of data fields on a marcXML record (assuming one exists for a book) make an automated import function impractical and would likely not improve the user experience to any meaningful degree. An export option though, would be very beneficial and this is the course that will be looked into more.

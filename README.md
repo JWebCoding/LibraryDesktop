@@ -14,14 +14,14 @@ The program is currently in a feature complete state* though other ideas are bei
 *By this, the author means that the program currently meets the pre-established goals that were in mind when intial work began. More features are in mind but most work on the application form now on will be bug fixes.
 
 ---------------------------
-##Major libraries used:
+## Major libraries used:
 
   JavaFX https://gluonhq.com/products/javafx/
   
   The other libraires are added through maven and can be found in the pom.xml file.
   
 --------------------------
-##VM Arguments:
+## VM Arguments:
 
 --module-path C:\JavaExtras\javafx-sdk-16\lib 
 --add-modules=javafx.controls,javafx.fxml 
