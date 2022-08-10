@@ -5,7 +5,9 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -13,40 +15,30 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="1050.0" styleClass="background" stylesheets="@stylesheets/generalStyleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddBookController">
+<Pane maxHeight="1075.0" maxWidth="1150.0" minHeight="775.0" minWidth="1075.0" prefHeight="775.0" prefWidth="1075.0" styleClass="background" stylesheets="@stylesheets/generalStyleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddBookController">
    <children>
-      <Separator layoutX="376.0" layoutY="50.0" orientation="VERTICAL" prefHeight="602.0" prefWidth="0.0" />
-      <Separator layoutX="718.0" layoutY="51.0" orientation="VERTICAL" prefHeight="602.0" prefWidth="0.0" />
-      <Separator layoutX="379.0" layoutY="246.0" prefHeight="5.0" prefWidth="340.0">
-         <padding>
-            <Insets top="1.0" />
-         </padding>
-      </Separator>
-      <Separator layoutX="379.0" layoutY="448.0" prefHeight="5.0" prefWidth="340.0">
-         <padding>
-            <Insets top="1.0" />
-         </padding>
-      </Separator>
-      <Pane layoutX="91.0" layoutY="25.0" prefHeight="640.0" prefWidth="277.0">
+      <Pane layoutX="81.0" layoutY="25.0" prefHeight="694.0" prefWidth="304.0">
          <children>
-            <TextField fx:id="textFieldTitle" layoutX="76.0" layoutY="50.0" prefHeight="26.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" />
-         	<CustomTextField fx:id="textFieldAuthor" layoutX="77.0" layoutY="93.0" prefHeight="25.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" />
-            <CustomTextField fx:id="textFieldPublisher" layoutX="77.0" layoutY="138.0" prefHeight="25.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" />
-            <TextField fx:id="textFieldISBN" layoutX="77.0" layoutY="225.0" prefHeight="26.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" />
+            <TextField fx:id="textFieldTitle" layoutX="76.0" layoutY="50.0" prefHeight="26.0" prefWidth="219.0" style="-fx-text-fill: goldenrod;" />
+         	<CustomTextField fx:id="textFieldAuthor" layoutX="77.0" layoutY="93.0" prefHeight="25.0" prefWidth="219.0" style="-fx-text-fill: goldenrod;" />
+            <CustomTextField fx:id="textFieldPublisher" layoutX="77.0" layoutY="138.0" prefHeight="25.0" prefWidth="219.0" style="-fx-text-fill: goldenrod;" />
+            <TextField fx:id="textFieldISBN" layoutX="77.0" layoutY="223.0" prefHeight="26.0" prefWidth="101.0" style="-fx-text-fill: goldenrod;" />
             <TextField fx:id="textFieldCopyright" layoutX="25.0" layoutY="292.0" prefHeight="26.0" prefWidth="68.0" style="-fx-text-fill: goldenrod;" />
             <TextField fx:id="textFieldPages" layoutX="102.0" layoutY="291.0" prefHeight="26.0" prefWidth="68.0" style="-fx-text-fill: goldenrod;" />
             <TextField fx:id="textFieldEdition" layoutX="182.0" layoutY="291.0" prefHeight="26.0" prefWidth="72.0" style="-fx-text-fill: goldenrod;" />
             <ChoiceBox fx:id="choiceBoxGenreType" layoutX="77.0" layoutY="343.0" onAction="#populateGenreChoiceBoxes" prefHeight="26.0" prefWidth="101.0" />
-            <ChoiceBox fx:id="choiceBoxGenreName" layoutX="77.0" layoutY="377.0" prefHeight="26.0" prefWidth="187.0" />
+            <ChoiceBox fx:id="choiceBoxGenreName" layoutX="77.0" layoutY="377.0" prefHeight="26.0" prefWidth="219.0" />
             <ChoiceBox fx:id="choiceBoxLanguage" layoutX="77.0" layoutY="425.0" prefHeight="26.0" prefWidth="101.0" />
-            <ChoiceBox fx:id="choiceBoxSeries" layoutX="79.0" layoutY="468.0" prefHeight="26.0" prefWidth="187.0" />
-            <TextField fx:id="textFieldSeriesPart" layoutX="79.0" layoutY="510.0" prefHeight="26.0" prefWidth="36.0" style="-fx-text-fill: goldenrod;" />
-            <ToggleButton fx:id="toggleButtonPaperback" layoutX="138.0" layoutY="182.0" mnemonicParsing="false" prefWidth="32.0">
+            <ChoiceBox fx:id="choiceBoxSeries" layoutX="50.0" layoutY="468.0" prefHeight="26.0" prefWidth="129.0" />
+            <TextField fx:id="textFieldSeriesPart" layoutX="263.0" layoutY="468.0" prefHeight="26.0" prefWidth="32.0" style="-fx-text-fill: goldenrod;" />
+            <ToggleButton fx:id="toggleButtonPaperback" disable="true" layoutX="138.0" layoutY="182.0" mnemonicParsing="false" prefWidth="32.0" visible="false" />
+            <ToggleButton fx:id="toggleButtonHardcover" disable="true" layoutX="106.0" layoutY="182.0" mnemonicParsing="false" prefWidth="32.0" visible="false" />
+            <RadioButton fx:id="radioButtonPaperback" layoutX="131.0" layoutY="186.0" mnemonicParsing="false">
                <toggleGroup>
                   <ToggleGroup fx:id="toggleGroupFormat" />
                </toggleGroup>
-            </ToggleButton>
-            <ToggleButton fx:id="toggleButtonHardcover" layoutX="106.0" layoutY="182.0" mnemonicParsing="false" prefWidth="32.0" selected="true" toggleGroup="$toggleGroupFormat" />
+            </RadioButton>
+            <RadioButton fx:id="radioButtonHardcover" layoutX="109.0" layoutY="186.0" mnemonicParsing="false" selected="true" toggleGroup="$toggleGroupFormat" />
             <Label layoutX="27.0" layoutY="346.0" text="Genre*">
                 <font>
                   <Font name="Arundina Serif" size="15.0" />
@@ -92,12 +84,12 @@
                   <Font name="Arundina Serif" size="15.0" />
                </font>
             </Label>
-            <Label id="label-header" layoutX="59.0" layoutY="6.0" text="Book Information">
+            <Label id="label-header" layoutX="81.0" layoutY="6.0" text="Book Information">
                 <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="177.0" layoutY="185.0" text="Paperback">
+            <Label layoutX="156.0" layoutY="185.0" text="Paperback">
                <font>
                   <Font name="Arundina Serif" size="15.0" />
                </font>
@@ -107,13 +99,13 @@
                   <Font name="Arundina Serif" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="34.0" layoutY="471.0" text="Series">
+            <Label layoutX="5.0" layoutY="471.0" text="Series">
                <font>
                   <Font name="Arundina Serif" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="buttonAddBook" layoutX="83.0" layoutY="555.0" mnemonicParsing="false" onAction="#addBook" text="Add Book" />
-            <Label fx:id="labelPart" layoutX="4.0" layoutY="513.0" text="Series Part">
+            <Button fx:id="buttonAddBook" layoutX="100.0" layoutY="636.0" mnemonicParsing="false" onAction="#addBook" text="Add Book" />
+            <Label fx:id="labelPart" layoutX="190.0" layoutY="471.0" text="Series Part">
                <font>
                   <Font size="15.0" />
                </font></Label>
@@ -125,16 +117,27 @@
             <Label fx:id="labelNotificationPages" layoutX="114.0" layoutY="320.0" styleClass="notification" text="Missing" visible="false" />
             <Label fx:id="labelNotificationGenre" layoutX="81.0" layoutY="403.0" styleClass="notification" text="Select a genre" visible="false" />
             <Label fx:id="labelNotificationLanguage" layoutX="81.0" layoutY="451.0" styleClass="notification" text="Select a genre" visible="false" />
-            <CheckBox id="checkbox" fx:id="checkBoxSaveData" layoutX="140.0" layoutY="513.0" mnemonicParsing="false" prefWidth="157.0" text="Save Data" textFill="#ffd400">
+            <CheckBox id="checkbox" fx:id="checkBoxPreserveData" layoutX="191.0" layoutY="639.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="101.0" text="Save Data" textFill="#ffd400">
                <font>
                   <Font size="15.0" />
                </font>
             </CheckBox>
+            <CheckBox id="checkbox" fx:id="checkBoxDisableISBN" layoutX="195.0" layoutY="226.0" mnemonicParsing="false" text="No ISBN?" textFill="#ffd400">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </CheckBox>
+            <TextArea fx:id="textAreaNotes" layoutX="51.0" layoutY="515.0" prefHeight="102.0" prefWidth="239.0" wrapText="true" />
+            <Label layoutX="7.0" layoutY="515.0" text="Notes">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
             
          </children>
       </Pane>
       
-      <Pane layoutX="393.0" layoutY="25.0" prefHeight="215.0" prefWidth="314.0">
+      <Pane layoutX="410.0" layoutY="25.0" prefHeight="136.0" prefWidth="314.0">
          <children>
             <Label layoutX="84.0" layoutY="6.0" styleClass="label-header" text="New Author Info">
                 <font>
@@ -146,26 +149,14 @@
                   <Font name="Arundina Serif" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="13.0" layoutY="140.0" text="Years">
-               <font>
-                  <Font size="15.0" />
-               </font></Label>
-            <Label layoutX="5.0" layoutY="95.0" text="Nation">
-               <font>
-                  <Font size="15.0" />
-               </font></Label>
             <TextField fx:id="textFieldAuthorFirstName" layoutX="58.0" layoutY="51.0" prefHeight="26.0" prefWidth="92.0" style="-fx-text-fill: goldenrod;" />
             <TextField fx:id="textFieldAuthorMiddleName" layoutX="155.0" layoutY="51.0" prefHeight="26.0" prefWidth="48.0" style="-fx-text-fill: goldenrod;" />
             <TextField fx:id="textFieldAuthorLastName" layoutX="208.0" layoutY="51.0" prefHeight="26.0" prefWidth="92.0" style="-fx-text-fill: goldenrod;" />
-            <TextField fx:id="textFieldAuthorLocation" layoutX="58.0" layoutY="95.0" prefHeight="26.0" prefWidth="193.0" style="-fx-text-fill: goldenrod;" />
-            <TextField fx:id="textFieldAuthorBirth" layoutX="58.0" layoutY="140.0" prefHeight="26.0" prefWidth="55.0" style="-fx-text-fill: goldenrod;" />
-            <TextField fx:id="textFieldAuthorDeath" layoutX="135.0" layoutY="140.0" prefHeight="26.0" prefWidth="55.0" style="-fx-text-fill: goldenrod;" />
-            <Button fx:id="buttonAddAuthor" layoutX="87.0" layoutY="181.0" mnemonicParsing="false" onAction="#addNewAuthor" text="Add Author" />
-            <Separator layoutX="119.0" layoutY="145.0" prefHeight="16.0" prefWidth="10.0" />
+            <Button fx:id="buttonAddAuthor" layoutX="117.0" layoutY="95.0" mnemonicParsing="false" onAction="#addNewAuthor" text="Add Author" />
          </children>
       </Pane>
       
-      <Pane layoutX="427.0" layoutY="267.0" prefHeight="169.0" prefWidth="245.0">
+      <Pane layoutX="444.0" layoutY="182.0" prefHeight="169.0" prefWidth="245.0">
          <children>
             <Label layoutX="37.0" layoutY="-1.0" styleClass="label-header" text="New Publisher Info">
                 <font>
@@ -188,7 +179,7 @@
             <Button fx:id="buttonAddPublisher" layoutX="69.0" layoutY="135.0" mnemonicParsing="false" onAction="#addNewPublisher" text="Add Publisher" />
          </children>
       </Pane>
-      <Pane layoutX="421.0" layoutY="469.0" prefHeight="169.0" prefWidth="256.0">
+      <Pane layoutX="437.0" layoutY="381.0" prefHeight="169.0" prefWidth="256.0">
          <children>
             <Label layoutX="59.0" layoutY="-1.0" styleClass="label-header" text="New Genre Info">
                <font>
@@ -210,11 +201,7 @@
             <Button fx:id="buttonAddGenre" layoutX="83.0" layoutY="128.0" mnemonicParsing="false" onAction="#addNewGenre" text="Add Genre" />
          </children>
       </Pane>
-      <Label fx:id="labelNotification" alignment="CENTER" layoutX="724.0" layoutY="374.0" prefHeight="235.0" prefWidth="277.0" textAlignment="CENTER">
-         <font>
-            <Font size="17.0" />
-         </font></Label>
-      <Pane layoutX="738.0" layoutY="32.0" prefHeight="136.0" prefWidth="245.0">
+      <Pane layoutX="444.0" layoutY="570.0" prefHeight="136.0" prefWidth="245.0">
          <children>
             <Label layoutX="54.0" layoutY="-1.0" styleClass="label-header" text="New Series Info">
                <font>
@@ -230,7 +217,7 @@
             <Button fx:id="buttonAddSeries" layoutX="85.0" layoutY="91.0" mnemonicParsing="false" onAction="#addNewSeries" text="Add Series" />
          </children>
       </Pane>
-      <Pane layoutX="732.0" layoutY="182.0" prefHeight="180.0" prefWidth="268.0">
+      <Pane layoutX="749.0" layoutY="182.0" prefHeight="180.0" prefWidth="268.0">
          <children>
             <Label layoutX="41.0" layoutY="-6.0" styleClass="label-header" text="New Language Info">
                <font>
@@ -252,19 +239,45 @@
             <Button fx:id="buttonAddLanguage" layoutX="75.0" layoutY="132.0" mnemonicParsing="false" onAction="#addNewLanguage" text="Add Publisher" />
          </children>
       </Pane>
-      <Separator layoutX="1003.0" layoutY="59.0" orientation="VERTICAL" prefHeight="305.0" prefWidth="6.0" />
-      <Separator layoutX="718.0" layoutY="166.0" prefHeight="5.0" prefWidth="285.0">
+      <Label fx:id="labelNotification" alignment="CENTER" layoutX="745.0" layoutY="410.0" prefHeight="235.0" prefWidth="277.0" textAlignment="CENTER">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
+      <Separator layoutX="393.0" layoutY="50.0" orientation="VERTICAL" prefHeight="660.0" prefWidth="0.0" />
+      <Separator layoutX="735.0" layoutY="51.0" orientation="VERTICAL" prefHeight="657.0" prefWidth="6.0" />
+      <Separator layoutX="397.0" layoutY="166.0" prefHeight="5.0" prefWidth="340.0">
          <padding>
             <Insets top="1.0" />
          </padding>
       </Separator>
-      <Separator layoutX="719.0" layoutY="362.0" prefHeight="5.0" prefWidth="287.0">
+      <Separator layoutX="396.0" layoutY="362.0" prefHeight="5.0" prefWidth="340.0">
          <padding>
             <Insets top="1.0" />
          </padding>
       </Separator>
-      <ChoiceBox fx:id="choiceBoxAuthor" disable="true" layoutX="696.0" layoutY="527.0" prefHeight="26.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" visible="false" />
-      <ChoiceBox fx:id="choiceBoxPublisher" disable="true" layoutX="696.0" layoutY="563.0" prefHeight="26.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" visible="false" />
+      <Separator layoutX="1018.0" layoutY="168.0" orientation="VERTICAL" prefHeight="197.0" prefWidth="6.0" />
+      <Separator layoutX="735.0" layoutY="166.0" prefHeight="5.0" prefWidth="285.0">
+         <padding>
+            <Insets top="1.0" />
+         </padding>
+      </Separator>
+      <Separator layoutX="736.0" layoutY="360.0" prefHeight="10.0" prefWidth="285.0">
+         <padding>
+            <Insets top="1.0" />
+         </padding>
+      </Separator>
+      <Separator layoutX="396.0" layoutY="550.0" prefHeight="5.0" prefWidth="340.0">
+         <padding>
+            <Insets top="1.0" />
+         </padding>
+      </Separator>
+      <ChoiceBox fx:id="choiceBoxAuthor" disable="true" layoutX="713.0" layoutY="527.0" prefHeight="26.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" visible="false" />
+      <ChoiceBox fx:id="choiceBoxPublisher" disable="true" layoutX="713.0" layoutY="563.0" prefHeight="26.0" prefWidth="187.0" style="-fx-text-fill: goldenrod;" visible="false" />
+      <Separator layoutX="70.0" layoutY="701.0" prefHeight="17.0" prefWidth="668.0">
+         <padding>
+            <Insets top="1.0" />
+         </padding>
+      </Separator>
+      <Separator layoutX="69.0" layoutY="51.0" orientation="VERTICAL" prefHeight="660.0" prefWidth="0.0" />
    </children>
 </Pane>
-
