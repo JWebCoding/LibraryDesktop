@@ -115,12 +115,13 @@ public class QueryFactory {
                 case "language" -> "GetAllLanguages";
                 case "publisher" -> "GetAllPublishers";
                 case "series" -> "GetAllSeries";
+                case "user" -> "GetSpecificUser(?)";
                 default -> throw new UnsupportedOperationException(defaultErrorString);
             };
         }else if(queryType.equals("insert")){
             return switch (elementType) {
                 case "author" -> "CreateNewAuthor(?, ?, ?)";
-                case "book" -> "CreateNewBook(?,?,?,?,?,?,?,?,?,?,?,?)";
+                case "book" -> "CreateNewBook(?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 case "genre" -> "CreateNewGenre(?, ?)";
                 case "language" -> "CreateNewLanguage(?, ?)";
                 case "publisher" -> "CreateNewPublisher(?, ?)";
