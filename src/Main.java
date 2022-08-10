@@ -12,7 +12,8 @@ public class Main extends Application {
         loader.setLocation(getClass().getResource("/fxml/mainStage.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Library Beta");
-        primaryStage.setScene(new Scene(root, 1050, 759));
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 1075, 855));
         primaryStage.show();
     }
 
