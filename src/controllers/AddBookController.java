@@ -27,15 +27,14 @@ public class AddBookController {
     @FXML ChoiceBox<String> choiceBoxGenreName;
     @FXML ChoiceBox<String> choiceBoxSeries;
     @FXML TextField textFieldSeriesPart;
-    @FXML ToggleButton toggleButtonPaperback;
-    @FXML ToggleButton toggleButtonHardcover;
+//    @FXML ToggleButton toggleButtonPaperback;
+//    @FXML ToggleButton toggleButtonHardcover;
+    @FXML RadioButton radioButtonHardcover;
+    @FXML RadioButton radioButtonPaperback;
     // New Author pane elements
     @FXML TextField textFieldAuthorFirstName;
     @FXML TextField textFieldAuthorMiddleName;
     @FXML TextField textFieldAuthorLastName;
-    @FXML TextField textFieldAuthorLocation;
-    @FXML TextField textFieldAuthorBirth;
-    @FXML TextField textFieldAuthorDeath;
     // New Publisher pane elements
     @FXML TextField textFieldPublisherName;
     @FXML TextField textFieldPublisherLocation;
@@ -49,6 +48,7 @@ public class AddBookController {
     @FXML TextField textFieldNewLanguageSuffix;
     @FXML TextField textFieldAuthor;
     @FXML TextField textFieldPublisher;
+    @FXML TextArea textAreaNotes;
     
     @FXML Label labelNotificationTitle;
     @FXML Label labelNotificationAuthor;
@@ -59,14 +59,14 @@ public class AddBookController {
     @FXML Label labelNotificationGenre;
     @FXML Label labelNotificationLanguage;
 
-    @FXML CheckBox checkBoxSaveData;
+    @FXML CheckBox checkBoxPreserveData;
+    @FXML CheckBox checkBoxDisableISBN;
 
     // Misc elements
     @FXML Label labelNotification;
     @FXML Button buttonAddBook;
 
     // Declare variables
-    String query;
     String notificationGreen="#00ff00",notificationRed="#ff0000";
 
     // This is the array list that will be used to pass collections of elements to the other classes.
@@ -93,7 +93,7 @@ public class AddBookController {
     //  Methods for adding new items to the database
 
     public void addBook() throws Exception {
-    	
+        Integer nullInteger=0;
         // Check if all fields have content
         if (!validateBookInformation()) {
             showNotification("Please fill the highlighted fields", notificationGreen);
@@ -104,10 +104,17 @@ public class AddBookController {
             String title = textFieldTitle.getText();
             elementsArrayList.add(checkForApostrophes(title));
             elementsArrayList.add(Integer.parseInt(textFieldCopyright.getText()));
-            elementsArrayList.add(Long.parseLong(textFieldISBN.getText()));
+
+            //Check if ISBN exists
+            if(!checkBoxDisableISBN.isSelected()){
+                elementsArrayList.add(Long.parseLong(textFieldISBN.getText()));
+            }else{
+                elementsArrayList.add(nullInteger);
+            }
+
             // Get Book Edition
             if (textFieldEdition.getText().isEmpty()) {
-                elementsArrayList.add(null);
+                elementsArrayList.add(nullInteger);
             } else {
                 elementsArrayList.add(Integer.parseInt(textFieldEdition.getText()));
             }
@@ -124,20 +131,20 @@ public class AddBookController {
 
             // Get Book Series Part
             if (textFieldSeriesPart.getText().isEmpty()) {
-                elementsArrayList.add(null);
+                elementsArrayList.add(nullInteger);
             } else {
                 elementsArrayList.add(Integer.parseInt(textFieldSeriesPart.getText()));
             }
 
             // Get Book Format
-            if (toggleButtonHardcover.isSelected()) {
+            if (radioButtonHardcover.isSelected()) {
                 elementsArrayList.add(1);
             } else {
                 elementsArrayList.add(0);
             }
             elementsArrayList.add(Integer.parseInt(textFieldPages.getText()));
             elementsArrayList.add(bookAttributes.bidiMapLanguages.getKey(choiceBoxLanguage.getValue()));
-            elementsArrayList.add("");
+            elementsArrayList.add(textAreaNotes.getText());
 
             try {
                 // Attempt to write the new book to the database and then display an appropriate notification.
@@ -148,7 +155,7 @@ public class AddBookController {
                     showNotification(title + "\nwas not added properly.", notificationRed);
                 }
                 // Save the data in the fields if the requisite checkbox is checked.
-                if(!checkBoxSaveData.isSelected()){
+                if(!checkBoxPreserveData.isSelected()){
                     emptyBookInformation();
                     setValues();
                 }
@@ -169,10 +176,13 @@ public class AddBookController {
         	labelNotificationTitle.setVisible(true);
             errorCount++;
         }
-        if (textFieldISBN.getText().isEmpty() || textFieldISBN.getText().length()>13 || !textFieldISBN.getText().matches("[0-9]+")) {
-        	labelNotificationISBN.setVisible(true);
-            errorCount++;
+        if(!checkBoxDisableISBN.isSelected()){
+            if (textFieldISBN.getText().isEmpty() || textFieldISBN.getText().length()>13 || !textFieldISBN.getText().matches("[0-9]+")) {
+                labelNotificationISBN.setVisible(true);
+                errorCount++;
+            }
         }
+
         if (textFieldCopyright.getText().length()>0) {
         	if (textFieldCopyright.getText().length()!=4 || !textFieldCopyright.getText().matches("[0-9]+")) {
         		labelNotificationCopyright.setVisible(true);
@@ -291,10 +301,6 @@ public class AddBookController {
         textFieldAuthorFirstName.setText("");
         textFieldAuthorMiddleName.setText("");
         textFieldAuthorLastName.setText("");
-        textFieldAuthorLocation.setText("");
-        textFieldAuthorBirth.setText("");
-        textFieldAuthorDeath.setText("");
-        query = "";
         resetTextFieldEffects();
     }
 
@@ -350,7 +356,6 @@ public class AddBookController {
     private void emptyPublisherInformation() {
     	textFieldPublisherName.setText("");
         textFieldPublisherLocation.setText("");
-        query = "";
         resetTextFieldEffects();
     }
 
@@ -410,7 +415,6 @@ public class AddBookController {
     private void emptyGenreInformation() {
     	textFieldGenreName.setText("");
         choiceBoxNewGenreType.setValue("Non-Fiction");
-        query = "";
         choiceBoxGenreName.getItems().clear();
         resetTextFieldEffects();
     }
@@ -525,8 +529,8 @@ public class AddBookController {
         private void setValues () {
             choiceBoxGenreType.setValue("Non-Fiction");
             choiceBoxNewGenreType.setValue("Non-Fiction");
-            toggleButtonHardcover.setSelected(true);
-            toggleButtonPaperback.setSelected(false);
+            radioButtonHardcover.setSelected(true);
+            radioButtonPaperback.setSelected(false);
             choiceBoxSeries.setValue("");
         }
         
