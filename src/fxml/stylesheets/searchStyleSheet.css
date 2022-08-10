@@ -16,13 +16,12 @@
 	-fx-text-fill: #cb4154;
 }
 
-.header-label{
+.header-label {
     -fx-font-size:20px;
 }
 
 .search-button {
     -fx-font-size: 15px;
-    -fx-pref-width:
 }
 
 .toggle-button:selected{
