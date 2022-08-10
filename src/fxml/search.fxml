@@ -11,19 +11,19 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="1050.0" styleClass="background" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SearchBookController">
+<Pane maxHeight="775.0" maxWidth="1075.0" minHeight="775.0" minWidth="1075.0" prefHeight="775.0" prefWidth="1075.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SearchBookController">
    <children>
-      <TableView fx:id="tableViewBooks" layoutX="237.0" layoutY="14.0" prefHeight="655.0" prefWidth="799.0">
+      <TableView fx:id="tableViewBooks" layoutX="237.0" layoutY="14.0" prefHeight="738.0" prefWidth="821.0">
         <columns>
-            <TableColumn fx:id="tableColumnId" prefWidth="33.0" text="ID" />
-          	<TableColumn fx:id="tableColumnTitle" maxWidth="180.0" minWidth="120.0" prefWidth="160.0" text="Title" />
+            <TableColumn fx:id="tableColumnId" prefWidth="33.0" resizable="false" text="ID" />
+          	<TableColumn fx:id="tableColumnTitle" maxWidth="180.0" minWidth="120.0" prefWidth="160.0" resizable="false" text="Title" />
             <TableColumn fx:id="tableColumnSeries" maxWidth="150.0" minWidth="48.0" prefWidth="99.0" text="Series" />
-            <TableColumn fx:id="tableColumnSeriesPart" maxWidth="90.0" minWidth="30.0" prefWidth="30.0" text="Part" />
+            <TableColumn fx:id="tableColumnSeriesPart" maxWidth="90.0" minWidth="30.0" prefWidth="30.0" resizable="false" text="Part" />
             <TableColumn fx:id="tableColumnAuthor" maxWidth="116.0" minWidth="50.0" prefWidth="109.0" text="Author" />
-            <TableColumn fx:id="tableColumnGenre" maxWidth="126.0" minWidth="60.0" prefWidth="88.0" text="Genre" />
-            <TableColumn fx:id="tableColumnPublisher" maxWidth="130.0" minWidth="90.0" prefWidth="127.0" text="Publisher" />
-            <TableColumn fx:id="tableColumnISBN" maxWidth="130.0" minWidth="95.0" prefWidth="100.0" text="ISBN" />
-            <TableColumn fx:id="tableColumnYear" maxWidth="77.0" minWidth="45.0" prefWidth="52.0" text="Year" />
+            <TableColumn fx:id="tableColumnGenre" maxWidth="126.0" minWidth="60.0" prefWidth="102.0" text="Genre" />
+            <TableColumn fx:id="tableColumnPublisher" maxWidth="175.0" minWidth="90.0" prefWidth="132.0" text="Publisher" />
+            <TableColumn fx:id="tableColumnISBN" maxWidth="158.0" minWidth="71.0" prefWidth="101.33331298828125" text="ISBN" />
+            <TableColumn fx:id="tableColumnYear" maxWidth="77.0" minWidth="16.0" prefWidth="51.333251953125" resizable="false" text="Year" />
             
         </columns>
       </TableView>
@@ -98,7 +98,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="labelNotification" alignment="CENTER" layoutX="6.0" layoutY="46.0" prefHeight="63.0" prefWidth="200.0" text="notification" textAlignment="CENTER">
+            <Label fx:id="labelNotification" alignment="CENTER" layoutX="6.0" layoutY="46.0" prefHeight="63.0" prefWidth="200.0" text="notification" textAlignment="CENTER" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
