@@ -5,6 +5,7 @@ public class Book {
 	static int numOfBooks;
     int id;
     String title;
+    String subtitle;
     String series;
     Integer seriesPart;
     String author;
@@ -19,9 +20,10 @@ public class Book {
     String notes;
 
     // Basic constructor with standard arguments. May be obsolete but withholding judgment for now.
-    public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre){
+    public Book(int id,String title,String subtitle,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre){
         this.id=id;
         this.title=title;
+        this.subtitle=subtitle;
         this.series=series;
         this.seriesPart=seriesPart;
         if(middleName==null) {
@@ -36,9 +38,10 @@ public class Book {
     }
 
     // Constructor for all parts of a book. Use for the detailed information modal
-    public Book(int id,String title,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount,String notes){
+    public Book(int id,String title, String subtitle,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount,String notes){
         this.id=id;
         this.title=title;
+        this.subtitle=subtitle;
         this.series=series;
         this.seriesPart=seriesPart;
         if(middleName==null) {
@@ -86,6 +89,7 @@ public class Book {
     
     public void setId(int id) {this.id=id;}
     public void setTitle(String title){ this.title=title; }
+    public void setSubtitle(String subtitle){this.subtitle=subtitle; }
     public void setAuthor(String author){ this.author=author; }
     public void setPublisher(String publisher){ this.publisher=publisher; }
     public void setCopyright(int copyright){ this.copyright=copyright; }
@@ -98,6 +102,7 @@ public class Book {
 
     public int getId() { return id; }
     public String getTitle(){ return title; }
+    public String getSubtitle(){return subtitle; }
     public String getAuthor(){ return author; }
     public String getPublisher(){ return publisher; }
     public int getCopyright(){ return copyright; }
