@@ -3,6 +3,8 @@ package controllers;
 import javafx.stage.Stage;
 import models.Book;
 import models.BookAttributes;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.sql.rowset.CachedRowSet;
@@ -17,6 +19,7 @@ import javafx.scene.paint.Color;
 public class DetailsController {
 
 	@FXML TextField textFieldTitle;
+	@FXML TextField textFieldSubtitle;
 	@FXML TextField textFieldSeries;
 	@FXML TextField textFieldSeriesPart;
 	@FXML TextField textFieldAuthor;
@@ -45,8 +48,8 @@ public class DetailsController {
 
     QueryFactory queryFactory = new QueryFactory();
 	BookAttributes bookAttributes=new BookAttributes();
-	String title,firstName,middleName,lastName,isbn,series,publisher,genre,language,notes;
-    String tempTitle,tempAuthor,tempISBN,tempCopyright,tempEdition,tempPageCount,tempGenre,tempSeries,tempSeriesPart,tempPublisher,tempLanguage,tempNotes;
+	String title,subtitle,firstName,middleName,lastName,isbn,series,publisher,genre,language,notes;
+    String tempTitle,tempSubtitle,tempAuthor,tempISBN,tempCopyright,tempEdition,tempPageCount,tempGenre,tempSeries,tempSeriesPart,tempPublisher,tempLanguage,tempNotes;
     String notificationGreen="#00ff00",notificationRed="#ff0000";
     Integer id,copyright,format,edition,pageCount,genreType,seriesPart;
 	CachedRowSet bookQuery=null;
@@ -85,6 +88,7 @@ public class DetailsController {
 
         id=bookQuery.getInt("bookID");
         title=bookQuery.getString("title");
+		subtitle=bookQuery.getString("subtitle");
         series=bookQuery.getString("series_name");
         seriesPart=bookQuery.getInt("series_part");
         if(seriesPart==0) {seriesPart=null;}
@@ -103,7 +107,7 @@ public class DetailsController {
         pageCount=bookQuery.getInt("pages");
 		notes=bookQuery.getString("notes");
 
-        return new Book(id,title,series,seriesPart,firstName,middleName,lastName,publisher,isbn,copyright,genre,edition,language,format,pageCount,notes);
+        return new Book(id,title,subtitle,series,seriesPart,firstName,middleName,lastName,publisher,isbn,copyright,genre,edition,language,format,pageCount,notes);
     }
 
     private void fillTextfields() throws Exception {
@@ -112,6 +116,7 @@ public class DetailsController {
 
     	// Fill in the majority of text boxes
     	textFieldTitle.setText(book.getTitle());
+		textFieldSubtitle.setText(book.getSubtitle());
     	textFieldSeries.setText(book.getSeries());
     	textFieldAuthor.setText(book.getAuthor());
     	textFieldPublisher.setText(book.getPublisher());
@@ -157,6 +162,7 @@ public class DetailsController {
 
     	// Set the textfields to be editable
     	textFieldTitle.setEditable(true);
+		textFieldSubtitle.setEditable(true);
     	textFieldSeries.setEditable(true);
     	textFieldSeriesPart.setEditable(true);
     	textFieldAuthor.setEditable(true);
@@ -179,6 +185,7 @@ public class DetailsController {
     	//Set the current values of the book's attributes into-
     	//temporary variables for potential use
     	tempTitle=textFieldTitle.getText();
+		tempSubtitle=textFieldSubtitle.getText();
     	tempAuthor=textFieldAuthor.getText();
     	tempSeries=textFieldSeries.getText();
     	tempGenre=textFieldGenre.getText();
@@ -221,7 +228,7 @@ public class DetailsController {
 			}
     	} catch(Exception e) {
 			showNotification("Book info not saved!", notificationRed);
-    		System.err.println("Error! Unable to update book information in database!\nError occurred in... \nClass: detailsController\nMethod: Save Changes: "+e);
+    		System.err.println("Error! Unable to update book information in database!\nError occurred in... \nClass: detailsController\nMethod: Save Changes:");
 			e.printStackTrace();
     	}
     }
@@ -230,6 +237,7 @@ public class DetailsController {
     	//Reset the contents of the textboxes to their original state
 		disableFieldsEditable();
     	textFieldTitle.setText(tempTitle);
+		textFieldSubtitle.setText(tempSubtitle);
     	textFieldAuthor.setText(tempAuthor);
     	textFieldSeries.setText(tempSeries);
     	textFieldSeriesPart.setText(tempSeriesPart);
@@ -252,6 +260,7 @@ public class DetailsController {
 
     	// Set the text-fields to be uneditable
     	textFieldTitle.setEditable(false);
+		textFieldSubtitle.setEditable(false);
     	textFieldSeries.setEditable(false);
     	textFieldSeriesPart.setEditable(false);
     	textFieldAuthor.setEditable(false);
@@ -275,12 +284,19 @@ public class DetailsController {
     private ArrayList<Object> getEditedBookInformation() {
 		Integer nullInteger=0;
 		ArrayList<Object> editsList =new ArrayList<>();
-    	// Add the edited information to an ArrayList
+    	// Add the edited information to an ArrayList for creating the update query
 		editsList.add(Book.getBookID());
         editsList.add(bookAttributes.bidiMapAuthors.getKey(textFieldAuthor.getText()));
 		editsList.add(bookAttributes.bidiMapPublishers.getKey(textFieldPublisher.getText()));
     	title=textFieldTitle.getText();
 		editsList.add(checkForApostrophes(title));
+		// Subtitle may be empty and will create a blank space in the list if left so. This inserts a NULL
+		if(textFieldSubtitle.getText()==null){
+			editsList.add("");
+		} else {
+			subtitle=textFieldSubtitle.getText();
+			editsList.add(checkForApostrophes(subtitle));
+		}
 		editsList.add(Integer.parseInt(textFieldCopyRight.getText()));
 		editsList.add(Long.parseLong(textFieldISBN.getText()));
 		// Get the edition
@@ -330,7 +346,7 @@ public class DetailsController {
 			sb.insert(location, "'");
 			string=sb.toString();
 		}
-		return string;
+		return value;
 	}
 
     private void showNotification(String notification,String color) {
