@@ -1,10 +1,33 @@
 /*Search table style*/
-.table-view {
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.column-header {
     -fx-background-color: #003899;
 }
+
 .table-view .column-header {
-    -fx-background-color: #003899;
-    -fx-border-color: #1a1a1a;
+    -fx-border-radius: 30px;
+}
+
+.table-row-cell: odd {
+    -fx-background-color: #e8e8e8;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.table-row-cell: even {
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.table-row-cell: hover {
+    -fx-text-background-color: goldenrod;
+}
+
+.table-row-cell: selected {
+    -fx-background-color: gray;
+    -fx-text-background-color: goldenrod;
 }
 
 .standardLabel {

@@ -1,0 +1,26 @@
+#checkbox {
+    -fx-color: #0748b0;
+    -fx-inner-border: #0748b0;
+    -fx-outer-border: #0748b0;
+    -fx-text-fill: goldenrod;
+    -fx-font-family: "PT Serif";
+    -fx-font-size: 15px;
+}
+
+#checkbox:hover {
+    -fx-color: #0748b0;
+    -fx-inner-border: #0748b0;
+    -fx-outer-border: #0748b0;
+    -fx-text-fill: goldenrod;
+    -fx-font-family: "PT Serif";
+    -fx-font-size: 15px;
+}
+
+#checkbox:selected {
+    -fx-color: #0748b0;
+    -fx-inner-border: #0748b0;
+    -fx-outer-border: #0748b0;
+    -fx-text-fill: goldenrod;
+    -fx-font-family: "PT Serif";
+    -fx-font-size: 15px;
+}
