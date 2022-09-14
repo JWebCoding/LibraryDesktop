@@ -16,7 +16,7 @@ public class QueryFactory {
             // Create the new query and then execute it
             CallableStatement query = generateQuery(queryType,elementType);
             return connectionCommands.readDatabase(query);
-        } catch (Exception e){
+        } catch (SQLException e){
             throw new SQLException(e);
         }
     }
@@ -28,7 +28,7 @@ public class QueryFactory {
             // Create the new query and then execute it
             CallableStatement query = generateQuery(queryType,elementType,parameters);
             return connectionCommands.readDatabase(query);
-        } catch (Exception e){
+        } catch (SQLException e){
             throw new SQLException(e);
         }
     }
@@ -41,7 +41,7 @@ public class QueryFactory {
             connectionCommands.writeDatabase(query);
             // Return "true" if the write was successful so that the appropriate error message can be printed on the GUI
             return true;
-        } catch(Exception e){
+        } catch(SQLException e){
             throw new SQLException(e);
         }
     }
@@ -56,25 +56,30 @@ public class QueryFactory {
         String procedureName = determineProcedureName(queryType,elementType);
         // Create the new statement
         CallableStatement newStatement = connectionCommands.connection.prepareCall("{ call "+procedureName+"}");
-        // Add the parameters from the array list to the new statement.
-        int parameterCount = determineParameterCount(procedureName);
-        for(int i=0;i<parameterCount;i++){
-            Object newParameter=parameters.get(i).getClass();
+        try {
+            // Add the parameters from the array list to the new statement.
+            int parameterCount = determineParameterCount(procedureName);
+            for(int i=0;i<parameterCount;i++){
+                Object newParameter=parameters.get(i).getClass();
                 // If the parameter is either an Integer or int
-            if(newParameter == Integer.class || newParameter == int.class){
-                newStatement.setInt(i+1, (Integer) parameters.get(i));
-                // If the parameter is a String
-            } else if(newParameter == Long.class){
-                newStatement.setLong(i+1, (Long) parameters.get(i));
-                // if the Parameter is Long
-            } else if(newParameter == String.class){
-                if (parameters.get(i).equals("")){
-                    newStatement.setNull(i+1, Types.VARCHAR);
-                } else {
-                    newStatement.setString(i+1,(String) parameters.get(i));
-                }
+                if(newParameter == Integer.class || newParameter == int.class){
+                    newStatement.setInt(i+1, (Integer) parameters.get(i));
 
+                    // if the Parameter is Long
+                } else if(newParameter == Long.class){
+                    newStatement.setLong(i+1, (Long) parameters.get(i));
+
+                    // If the parameter is a String
+                } else if(newParameter == String.class){
+                    if (parameters.get(i).equals("")){
+                        newStatement.setNull(i+1, Types.VARCHAR);
+                    } else {
+                        newStatement.setString(i+1,(String) parameters.get(i));
+                    }
+                }
             }
+        } catch (SQLException  e){
+            e.printStackTrace();
         }
         return newStatement;
     }
@@ -121,7 +126,7 @@ public class QueryFactory {
         }else if(queryType.equals("insert")){
             return switch (elementType) {
                 case "author" -> "CreateNewAuthor(?, ?, ?)";
-                case "book" -> "CreateNewBook(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                case "book" -> "CreateNewBook(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 case "genre" -> "CreateNewGenre(?, ?)";
                 case "language" -> "CreateNewLanguage(?, ?)";
                 case "publisher" -> "CreateNewPublisher(?, ?)";
@@ -130,7 +135,7 @@ public class QueryFactory {
             };
         }else if(queryType.equals("update")){
             if(elementType.equals("book")){
-                return "EditSpecificBook(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                return "EditSpecificBook(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             } else {
                 throw new UnsupportedOperationException(defaultErrorString);
             }
