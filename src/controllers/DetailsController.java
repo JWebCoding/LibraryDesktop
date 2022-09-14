@@ -337,14 +337,15 @@ public class DetailsController {
     }
 
 	private String checkForApostrophes(String text) {
-		String string=text;
+		String value=text;
 		int location;
-
-		if(string.contains("'")) {
-			location=string.indexOf("'");
-			StringBuilder sb=new StringBuilder(string);
-			sb.insert(location, "'");
-			string=sb.toString();
+		if(!(value == null)){
+			if(value.contains("'")) {
+				location=value.indexOf("'");
+				StringBuilder sb=new StringBuilder(value);
+				sb.insert(location, "'");
+				value=sb.toString();
+			}
 		}
 		return value;
 	}
