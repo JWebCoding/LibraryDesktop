@@ -5,8 +5,10 @@ import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 import java.io.*;
 import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 public class ConnectionCommands {
     // Variables
@@ -37,19 +39,19 @@ public class ConnectionCommands {
 			DocumentBuilder documentBuilder=documentFactory.newDocumentBuilder();
 			document = documentBuilder.parse(settingsFile);
 			
-		} catch(Exception e) {
-			System.out.println("\nError!\nUnable to open file: settings.xml\nPlease check file location.");
-			e.printStackTrace();
+		} catch(SAXException | IOException e) {
+			System.err.println("\nError!\nUnable to open file: settings.xml\nPlease check file location.");
+		} catch (ParserConfigurationException e) {
+			System.err.println("\nError!\nUnable to parse the file: settings.xml");
 		}
-		
+
 		// Get "settings" element
 		try {
 		nodeList=document.getElementsByTagName("settings");
 		element= (Element) nodeList.item(0);
 		
 		} catch(Exception e) {
-			System.out.println("\nError!\nSettings not found. Please check settings.xml");
-			e.printStackTrace();
+			System.out.println("\nError!\nNo settings found in file. Please check settings.xml");
 		}
 		
 		// Get server connection settings
@@ -64,7 +66,7 @@ public class ConnectionCommands {
 				
 				// Check if the given parameter is empty
 				if(Objects.equals(param, "")) {
-					String errorMessage=String.format("\nERROR!\nThe following setting: '%s' is empty. Please Check the file: 'settings.xml' for errors.",setting);
+					String errorMessage=String.format("\nERROR!\nThe following setting: '%s' is empty. Please Check the file: 'settings.xml' for missing data.",setting);
 					System.err.println(errorMessage);
 				}
 				// Assign the paramater to its appropriate setting.
@@ -94,9 +96,9 @@ public class ConnectionCommands {
 		if(URL!=null||serverTimeZone!=""||username!=""||password!="") {
 			// Attempt to create a connection
 			try {
-				connection=DriverManager.getConnection(URL, username, password);
-				URL=URL2;
-			} catch(Exception e) {
+				connection = DriverManager.getConnection(URL, username, password);
+				URL = URL2;
+			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				// Determine if the connection will work and close it if not..
