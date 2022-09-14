@@ -37,7 +37,7 @@ public class SearchBookController {
     @FXML Button buttonEditBook;
 
     // Declare variables
-    String title,firstName,middleName,lastName,isbn,series,publisher,genre;
+    String title,subtitle,firstName,middleName,lastName,isbn,series,publisher,genre;
     int id,year;
     Integer seriesPart;
     ArrayList<Object> elementsArrayList= new ArrayList<>();
@@ -77,6 +77,7 @@ public class SearchBookController {
 
         id=bookCollection.getInt("bookID");
         title=bookCollection.getString("title");
+        subtitle=bookCollection.getString("subtitle");
         series=bookCollection.getString("series_name");
         seriesPart=bookCollection.getInt("series_part");
         if(seriesPart==0) {
@@ -90,7 +91,7 @@ public class SearchBookController {
         year=bookCollection.getInt("copyright");
         genre=bookCollection.getString("genre_name");
 
-        return new Book(id,title,series,seriesPart,firstName,middleName,lastName,publisher,isbn,year,genre);
+        return new Book(id,title,subtitle,series,seriesPart,firstName,middleName,lastName,publisher,isbn,year,genre);
     }
     
     // Fill the BookNumber label
@@ -223,7 +224,8 @@ public class SearchBookController {
 	    		root=FXMLLoader.load(getClass().getClassLoader().getResource("FXML/details_edit.fxml"));
 	    		Stage detailStage=new Stage();
 	    		detailStage.setTitle("Book Details");
-	    		detailStage.setScene(new Scene(root,563,539));
+                detailStage.setResizable(false);
+	    		detailStage.setScene(new Scene(root,547,539));
 	    		detailStage.show();
 	    	} catch(IOException e){
 	    		throw new IOException(e);
