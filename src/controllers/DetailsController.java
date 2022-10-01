@@ -233,6 +233,18 @@ public class DetailsController {
     	}
     }
 
+	private boolean determineIfChangesMade(){
+		if(
+				tempAuthor.equals(textFieldAuthor.getText()) &&
+				tempPublisher.equals(textFieldPublisher) &&
+				tempTitle.equals(textFieldTitle.getText())
+		){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
     public void discardChanges() {
     	//Reset the contents of the textboxes to their original state
 		disableFieldsEditable();
