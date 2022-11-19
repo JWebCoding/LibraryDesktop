@@ -1,4 +1,4 @@
-package controllers;
+package com.library.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import java.io.IOException;
 
 import javafx.scene.control.TextField;
-import models.ConnectionCommands;
+import com.library.models.ConnectionCommands;
 
 public class LoginController {
     MainStageController mainStageController=MainStageController.getInstance();

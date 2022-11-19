@@ -1,4 +1,4 @@
-package controllers;
+package com.library.controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -38,7 +38,7 @@ public class MainStageController {
         buttonAddBooks.setDisable(true);
         buttonSearchEdit.setDisable(false);
 
-        Pane paneAdd=FXMLLoader.load(getClass().getResource("/FXML/add.fxml"));
+        Pane paneAdd=FXMLLoader.load(getClass().getResource("/fxml/AddPane.fxml"));
         panePrimary.getChildren().clear();
         panePrimary.getChildren().add(paneAdd);
     }
@@ -46,10 +46,10 @@ public class MainStageController {
     public void openScreenSearch() throws IOException {
         buttonAddBooks.setDisable(false);
         buttonSearchEdit.setDisable(true);
-//        loader.setLocation(getClass().getResource("/fxml/search.fxml"));
+//        loader.setLocation(getClass().getResource("/fxml/SearchPane.fxml"));
 //        Pane paneSearch=loader.load();
 
-        Pane paneSearch=FXMLLoader.load(getClass().getResource("/FXML/search.fxml"));
+        Pane paneSearch=FXMLLoader.load(getClass().getResource("/fxml/SearchPane.fxml"));
         panePrimary.getChildren().clear();
         panePrimary.getChildren().add(paneSearch);
     }
@@ -59,9 +59,9 @@ public class MainStageController {
         buttonSearchEdit.setVisible(false);
         buttonLogout.setVisible(false);
         labelTitle.setVisible(false);
-//        loader.setLocation(getClass().getResource("/fxml/login.fxml"));
+//        loader.setLocation(getClass().getResource("/fxml/LoginPane.fxml"));
 //        Pane paneLogin=
-        Pane paneLogin=FXMLLoader.load(getClass().getResource("/FXML/login.fxml"));
+        Pane paneLogin=FXMLLoader.load(getClass().getResource("/fxml/LoginPane.fxml"));
         panePrimary.getChildren().clear();
         panePrimary.getChildren().add(paneLogin);
     }

@@ -1,6 +1,7 @@
-package controllers;
+package com.library.controllers;
 
-import models.Book;
+import com.library.Main;
+import com.library.models.Book;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import models.QueryFactory;
+import com.library.models.QueryFactory;
 import javax.sql.rowset.CachedRowSet;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -216,12 +217,13 @@ public class SearchBookController {
 
     public void openScreenDetails() throws IOException {
     	if(tableViewBooks.getSelectionModel().getSelectedItem()!=null) {
-	    	Parent root;
 	    	try {
 	    		Book detailsBook=tableViewBooks.getSelectionModel().getSelectedItem();
 	    		Book.setBookID(detailsBook.getId());
 
-	    		root=FXMLLoader.load(getClass().getClassLoader().getResource("FXML/details_edit.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/DetailsEditPane.fxml"));
+                Parent root = fxmlLoader.load();
+
 	    		Stage detailStage=new Stage();
 	    		detailStage.setTitle("Book Details");
                 detailStage.setResizable(false);

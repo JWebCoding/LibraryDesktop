@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="855.0" maxWidth="1075.0" minHeight="855.0" minWidth="1075.0" prefHeight="855.0" prefWidth="1075.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainStageController">
+<BorderPane maxHeight="855.0" maxWidth="1075.0" minHeight="855.0" minWidth="1075.0" prefHeight="855.0" prefWidth="1075.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controllers.MainStageController">
    <top>
       <AnchorPane maxHeight="80.0" prefHeight="80.0" styleClass="top-banner" stylesheets="@stylesheets/generalStyleSheet.css" BorderPane.alignment="CENTER">
          <children>

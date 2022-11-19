@@ -1,4 +1,4 @@
-package models;
+package com.library.models;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.CallableStatement;
@@ -135,7 +135,7 @@ public class QueryFactory {
             };
         }else if(queryType.equals("update")){
             if(elementType.equals("book")){
-                return "EditSpecificBook(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                return "UpdateSpecificBook(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             } else {
                 throw new UnsupportedOperationException(defaultErrorString);
             }

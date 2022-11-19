@@ -1,11 +1,10 @@
-package models;
+package com.library.models;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 import java.io.*;
 import java.util.Objects;
-import java.util.concurrent.TimeoutException;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
@@ -82,6 +81,7 @@ public class ConnectionCommands {
 					}
 				}
 			}
+
 		} catch(Exception e) {
 			System.err.println("\nERROR!\nUnable to find needed settings! Please check file: settings.xml");
 		} 
@@ -101,7 +101,7 @@ public class ConnectionCommands {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
-				// Determine if the connection will work and close it if not..
+				// Determine if the connection will work and close it if not.
 				if(connection==null) {
 					System.err.println("Unable to establish a connection to the server.");
 				}

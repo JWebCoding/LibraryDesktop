@@ -1,4 +1,4 @@
-package models;
+package com.library.models;
 import org.apache.commons.collections4.bidimap.*;
 import javax.sql.rowset.CachedRowSet;
 import org.apache.commons.collections4.BidiMap;

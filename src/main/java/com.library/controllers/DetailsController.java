@@ -1,14 +1,14 @@
-package controllers;
+package com.library.controllers;
 
 import javafx.stage.Stage;
-import models.Book;
-import models.BookAttributes;
+import com.library.models.Book;
+import com.library.models.BookAttributes;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.sql.rowset.CachedRowSet;
-import models.QueryFactory;
+import com.library.models.QueryFactory;
 import org.controlsfx.control.textfield.TextFields;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,10 +1,10 @@
-package controllers;
-import models.BookAttributes;
+package com.library.controllers;
+import com.library.models.BookAttributes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import models.QueryFactory;
+import com.library.models.QueryFactory;
 import org.controlsfx.control.textfield.TextFields;
 import java.util.ArrayList;
 
@@ -68,7 +68,7 @@ public class AddBookController {
         bookAttributes.createGenreHashMaps();
         bookAttributes.createLanguageHashMap();
         bookAttributes.createSeriesHashMap();
-        bindTextfieldSuggestions();
+        bindTextFieldSuggestions();
         setChoiceBoxContents();
 
         setValues();
@@ -145,7 +145,7 @@ public class AddBookController {
                 } else {
                     showNotification(title + "\nwas not added properly.", notificationRed);
                 }
-                // Save the data in the fields if the requisite checkbox is checked.
+//                 Save the data in the fields if the requisite checkbox is checked.
                 if(!checkBoxPreserveData.isSelected()){
                     emptyBookInformation();
                     setValues();
@@ -154,8 +154,10 @@ public class AddBookController {
                 elementsArrayList.clear();
 
             } catch(Exception e) {
+                showNotification(title + "\nwas not added properly.", notificationRed);
                 throw new Exception("Unable to add book:\n"+e);
             } finally {
+
                 elementsArrayList.clear();
             }
         }
@@ -264,7 +266,7 @@ public class AddBookController {
                 // Refresh the author hashmap & clear the fields
                 bookAttributes.createAuthorHashMap();
                 elementsArrayList.clear();
-                bindTextfieldSuggestions();
+                bindTextFieldSuggestions();
                 emptyAuthorFields();
             } catch(Exception e) {
                 throw new Exception("Unable to add new author:\n"+e);
@@ -281,10 +283,10 @@ public class AddBookController {
             textFieldAuthorFirstName.setStyle(errorColor);
             errorCount++;
         }
-        if (textFieldAuthorMiddleName.getText().isEmpty()) {
-            textFieldAuthorMiddleName.setStyle(errorColor);
-            errorCount++;
-        }
+//        if (textFieldAuthorMiddleName.getText().isEmpty()) {
+//            textFieldAuthorMiddleName.setStyle(errorColor);
+//            errorCount++;
+//        }
         if (textFieldAuthorLastName.getText().isEmpty()) {
             textFieldAuthorLastName.setStyle(errorColor);
             errorCount++;
@@ -327,7 +329,7 @@ public class AddBookController {
                 // Refresh the publisher hashmap & clear the fields
                 bookAttributes.createPublisherHashMap();
                 elementsArrayList.clear();
-                bindTextfieldSuggestions();
+                bindTextFieldSuggestions();
                 emptyPublisherInformation();
             } catch(Exception e) {
                 throw new Exception("Unable to add publisher:\n"+e);
@@ -523,7 +525,7 @@ public class AddBookController {
             choiceBoxSeries.setValue("");
         }
         
-        private void bindTextfieldSuggestions() {
+        private void bindTextFieldSuggestions() {
         	TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.obvListAuthors);
         	TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.obvListPublishers);
         }

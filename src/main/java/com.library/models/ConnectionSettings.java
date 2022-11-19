@@ -1,4 +1,4 @@
-package models;
+package com.library.models;
 
 public class ConnectionSettings {
 	public static String URL;
