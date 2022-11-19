@@ -40,4 +40,6 @@ There is too little meaningful information to be presented in such a hypothetica
   8 - User account sign-in  
   	- Having to access the program through a sign-in process would improve security and 	prevent tampering with the database contents.
   		
-  
+  9 - Add Google Books API
+    - Allow for a faster and more streamline process of adding books.
+    - Will keep manual in perpetuity. 
