@@ -38,7 +38,7 @@ public class MainStageController {
         buttonAddBooks.setDisable(true);
         buttonSearchEdit.setDisable(false);
 
-        Pane paneAdd=FXMLLoader.load(getClass().getResource("/fxml/AddPane.fxml"));
+        Pane paneAdd=FXMLLoader.load(getClass().getResource("/fxml/ManualAddBookPane.fxml"));
         panePrimary.getChildren().clear();
         panePrimary.getChildren().add(paneAdd);
     }

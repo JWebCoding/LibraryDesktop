@@ -8,7 +8,7 @@ import com.library.models.QueryFactory;
 import org.controlsfx.control.textfield.TextFields;
 import java.util.ArrayList;
 
-public class AddBookController {
+public class ManualAddBookController {
     BookAttributes bookAttributes=new BookAttributes();
     QueryFactory queryFactory=new QueryFactory();
 
