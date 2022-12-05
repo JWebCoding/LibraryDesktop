@@ -38,19 +38,20 @@ public class BookAttributes {
         bidiMapAuthors.clear();
         obvListAuthors.clear();
         
-        // Combine the seperate parts of the names from the cached rowset
+        // Combine the separate parts of the names from the cached row set
         try {
         	while (authorList.next()) {
         		// Get the id and name of the author
                 id = authorList.getInt(1);
-                authorFirstName = authorList.getString(2);
-                authorMiddleName=authorList.getString(3);
-                authorLastName = authorList.getString(4);
-                if(authorMiddleName==null) {
-                	authorFullName = (authorFirstName +" "+ authorLastName);
-                } else {
-                	authorFullName = (authorFirstName +" "+ authorMiddleName +" "+ authorLastName);
-                }
+                authorFullName = authorList.getString(2);
+//                authorFirstName = authorList.getString(2);
+//                authorMiddleName=authorList.getString(3);
+//                authorLastName = authorList.getString(4);
+//                if(authorMiddleName==null) {
+//                	authorFullName = (authorFirstName +" "+ authorLastName);
+//                } else {
+//                	authorFullName = (authorFirstName +" "+ authorMiddleName +" "+ authorLastName);
+//                }
                 // Add author to hashmap and list
                 tempAuthorList.add(authorFullName);
                 bidiMapAuthors.put(id, authorFullName);
@@ -70,7 +71,7 @@ public class BookAttributes {
         // Get the Cached Row Set for all Authors in the database
         CachedRowSet publisherList = queryFactory.readFromDatabase("publisher");
 
-        // Clear the contents of the relvant hash-maps, observable lists and choice-boxes.
+        // Clear the contents of the relevant hash-maps, observable lists and choice-boxes.
         bidiMapPublishers.clear();
         obvListPublishers.clear();
         
@@ -99,7 +100,7 @@ public class BookAttributes {
 
         CachedRowSet genreList = queryFactory.readFromDatabase("genre");
 
-        // Clear the contents of the relvant hash-maps and observable lists.
+        // Clear the contents of the relevant hash-maps and observable lists.
         bidiMapFictionGenres.clear();
         obvListFictionGenres.clear();
         bidiMapNonFictionGenres.clear();

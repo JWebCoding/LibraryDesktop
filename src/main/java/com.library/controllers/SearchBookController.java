@@ -38,7 +38,7 @@ public class SearchBookController {
     @FXML Button buttonEditBook;
 
     // Declare variables
-    String title,subtitle,firstName,middleName,lastName,isbn,series,publisher,genre;
+    String title,subtitle,author,isbn,series,publisher,genre;
     int id,year;
     Integer seriesPart;
     ArrayList<Object> elementsArrayList= new ArrayList<>();
@@ -84,15 +84,13 @@ public class SearchBookController {
         if(seriesPart==0) {
         	seriesPart=null;
         }
-        firstName=bookCollection.getString("first_name");
-        middleName=bookCollection.getString("middle_name");
-        lastName=bookCollection.getString("last_name");
+        author=bookCollection.getString("author_name");
         publisher=bookCollection.getString("publisher_name");
         isbn=bookCollection.getString("isbn");
         year=bookCollection.getInt("copyright");
         genre=bookCollection.getString("genre_name");
 
-        return new Book(id,title,subtitle,series,seriesPart,firstName,middleName,lastName,publisher,isbn,year,genre);
+        return new Book(id,title,subtitle,series,seriesPart,author,publisher,isbn,year,genre);
     }
     
     // Fill the BookNumber label

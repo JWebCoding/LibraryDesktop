@@ -27,6 +27,7 @@ public class AddBookController {
     @FXML RadioButton radioButtonHardcover;
     @FXML RadioButton radioButtonPaperback;
     // New Author pane elements
+    @FXML TextField textFieldAuthorName;
     @FXML TextField textFieldAuthorFirstName;
     @FXML TextField textFieldAuthorMiddleName;
     @FXML TextField textFieldAuthorLastName;
@@ -239,23 +240,12 @@ public class AddBookController {
             showNotification("Please fill the highlighted fields", notificationGreen);
         } else {
             // Add variables into the
-            elementsArrayList.add(textFieldAuthorFirstName.getText());
-            if(textFieldAuthorMiddleName.getText().isEmpty()) {
-                elementsArrayList.add("");
-            } else {
-                elementsArrayList.add(textFieldAuthorMiddleName.getText());
-            }
-            elementsArrayList.add(textFieldAuthorLastName.getText());
+            elementsArrayList.add(textFieldAuthorName.getText());
 
             // Form the author's name to displayed.
-            String notificationText;
-            if(textFieldAuthorMiddleName.getText().isEmpty()) {
-                notificationText=(elementsArrayList.get(0) + " " + elementsArrayList.get(1));
-            } else {
-                notificationText=(elementsArrayList.get(0) + " " +elementsArrayList.get(1) + " " + elementsArrayList.get(2));
-            }
+            String notificationText=textFieldAuthorName.getText();
             try{
-                // Create the query, write new author to database and display notifcation
+                // Create the query, write new author to database and display notification
                 boolean success=queryFactory.writeToDatabase("insert","author",elementsArrayList);
                 if(success){
                     showNotification(notificationText+" \nhas been added.", notificationGreen);
@@ -279,16 +269,8 @@ public class AddBookController {
     private boolean validateAuthorInformation() {
         // Validate textField Contents
         int errorCount = 0;
-        if (textFieldAuthorFirstName.getText().isEmpty()) {
-            textFieldAuthorFirstName.setStyle(errorColor);
-            errorCount++;
-        }
-//        if (textFieldAuthorMiddleName.getText().isEmpty()) {
-//            textFieldAuthorMiddleName.setStyle(errorColor);
-//            errorCount++;
-//        }
-        if (textFieldAuthorLastName.getText().isEmpty()) {
-            textFieldAuthorLastName.setStyle(errorColor);
+        if (textFieldAuthorName.getText().isEmpty() || textFieldAuthorName.getText().length()>60) {
+            textFieldAuthorName.setStyle(errorColor);
             errorCount++;
         }
         if (errorCount > 0) {

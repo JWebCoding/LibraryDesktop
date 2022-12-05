@@ -20,17 +20,13 @@ public class Book {
     String notes;
 
     // Basic constructor with standard arguments. May be obsolete but withholding judgment for now.
-    public Book(int id,String title,String subtitle,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre){
+    public Book(int id,String title,String subtitle,String series,Integer seriesPart,String author,String publisher,String isbn,int copyright,String genre){
         this.id=id;
         this.title=title;
         this.subtitle=subtitle;
         this.series=series;
         this.seriesPart=seriesPart;
-        if(middleName==null) {
-        	this.author=firstName+" "+lastName;
-        } else {
-        	this.author=firstName+" "+middleName+" "+lastName;
-        }
+        this.author=author;
         this.publisher=publisher;
         this.isbn=isbn;
         this.copyright=copyright;
@@ -38,17 +34,13 @@ public class Book {
     }
 
     // Constructor for all parts of a book. Use for the detailed information modal
-    public Book(int id,String title, String subtitle,String series,Integer seriesPart,String firstName,String middleName,String lastName,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount,String notes){
+    public Book(int id,String title, String subtitle,String series,Integer seriesPart,String author,String publisher,String isbn,int copyright,String genre,int edition,String language,int format,int pageCount,String notes){
         this.id=id;
         this.title=title;
         this.subtitle=subtitle;
         this.series=series;
         this.seriesPart=seriesPart;
-        if(middleName==null) {
-        	this.author=firstName+" "+lastName;
-        } else {
-        	this.author=firstName+" "+middleName+" "+lastName;
-        }
+        this.author=author;
         this.publisher=publisher;
         this.isbn=isbn;
         this.copyright=copyright;

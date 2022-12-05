@@ -48,7 +48,7 @@ public class DetailsController {
 
     QueryFactory queryFactory = new QueryFactory();
 	BookAttributes bookAttributes=new BookAttributes();
-	String title,subtitle,firstName,middleName,lastName,isbn,series,publisher,genre,language,notes;
+	String title,subtitle,author,isbn,series,publisher,genre,language,notes;
     String tempTitle,tempSubtitle,tempAuthor,tempISBN,tempCopyright,tempEdition,tempPageCount,tempGenre,tempSeries,tempSeriesPart,tempPublisher,tempLanguage,tempNotes;
     String notificationGreen="#00ff00",notificationRed="#ff0000";
     Integer id,copyright,format,edition,pageCount,genreType,seriesPart;
@@ -92,9 +92,7 @@ public class DetailsController {
         series=bookQuery.getString("series_name");
         seriesPart=bookQuery.getInt("series_part");
         if(seriesPart==0) {seriesPart=null;}
-        firstName=bookQuery.getString("first_name");
-        middleName=bookQuery.getString("middle_name");
-        lastName=bookQuery.getString("last_name");
+        author=bookQuery.getString("author_name");
         publisher=bookQuery.getString("publisher_name");
         isbn=bookQuery.getString("isbn");
 		edition=bookQuery.getInt("edition");
@@ -107,7 +105,7 @@ public class DetailsController {
         pageCount=bookQuery.getInt("pages");
 		notes=bookQuery.getString("notes");
 
-        return new Book(id,title,subtitle,series,seriesPart,firstName,middleName,lastName,publisher,isbn,copyright,genre,edition,language,format,pageCount,notes);
+        return new Book(id,title,subtitle,series,seriesPart,author,publisher,isbn,copyright,genre,edition,language,format,pageCount,notes);
     }
 
     private void fillTextfields() throws Exception {

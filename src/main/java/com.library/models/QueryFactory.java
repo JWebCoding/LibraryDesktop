@@ -125,7 +125,7 @@ public class QueryFactory {
             };
         }else if(queryType.equals("insert")){
             return switch (elementType) {
-                case "author" -> "CreateNewAuthor(?, ?, ?)";
+                case "author" -> "CreateNewAuthor(?)";
                 case "book" -> "CreateNewBook(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 case "genre" -> "CreateNewGenre(?, ?)";
                 case "language" -> "CreateNewLanguage(?, ?)";
