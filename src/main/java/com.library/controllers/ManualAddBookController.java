@@ -28,9 +28,6 @@ public class ManualAddBookController {
     @FXML RadioButton radioButtonPaperback;
     // New Author pane elements
     @FXML TextField textFieldAuthorName;
-    @FXML TextField textFieldAuthorFirstName;
-    @FXML TextField textFieldAuthorMiddleName;
-    @FXML TextField textFieldAuthorLastName;
     // New Publisher pane elements
     @FXML TextField textFieldPublisherName;
     @FXML TextField textFieldPublisherLocation;
@@ -239,29 +236,32 @@ public class ManualAddBookController {
         if (!validateAuthorInformation()) {
             showNotification("Please fill the highlighted fields", notificationGreen);
         } else {
-            // Add variables into the
-            elementsArrayList.add(textFieldAuthorName.getText());
-
-            // Form the author's name to displayed.
             String notificationText=textFieldAuthorName.getText();
-            try{
-                // Create the query, write new author to database and display notification
-                boolean success=queryFactory.writeToDatabase("insert","author",elementsArrayList);
-                if(success){
-                    showNotification(notificationText+" \nhas been added.", notificationGreen);
-                } else {
-                    showNotification(notificationText+" \nwas not added.", notificationRed);
-                }
+            if(!checkIfAuthorExists()){
+                // Add variables into the array list
+                elementsArrayList.add(textFieldAuthorName.getText());
+                try{
 
-                // Refresh the author hashmap & clear the fields
-                bookAttributes.createAuthorHashMap();
-                elementsArrayList.clear();
-                bindTextFieldSuggestions();
-                emptyAuthorFields();
-            } catch(Exception e) {
-                throw new Exception("Unable to add new author:\n"+e);
-            } finally {
-                elementsArrayList.clear();
+                    // Create the query, write new author to database and display notification
+                    boolean success=queryFactory.writeToDatabase("insert","author",elementsArrayList);
+                    if(success){
+
+                        // Refresh the author hashmap & clear the fields
+                        bookAttributes.createAuthorHashMap();
+                        elementsArrayList.clear();
+                        bindTextFieldSuggestions();
+                        emptyAuthorFields();
+                        showNotification(notificationText+" \nhas been added.", notificationGreen);
+                    } else {
+                        showNotification(notificationText+" \nwas not added.", notificationRed);
+                    }
+                } catch(Exception e) {
+                    throw new Exception("Unable to add new author:\n"+e);
+                } finally {
+                    elementsArrayList.clear();
+                }
+            } else {
+                showNotification(notificationText+" \nis already available.", notificationRed);
             }
         }
     }
@@ -280,9 +280,7 @@ public class ManualAddBookController {
     }
     
     private void emptyAuthorFields() {
-        textFieldAuthorFirstName.setText("");
-        textFieldAuthorMiddleName.setText("");
-        textFieldAuthorLastName.setText("");
+        textFieldAuthorName.clear();
         resetNewAuthorTextFieldEffects();
     }
 
@@ -290,35 +288,47 @@ public class ManualAddBookController {
         if (!validatePublisherInformation()) {
             showNotification("Please fill the highlighted fields", notificationRed);
         } else {
-            // Add Elements to the array list
             String publisherName = textFieldPublisherName.getText();
-            elementsArrayList.add(checkForApostrophes(publisherName));
-            if (!textFieldPublisherLocation.getText().isEmpty()) {
-                elementsArrayList.add(textFieldPublisherLocation.getText());
-            } else {
-                elementsArrayList.add(nullInteger);
-            }
+            // Is the new author already in the system?
+            if(!checkIfPublisherExists()){
 
-            try {
-                // Create query and insert into the database
-                boolean success=queryFactory.writeToDatabase("insert","publisher",elementsArrayList);
-                if(success){
-                    showNotification(publisherName + "\nhas been added.", notificationGreen);
+                // Add Elements to the array list
+                elementsArrayList.add(checkForApostrophes(publisherName));
+                if (!textFieldPublisherLocation.getText().isEmpty()) {
+                    elementsArrayList.add(textFieldPublisherLocation.getText());
                 } else {
-                    showNotification(publisherName + "\nwas not added.", notificationRed);
+                    elementsArrayList.add(nullInteger);
+                }
+                try {
+
+                    // Create query and insert into the database
+                    boolean success=queryFactory.writeToDatabase("insert","publisher",elementsArrayList);
+                    if(success){
+                        showNotification(publisherName + "\nhas been added.", notificationGreen);
+                    } else {
+                        showNotification(publisherName + "\nwas not added.", notificationRed);
+                    }
+
+                    // Refresh the publisher hashmap & clear the fields
+                    bookAttributes.createPublisherHashMap();
+                    elementsArrayList.clear();
+                    bindTextFieldSuggestions();
+                    emptyPublisherInformation();
+                } catch(Exception e) {
+                    throw new Exception("Unable to add publisher:\n"+e);
+                } finally {
+                    elementsArrayList.clear();
                 }
 
-                // Refresh the publisher hashmap & clear the fields
-                bookAttributes.createPublisherHashMap();
-                elementsArrayList.clear();
-                bindTextFieldSuggestions();
-                emptyPublisherInformation();
-            } catch(Exception e) {
-                throw new Exception("Unable to add publisher:\n"+e);
-            } finally {
-                elementsArrayList.clear();
+            } else {
+                showNotification(publisherName + "\nis already available.", notificationRed);
             }
+
         }
+    }
+
+    private boolean checkIfPublisherExists() {
+        return bookAttributes.bidiMapPublishers.containsValue(textFieldPublisherName.getText());
     }
 
     private boolean validatePublisherInformation() {
@@ -344,33 +354,43 @@ public class ManualAddBookController {
         if (!validateGenreInformation()) {
             showNotification("Please fill the highlighted fields", notificationRed);
         } else {
-            // Create the relevant variables
-            elementsArrayList.add(textFieldGenreName.getText());
-            if (choiceBoxNewGenreType.getValue().equals("Fiction")) {
-                elementsArrayList.add(0);
-            } else {
-                elementsArrayList.add(1);
-            }
-            try {
-                // Create query and insert into the database
-                boolean success=queryFactory.writeToDatabase("insert","genre",elementsArrayList);
-                if(success){
-                    showNotification(elementsArrayList.get(0) + "\nhas been added.", notificationGreen);
+            String genreName = textFieldGenreName.getText();
+            if(!checkIfGenreExists()){
+                // Create the relevant variables
+                elementsArrayList.add(genreName);
+                if (choiceBoxNewGenreType.getValue().equals("Fiction")) {
+                    elementsArrayList.add(0);
                 } else {
-                    showNotification(elementsArrayList.get(0) + "\nwas not added.", notificationRed);
+                    elementsArrayList.add(1);
                 }
+                try {
+                    // Create query and insert into the database
+                    boolean success=queryFactory.writeToDatabase("insert","genre",elementsArrayList);
+                    if(success){
+                        showNotification(genreName + "\nhas been added.", notificationGreen);
+                    } else {
+                        showNotification(genreName + "\nwas not added.", notificationRed);
+                    }
 
-                // Refresh genre hashmap
-                bookAttributes.createGenreHashMaps();
-                elementsArrayList.clear();
-                emptyGenreInformation();
-                populateGenreChoiceBoxes();
-            } catch(Exception e) {
-                throw new Exception("Unable to add genre:\n"+e);
-            } finally {
-                elementsArrayList.clear();
+                    // Refresh genre hashmap
+                    bookAttributes.createGenreHashMaps();
+                    elementsArrayList.clear();
+                    emptyGenreInformation();
+                    populateGenreChoiceBoxes();
+                } catch(Exception e) {
+                    throw new Exception("Unable to add genre:\n"+e);
+                } finally {
+                    elementsArrayList.clear();
+                }
+            } else {
+                showNotification(genreName + "\nis already available", notificationRed);
             }
         }
+    }
+
+    private boolean checkIfGenreExists() {
+        return (bookAttributes.bidiMapFictionGenres.containsValue(textFieldGenreName.getText()) ||
+                bookAttributes.bidiMapNonFictionGenres.containsValue(textFieldGenreName.getText()));
     }
 
     // Validate the provided genre information
@@ -395,32 +415,40 @@ public class ManualAddBookController {
     }
     
     public void addNewSeries() throws Exception {
-    if(!validateSeriesInformation()){
-        showNotification("Please fill the highlighted field",notificationRed);
-    }
-    else {
-            // Create the relevant variables
-            elementsArrayList.add(textFieldNewSeriesName.getText());
-            try {
-                // Create query and insert into the database
-                boolean success=queryFactory.writeToDatabase("insert","series", elementsArrayList);
-                if(success){
-                    showNotification(elementsArrayList.get(0)+"\nhas been added.",notificationGreen);
-                } else {
-                    showNotification(elementsArrayList.get(0)+"\nwas not added.",notificationRed);
-                }
+        if(!validateSeriesInformation()){
+            showNotification("Please fill the highlighted field",notificationRed);
+        } else {
+            String seriesName=textFieldNewSeriesName.getText();
+            if(!checkIfSeriesExists()){
+                // Create the relevant variables
+                elementsArrayList.add(seriesName);
+                try {
+                    // Create query and insert into the database
+                    boolean success=queryFactory.writeToDatabase("insert","series", elementsArrayList);
+                    if(success){
+                        showNotification(seriesName+"\nhas been added.",notificationGreen);
+                    } else {
+                        showNotification(seriesName+"\nwas not added.",notificationRed);
+                    }
 
-                // Reset obvListSeries box
-                bookAttributes.createSeriesHashMap();
-                elementsArrayList.clear();
-                emptySeriesInformation();
-                setChoiceBoxContents();
-            } catch(Exception e) {
-                throw new Exception("Unable to add new series");
-            } finally {
-                elementsArrayList.clear();
+                    // Reset obvListSeries box
+                    bookAttributes.createSeriesHashMap();
+                    elementsArrayList.clear();
+                    emptySeriesInformation();
+                    setChoiceBoxContents();
+                } catch(Exception e) {
+                    throw new Exception("Unable to add new series");
+                } finally {
+                    elementsArrayList.clear();
+                }
+            } else {
+                showNotification(seriesName+"\nis already available",notificationRed);
             }
         }
+    }
+
+    private boolean checkIfSeriesExists() {
+        return bookAttributes.bidiMapSeries.containsValue(textFieldNewSeriesName.getText());
     }
 
     private boolean validateSeriesInformation () {
@@ -480,6 +508,10 @@ public class ManualAddBookController {
             return true;
         }
     }
+
+    private boolean checkIfAuthorExists() {
+        return bookAttributes.bidiMapAuthors.containsValue(textFieldAuthorName.getText());
+    }
     
     private void emptyLanguageInformation() {
     	textFieldNewLanguageName.setText("");
@@ -519,9 +551,7 @@ public class ManualAddBookController {
         }
 
         private void resetNewAuthorTextFieldEffects () {
-            textFieldAuthorFirstName.setStyle(null);
-            textFieldAuthorMiddleName.setStyle(null);
-            textFieldAuthorLastName.setStyle(null);
+            textFieldAuthorName.setStyle(null);
         }
 
         private void resetNewBookTextFieldEffects () {
