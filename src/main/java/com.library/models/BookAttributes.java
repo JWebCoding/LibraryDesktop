@@ -13,16 +13,14 @@ public class BookAttributes {
 	// Lists
     public ObservableList<String> obvListAuthors = FXCollections.observableArrayList();
     public ObservableList<String> obvListPublishers = FXCollections.observableArrayList();
-	public ObservableList<String> obvListFictionGenres = FXCollections.observableArrayList();
-	public ObservableList<String> obvListNonFictionGenres = FXCollections.observableArrayList();
+    public ObservableList<String> obvListGenres = FXCollections.observableArrayList();
     public ObservableList<String> obvListLanguages = FXCollections.observableArrayList();
     public ObservableList<String> obvListSeries = FXCollections.observableArrayList();
 
     // Hashmaps
     public BidiMap<Integer, String> bidiMapAuthors = new TreeBidiMap<>();
     public BidiMap<Integer, String> bidiMapPublishers = new TreeBidiMap<>();
-    public BidiMap<Integer, String> bidiMapFictionGenres = new TreeBidiMap<>();
-    public BidiMap<Integer, String> bidiMapNonFictionGenres = new TreeBidiMap<>();
+    public BidiMap<Integer, String> bidiMapGenres = new TreeBidiMap<>();
     public BidiMap<Integer, String> bidiMapLanguages = new TreeBidiMap<>();
     public BidiMap<Integer, String> bidiMapSeries = new TreeBidiMap<>();
     
@@ -31,6 +29,7 @@ public class BookAttributes {
     	String authorFirstName,authorMiddleName, authorLastName, authorFullName;
         int id;
         ObservableList<String> tempAuthorList=FXCollections.observableArrayList();
+
         // Get the Cached Row Set for all Authors in the database
         CachedRowSet authorList = queryFactory.readFromDatabase("author");
 
@@ -44,18 +43,9 @@ public class BookAttributes {
         		// Get the id and name of the author
                 id = authorList.getInt(1);
                 authorFullName = authorList.getString(2);
-//                authorFirstName = authorList.getString(2);
-//                authorMiddleName=authorList.getString(3);
-//                authorLastName = authorList.getString(4);
-//                if(authorMiddleName==null) {
-//                	authorFullName = (authorFirstName +" "+ authorLastName);
-//                } else {
-//                	authorFullName = (authorFirstName +" "+ authorMiddleName +" "+ authorLastName);
-//                }
                 // Add author to hashmap and list
                 tempAuthorList.add(authorFullName);
                 bidiMapAuthors.put(id, authorFullName);
-                
         	}
         	obvListAuthors.addAll(tempAuthorList);
                 
@@ -84,7 +74,6 @@ public class BookAttributes {
                 // Add publisher to hashmap and list
                 tempPublisherList.add(publisherName);
                 bidiMapPublishers.put(id, publisherName);
-                
             }
             obvListPublishers.addAll(tempPublisherList);
             
@@ -101,27 +90,17 @@ public class BookAttributes {
         CachedRowSet genreList = queryFactory.readFromDatabase("genre");
 
         // Clear the contents of the relevant hash-maps and observable lists.
-        bidiMapFictionGenres.clear();
-        obvListFictionGenres.clear();
-        bidiMapNonFictionGenres.clear();
-        obvListNonFictionGenres.clear();
+        bidiMapGenres.clear();
+        obvListGenres.clear();
 
         // Iterate through the cachedRowSet and put each genre into it's respective map and list.
         try{
             while (genreList.next()){
                 id = genreList.getInt("genreID");
-                genreType = genreList.getBoolean("genre_type");
                 genreName = genreList.getString("genre_name");
-                // Non-fiction=1 and Fiction=0
-                if(genreType){
-                    // Add genre to hashmap and list
-                    bidiMapNonFictionGenres.put(id,genreName);
-                    obvListNonFictionGenres.add(genreName);
-                } else {
-                    // Add genre to hashmap and list
-                    bidiMapFictionGenres.put(id,genreName);
-                    obvListFictionGenres.add(genreName);
-                }
+
+                bidiMapGenres.put(id,genreName);
+                obvListGenres.add(genreName);
             }
         } catch(Exception e){
             printRowSetErrorMessage("fictionGenreList", e);
@@ -143,7 +122,6 @@ public class BookAttributes {
         	while (languageList.next()) {
                 id = languageList.getInt(1);
                 languageName = languageList.getString(2);
-                
                 
                 bidiMapLanguages.put(id, languageName);
                 obvListLanguages.add(languageName);
@@ -182,10 +160,9 @@ public class BookAttributes {
         switch (selection) {
             case 1 -> System.out.println(obvListAuthors.toString());
             case 2 -> System.out.println(obvListPublishers.toString());
-            case 3 -> System.out.println(obvListFictionGenres.toString());
-            case 4 -> System.out.println(obvListNonFictionGenres.toString());
-            case 5 -> System.out.println(obvListLanguages.toString());
-            case 6 -> System.out.println(obvListSeries.toString());
+            case 3 -> System.out.println(obvListGenres.toString());
+            case 4 -> System.out.println(obvListLanguages.toString());
+            case 5 -> System.out.println(obvListSeries.toString());
             default -> throw new IllegalArgumentException("Unexpected value: " + selection);
         }
     }
@@ -194,10 +171,9 @@ public class BookAttributes {
         switch (selection) {
             case 1 -> System.out.println(bidiMapAuthors.toString());
             case 2 -> System.out.println(bidiMapPublishers.toString());
-            case 3 -> System.out.println(bidiMapNonFictionGenres.toString());
-            case 4 -> System.out.println(bidiMapFictionGenres.toString());
-            case 5 -> System.out.println(bidiMapLanguages.toString());
-            case 6 -> System.out.println(bidiMapSeries.toString());
+            case 3 -> System.out.println(bidiMapGenres.toString());
+            case 4 -> System.out.println(bidiMapLanguages.toString());
+            case 5 -> System.out.println(bidiMapSeries.toString());
             default -> throw new IllegalArgumentException("Unexpected value: " + selection);
         }
     }

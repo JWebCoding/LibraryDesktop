@@ -20,7 +20,6 @@ public class ManualAddBookController {
     @FXML TextField textFieldEdition;
     @FXML TextField textFieldCopyright;
     @FXML ChoiceBox<String> choiceBoxLanguage;
-    @FXML ChoiceBox<String> choiceBoxGenreType;
     @FXML ChoiceBox<String> choiceBoxGenreName;
     @FXML ChoiceBox<String> choiceBoxSeries;
     @FXML TextField textFieldSeriesPart;
@@ -30,9 +29,11 @@ public class ManualAddBookController {
     @FXML TextField textFieldAuthorName;
     // New Publisher pane elements
     @FXML TextField textFieldPublisherName;
+    @FXML TextField textFieldGenreName;
+    @FXML TextField textFieldSeriesName;
     @FXML TextField textFieldPublisherLocation;
     // New Genre pane elements
-    @FXML TextField textFieldGenreName;
+    @FXML TextField textFieldNewGenreName;
     @FXML ChoiceBox<String> choiceBoxNewGenreType;
     // New Series pane elements
     @FXML TextField textFieldNewSeriesName;
@@ -60,17 +61,15 @@ public class ManualAddBookController {
     public void initialize() throws Exception {
         ObservableList<String> genreTypes = FXCollections.observableArrayList("Fiction", "Non-Fiction");
         choiceBoxNewGenreType.setItems(genreTypes);
-        choiceBoxGenreType.setItems(genreTypes);
         bookAttributes.createAuthorHashMap();
         bookAttributes.createPublisherHashMap();      
         bookAttributes.createGenreHashMaps();
         bookAttributes.createLanguageHashMap();
         bookAttributes.createSeriesHashMap();
-        bindTextFieldSuggestions();
-        setChoiceBoxContents();
 
+        setChoiceBoxContents();
         setValues();
-        populateGenreChoiceBoxes();
+        bindTextFieldSuggestions();
 
         closeNotification();
   
@@ -109,13 +108,9 @@ public class ManualAddBookController {
             }
 
             // Get Book Genre
-            if(choiceBoxGenreType.getValue().equals("Fiction")){
-                elementsArrayList.add(bookAttributes.bidiMapFictionGenres.getKey(choiceBoxGenreName.getValue()));
-            }
-            else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
-                elementsArrayList.add(bookAttributes.bidiMapNonFictionGenres.getKey(choiceBoxGenreName.getValue()));
-            }
+            elementsArrayList.add(bookAttributes.bidiMapGenres.getKey(textFieldGenreName.getText()));
 
+            //Get Book Series
             elementsArrayList.add(bookAttributes.bidiMapSeries.getKey(choiceBoxSeries.getValue()));
 
             // Get Book Series Part
@@ -195,8 +190,8 @@ public class ManualAddBookController {
             textFieldPages.setStyle(errorColor);
             errorCount++;
         }
-        if (choiceBoxGenreName.getValue()==null) {
-            choiceBoxGenreName.setStyle(errorColor);
+        if (textFieldGenreName.getText()==null) {
+            textFieldGenreName.setStyle(errorColor);
             errorCount++;
         }
         if (choiceBoxLanguage.getValue() == null) {
@@ -225,7 +220,6 @@ public class ManualAddBookController {
         textFieldCopyright.setText("");
         textFieldPages.setText("");
         textFieldEdition.setText("");
-        choiceBoxGenreType.setValue("Non-Fiction");
         choiceBoxGenreName.setValue("");
         choiceBoxLanguage.setValue("");
         choiceBoxSeries.setValue("");
@@ -354,7 +348,7 @@ public class ManualAddBookController {
         if (!validateGenreInformation()) {
             showNotification("Please fill the highlighted fields", notificationRed);
         } else {
-            String genreName = textFieldGenreName.getText();
+            String genreName = textFieldNewGenreName.getText();
             if(!checkIfGenreExists()){
                 // Create the relevant variables
                 elementsArrayList.add(genreName);
@@ -376,7 +370,6 @@ public class ManualAddBookController {
                     bookAttributes.createGenreHashMaps();
                     elementsArrayList.clear();
                     emptyGenreInformation();
-                    populateGenreChoiceBoxes();
                 } catch(Exception e) {
                     throw new Exception("Unable to add genre:\n"+e);
                 } finally {
@@ -521,18 +514,19 @@ public class ManualAddBookController {
 
 ////////////////////////////////////////////////////////////
         // Methods to run during initialization
-        public void populateGenreChoiceBoxes () {
-            // The values are set to null in the addNewGenre function.
-            if(choiceBoxGenreType.getValue().equals("Fiction")){
-                choiceBoxGenreName.setItems(bookAttributes.obvListFictionGenres);
-            }
-            else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
-                choiceBoxGenreName.setItems(bookAttributes.obvListNonFictionGenres);
-            }
-        }
+//        public void populateGenreChoiceBoxes () {
+//            // The values are set to null in the addNewGenre function.
+//            if(choiceBoxGenreType.getValue().equals("Fiction")){
+//                //choiceBoxGenreName.setItems(bookAttributes.obvListFictionGenres);
+//
+//            }
+//            else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
+//                //choiceBoxGenreName.setItems(bookAttributes.obvListNonFictionGenres);
+//
+//            }
+//        }
 
         private void setValues () {
-            choiceBoxGenreType.setValue("Non-Fiction");
             choiceBoxNewGenreType.setValue("Non-Fiction");
             radioButtonHardcover.setSelected(true);
             radioButtonPaperback.setSelected(false);
@@ -542,6 +536,8 @@ public class ManualAddBookController {
         private void bindTextFieldSuggestions() {
         	TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.obvListAuthors);
         	TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.obvListPublishers);
+            TextFields.bindAutoCompletion(textFieldSeriesName,bookAttributes.obvListSeries);
+            TextFields.bindAutoCompletion(textFieldGenreName,bookAttributes.obvListGenres);
         }
         
         private void setChoiceBoxContents() {
