@@ -68,12 +68,7 @@ public class DetailsController {
 
 	private void populateGenreChoiceBoxes () {
         // The values in the choice box are set to null in the addNewGenre function.
-        if(choiceBoxGenreType.getValue().equals("Fiction")){
-            choiceBoxGenreName.setItems(bookAttributes.obvListFictionGenres);
-        }
-        else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
-            choiceBoxGenreName.setItems(bookAttributes.obvListNonFictionGenres);
-        }
+		choiceBoxGenreName.setItems(bookAttributes.obvListGenres);
     }
 
     private void getBookData() throws Exception{
@@ -316,11 +311,8 @@ public class DetailsController {
 			editsList.add(Integer.parseInt(textFieldEdition.getText()));
 		}
 		// Get the genre
-        if(choiceBoxGenreType.getValue().equals("Non-Fiction")) {
-			editsList.add(bookAttributes.bidiMapNonFictionGenres.getKey(textFieldGenre.getText()));
-        } else {
-			editsList.add(bookAttributes.bidiMapFictionGenres.getKey(textFieldGenre.getText()));
-        }
+		editsList.add(bookAttributes.bidiMapGenres.getKey(textFieldGenre.getText()));
+
 		// Get the series
 		editsList.add(bookAttributes.bidiMapSeries.getKey(textFieldSeries.getText()));
 		// Get the series part
