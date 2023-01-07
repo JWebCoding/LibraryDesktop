@@ -382,8 +382,7 @@ public class ManualAddBookController {
     }
 
     private boolean checkIfGenreExists() {
-        return (bookAttributes.bidiMapFictionGenres.containsValue(textFieldGenreName.getText()) ||
-                bookAttributes.bidiMapNonFictionGenres.containsValue(textFieldGenreName.getText()));
+        return (bookAttributes.bidiMapGenres.containsValue(textFieldGenreName.getText()));
     }
 
     // Validate the provided genre information
