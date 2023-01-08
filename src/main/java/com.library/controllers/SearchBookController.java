@@ -144,10 +144,8 @@ public class SearchBookController {
             if(selectedRadioButton.getText().equals("Author")) {
             	while(bookCollection.next()){
                     // Select the contents of the current row to be searched and set it to lowercase
-                    String firstName=bookCollection.getString("firstName").toLowerCase();
-                    String lastName=bookCollection.getString("lastName").toLowerCase();
-                    if(firstName.contains(searchFor) || lastName.contains(searchFor)){
-                    	
+                    String firstName=bookCollection.getString("author_name").toLowerCase();
+                    if(firstName.contains(searchFor)){
                         Book book=createBook();
                         tableViewBooks.getItems().add(book);
                     }
