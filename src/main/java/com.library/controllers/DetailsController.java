@@ -4,7 +4,6 @@ import javafx.stage.Stage;
 import com.library.models.Book;
 import com.library.models.BookAttributes;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.sql.rowset.CachedRowSet;
@@ -226,18 +225,6 @@ public class DetailsController {
     	}
     }
 
-	private boolean determineIfChangesMade(){
-		if(
-				tempAuthor.equals(textFieldAuthor.getText()) &&
-				tempPublisher.equals(textFieldPublisher) &&
-				tempTitle.equals(textFieldTitle.getText())
-		){
-			return true;
-		} else {
-			return false;
-		}
-	}
-
     public void discardChanges() {
     	//Reset the contents of the textboxes to their original state
 		disableFieldsEditable();
@@ -315,6 +302,7 @@ public class DetailsController {
 
 		// Get the series
 		editsList.add(bookAttributes.bidiMapSeries.getKey(textFieldSeries.getText()));
+
 		// Get the series part
         if (textFieldSeriesPart.getText().isEmpty()) {
 			editsList.add(nullInteger);
@@ -334,7 +322,6 @@ public class DetailsController {
 		} else {
 			editsList.add(textAreaNotes.getText());
 		}
-
 		return editsList;
     }
 
