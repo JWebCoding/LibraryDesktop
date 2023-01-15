@@ -20,8 +20,6 @@ public class ManualAddBookController {
     @FXML TextField textFieldEdition;
     @FXML TextField textFieldCopyright;
     @FXML ChoiceBox<String> choiceBoxLanguage;
-    @FXML ChoiceBox<String> choiceBoxGenreName;
-    @FXML ChoiceBox<String> choiceBoxSeries;
     @FXML TextField textFieldSeriesPart;
     @FXML RadioButton radioButtonHardcover;
     @FXML RadioButton radioButtonPaperback;
@@ -111,7 +109,7 @@ public class ManualAddBookController {
             elementsArrayList.add(bookAttributes.bidiMapGenres.getKey(textFieldGenreName.getText()));
 
             //Get Book Series
-            elementsArrayList.add(bookAttributes.bidiMapSeries.getKey(choiceBoxSeries.getValue()));
+            elementsArrayList.add(bookAttributes.bidiMapSeries.getKey(textFieldSeriesName.getText()));
 
             // Get Book Series Part
             if (textFieldSeriesPart.getText().isEmpty()) {
@@ -149,9 +147,6 @@ public class ManualAddBookController {
             } catch(Exception e) {
                 showNotification(title + "\nwas not added properly.", notificationRed);
                 throw new Exception("Unable to add book:\n"+e);
-            } finally {
-
-                elementsArrayList.clear();
             }
         }
     }
@@ -198,6 +193,10 @@ public class ManualAddBookController {
             choiceBoxLanguage.setStyle(errorColor);
             errorCount++;
         }
+        if (textFieldSeriesName.getText()==null) {
+            textFieldSeriesName.setStyle(errorColor);
+            errorCount++;
+        }
         if (textFieldSeriesPart.getText().length()>0) {
         	if (!textFieldSeriesPart.getText().matches("[0-9]+")) {
                 textFieldSeriesPart.setStyle(errorColor);
@@ -220,10 +219,9 @@ public class ManualAddBookController {
         textFieldCopyright.setText("");
         textFieldPages.setText("");
         textFieldEdition.setText("");
-        choiceBoxGenreName.setValue("");
         choiceBoxLanguage.setValue("");
-        choiceBoxSeries.setValue("");
         textFieldSeriesPart.setText("");
+        textFieldGenreName.setText("");
     }
 
     public void addNewAuthor() throws Exception {
@@ -369,6 +367,7 @@ public class ManualAddBookController {
                     // Refresh genre hashmap
                     bookAttributes.createGenreHashMaps();
                     elementsArrayList.clear();
+                    bindTextFieldSuggestions();
                     emptyGenreInformation();
                 } catch(Exception e) {
                     throw new Exception("Unable to add genre:\n"+e);
@@ -402,7 +401,7 @@ public class ManualAddBookController {
     private void emptyGenreInformation() {
     	textFieldGenreName.setText("");
         choiceBoxNewGenreType.setValue("Non-Fiction");
-        choiceBoxGenreName.getItems().clear();
+        textFieldSeriesName.setText("");
         resetNewGenreTextFieldEffects();
     }
     
@@ -427,6 +426,7 @@ public class ManualAddBookController {
                     bookAttributes.createSeriesHashMap();
                     elementsArrayList.clear();
                     emptySeriesInformation();
+                    bindTextFieldSuggestions();
                     setChoiceBoxContents();
                 } catch(Exception e) {
                     throw new Exception("Unable to add new series");
@@ -511,98 +511,83 @@ public class ManualAddBookController {
         resetNewLanguageTextFieldEffects();
     }
 
-////////////////////////////////////////////////////////////
-        // Methods to run during initialization
-//        public void populateGenreChoiceBoxes () {
-//            // The values are set to null in the addNewGenre function.
-//            if(choiceBoxGenreType.getValue().equals("Fiction")){
-//                //choiceBoxGenreName.setItems(bookAttributes.obvListFictionGenres);
-//
-//            }
-//            else if(choiceBoxGenreType.getValue().equals("Non-Fiction")){
-//                //choiceBoxGenreName.setItems(bookAttributes.obvListNonFictionGenres);
-//
-//            }
-//        }
+    private void setValues () {
+        choiceBoxNewGenreType.setValue("Non-Fiction");
+        radioButtonHardcover.setSelected(true);
+        radioButtonPaperback.setSelected(false);
 
-        private void setValues () {
-            choiceBoxNewGenreType.setValue("Non-Fiction");
-            radioButtonHardcover.setSelected(true);
-            radioButtonPaperback.setSelected(false);
-            choiceBoxSeries.setValue("");
-        }
+        choiceBoxLanguage.setValue("English");
+    }
+
+    private void bindTextFieldSuggestions() {
+        TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.obvListAuthors);
+        TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.obvListPublishers);
+        TextFields.bindAutoCompletion(textFieldSeriesName,bookAttributes.obvListSeries);
+        TextFields.bindAutoCompletion(textFieldGenreName,bookAttributes.obvListGenres);
+    }
         
-        private void bindTextFieldSuggestions() {
-        	TextFields.bindAutoCompletion(textFieldAuthor,bookAttributes.obvListAuthors);
-        	TextFields.bindAutoCompletion(textFieldPublisher,bookAttributes.obvListPublishers);
-            TextFields.bindAutoCompletion(textFieldSeriesName,bookAttributes.obvListSeries);
-            TextFields.bindAutoCompletion(textFieldGenreName,bookAttributes.obvListGenres);
-        }
-        
-        private void setChoiceBoxContents() {
-        	choiceBoxLanguage.setItems(bookAttributes.obvListLanguages);
-        	choiceBoxSeries.setItems(bookAttributes.obvListSeries);
+    private void setChoiceBoxContents() {
+        choiceBoxLanguage.setItems(bookAttributes.obvListLanguages);
+    }
 
-        }
+    private void resetNewAuthorTextFieldEffects () {
+        textFieldAuthorName.setStyle(null);
+    }
+    private void resetNewBookTextFieldEffects () {
+        textFieldTitle.setStyle(null);
+        textFieldAuthor.setStyle(null);
+        textFieldPublisher.setStyle(null);
+        textFieldCopyright.setStyle(null);
+        textFieldISBN.setStyle(null);
+        textFieldPages.setStyle(null);
+        textFieldGenreName.setStyle(null);
+        textFieldSeriesName.setStyle(null);
+        choiceBoxLanguage.setStyle(null);
+    }
 
-        private void resetNewAuthorTextFieldEffects () {
-            textFieldAuthorName.setStyle(null);
-        }
+    private void resetNewGenreTextFieldEffects () {
+        textFieldGenreName.setStyle(null);
+    }
 
-        private void resetNewBookTextFieldEffects () {
-            textFieldTitle.setStyle(null);
-            textFieldAuthor.setStyle(null);
-            textFieldPublisher.setStyle(null);
-            textFieldCopyright.setStyle(null);
-            textFieldISBN.setStyle(null);
-            textFieldPages.setStyle(null);
-            choiceBoxGenreName.setStyle(null);
-            choiceBoxLanguage.setStyle(null);
-        }
+    private void resetNewLanguageTextFieldEffects () {
+        textFieldNewLanguageName.setStyle(null);
+        textFieldNewLanguageSuffix.setStyle(null);
+    }
 
-        private void resetNewGenreTextFieldEffects () {
-            textFieldGenreName.setStyle(null);
-        }
+    private void resetNewPublisherTextFieldEffects () {
+        textFieldPublisher.setStyle(null);
+    }
 
-        private void resetNewLanguageTextFieldEffects () {
-            textFieldNewLanguageName.setStyle(null);
-            textFieldNewLanguageSuffix.setStyle(null);
-        }
-
-        private void resetNewPublisherTextFieldEffects () {
-            textFieldPublisher.setStyle(null);
-        }
-
-        private void resetNewSeriesTextFieldEffects () {
-            textFieldNewSeriesName.setStyle(null);
-        }
+    private void resetNewSeriesTextFieldEffects () {
+        textFieldNewSeriesName.setStyle(null);
+    }
 
 
 
-        // Check to ensure that an apostrophe in the title is properly formatted
-        private String checkForApostrophes(String text) {
-        	String string=text;
-    		int location;
+    // Check to ensure that an apostrophe in the title is properly formatted
+    private String checkForApostrophes(String text) {
+        String string=text;
+        int location;
     		
-    		if(string.contains("'")) {
-    			location=string.indexOf("'");
-    			StringBuilder sb=new StringBuilder(string);
-        		sb.insert(location, "'");
-        		string=sb.toString();
-    		}
-        	return string;
+        if(string.contains("'")) {
+            location=string.indexOf("'");
+            StringBuilder sb=new StringBuilder(string);
+            sb.insert(location, "'");
+            string=sb.toString();
         }
+        return string;
+    }
 
 ////////////////////////////////////////////////////////////
         // Misc methods
-        private void showNotification (String notification, String color){
-            labelNotification.setStyle(color);
-            labelNotification.setText(notification);
-            labelNotification.setVisible(true);
-        }
+    private void showNotification (String notification, String color){
+        labelNotification.setStyle(color);
+        labelNotification.setText(notification);
+        labelNotification.setVisible(true);
+    }
 
-        private void closeNotification () {
-            labelNotification.setText("");
-            labelNotification.setVisible(false);
-        }
+    private void closeNotification () {
+        labelNotification.setText("");
+        labelNotification.setVisible(false);
+    }
 }
