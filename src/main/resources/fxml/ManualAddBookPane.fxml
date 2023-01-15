@@ -28,10 +28,8 @@
             <TextField id="textFieldCopyright" fx:id="textFieldCopyright" layoutX="28.0" layoutY="323.0" prefHeight="26.0" prefWidth="68.0" />
             <TextField id="textFieldId" fx:id="textFieldPages" layoutX="105.0" layoutY="322.0" prefHeight="26.0" prefWidth="68.0" />
             <TextField id="textFieldEdition" fx:id="textFieldEdition" layoutX="185.0" layoutY="322.0" prefHeight="26.0" prefWidth="72.0" />
-            <ChoiceBox id="choiceBoxGenre" fx:id="choiceBoxGenreName" disable="true" layoutX="80.0" layoutY="408.0" prefHeight="26.0" prefWidth="219.0" visible="false" />
             <CustomTextField id="textFieldPublisher" fx:id="textFieldGenreName" layoutX="82.0" layoutY="375.0" prefHeight="25.0" prefWidth="219.0" />
             <ChoiceBox id="choiceBoxLanguage" fx:id="choiceBoxLanguage" layoutX="80.0" layoutY="456.0" prefHeight="26.0" prefWidth="101.0" />
-            <ChoiceBox id="choiceBoxSeries" fx:id="choiceBoxSeries" disable="true" layoutX="53.0" layoutY="499.0" prefHeight="26.0" prefWidth="129.0" visible="false" />
             <CustomTextField id="textFieldPublisher" fx:id="textFieldSeriesName" layoutX="55.0" layoutY="499.0" prefHeight="26.0" prefWidth="129.0" />
             <TextField id="textFieldSeriesPart" fx:id="textFieldSeriesPart" layoutX="266.0" layoutY="499.0" prefHeight="26.0" prefWidth="32.0" />
             <ToggleButton fx:id="toggleButtonPaperback" disable="true" layoutX="141.0" layoutY="213.0" mnemonicParsing="false" prefWidth="32.0" visible="false" />
