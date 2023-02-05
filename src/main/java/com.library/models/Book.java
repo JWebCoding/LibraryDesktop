@@ -59,10 +59,6 @@ public class Book {
         else{ return "H"; }
     }
 
-    public String toString(){
-        return id+" "+title+" "+author+" "+copyright+" "+genre+" "+isbn;
-    }
-    
     public static void setBookID(int id) {
     	bookID=id;
     }
@@ -107,4 +103,25 @@ public class Book {
     public Integer getSeriesPart() {return seriesPart;}
     public int getPageCount() { return pageCount; }
     public String getNotes() { return notes; }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", series='" + series + '\'' +
+                ", seriesPart=" + seriesPart +
+                ", author='" + author + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", copyright=" + copyright +
+                ", genre='" + genre + '\'' +
+                ", format='" + format + '\'' +
+                ", edition=" + edition +
+                ", pageCount=" + pageCount +
+                ", language='" + language + '\'' +
+                ", notes='" + notes + '\'' +
+                '}';
+    }
 }
