@@ -28,14 +28,12 @@ public class SearchBookController {
     @FXML TableColumn<Book,Integer> tableColumnSeriesPart;
     @FXML TableColumn<Book,String> tableColumnSeries;
     @FXML TableColumn<Book,Integer> tableColumnId;
-
     @FXML TextField textFieldSearch;
     @FXML Label labelNotification;
     @FXML Label labelBookNumber;
-
     @FXML ToggleGroup toggleSearchButtons;
-    
     @FXML Button buttonEditBook;
+    @FXML Button buttonRemoveBook;
 
     // Declare variables
     String title,subtitle,author,isbn,series,publisher,genre;
