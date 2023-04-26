@@ -83,9 +83,13 @@ public class Book {
     public void setCopyright(int copyright){ this.copyright=copyright; }
     public void setIsbn(String isbn){ this.isbn=isbn; }
     public void setEdition(int edition){ this.edition=edition; }
+    public void setGenre(String genre){ this.genre=genre; }
     public void setLanguage(String language){ this.language=language;}
     public void setFormat(String format){ this.format=format; }
     public void setSeries(String series){ this.series=series; }
+    public void setPageCount(int pageCount){ this.pageCount=pageCount; }
+
+    public void setSeriesPart(int seriesPart){ this.seriesPart=seriesPart; }
     public void setNotes(String notes){ this.notes=notes;}
 
     public int getId() { return id; }
