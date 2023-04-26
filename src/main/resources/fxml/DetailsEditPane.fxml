@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
-<AnchorPane prefHeight="539.0" prefWidth="547.0" styleClass="background" stylesheets="@stylesheets/generalStyleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controllers.DetailsController">
+<AnchorPane prefHeight="539.0" prefWidth="547.0" styleClass="background" stylesheets="@stylesheets/generalStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controllers.DetailsController">
    <children>
       <TextField promptText="Placeholder " text="Used to prevent the title field from being highlighted" visible="false" />
       <Label layoutX="241.0" layoutY="24.0" styleClass="headerLabel" text="Details">
@@ -26,20 +26,20 @@
       <Label layoutX="65.0" layoutY="147.0" styleClass="standardLabel" text="Series" />
       <CustomTextField fx:id="textFieldSeries" editable="false" layoutX="111.0" layoutY="143.0" style="-fx-text-fill: goldenrod;" />
 
-      <Label layoutX="268.0" layoutY="147.0" styleClass="standardLabel" text="Series Part" />
-      <TextField fx:id="textFieldSeriesPart" editable="false" layoutX="332.0" layoutY="143.0" prefHeight="25.0" prefWidth="37.0" style="-fx-text-fill: goldenrod;" />
+      <Label layoutX="278.0" layoutY="147.0" styleClass="standardLabel" text="Series Part" />
+      <TextField fx:id="textFieldSeriesPart" editable="false" layoutX="348.0" layoutY="143.0" prefHeight="25.0" prefWidth="37.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="65.0" layoutY="110.0" styleClass="standardLabel" text="Author" />
       <CustomTextField fx:id="textFieldAuthor" editable="false" layoutX="111.0" layoutY="106.0" prefHeight="25.0" prefWidth="149.0" style="-fx-text-fill: goldenrod;" />
 
-      <Label layoutX="267.0" layoutY="110.0" styleClass="standardLabel" text="Publisher" />
+      <Label layoutX="265.0" layoutY="110.0" styleClass="standardLabel" text="Publisher" />
       <CustomTextField fx:id="textFieldPublisher" editable="false" layoutX="326.0" layoutY="106.0" prefHeight="25.0" prefWidth="169.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="74.0" layoutY="199.0" styleClass="standardLabel" text="ISBN" />
       <TextField fx:id="textFieldISBN" editable="false" layoutX="111.0" layoutY="195.0" prefHeight="25.0" prefWidth="111.0" style="-fx-text-fill: goldenrod;" />
 
-      <Label layoutX="376.0" layoutY="147.0" styleClass="standardLabel" text="Copyright" />
-      <TextField fx:id="textFieldCopyRight" editable="false" layoutX="434.0" layoutY="143.0" prefHeight="25.0" prefWidth="42.0" style="-fx-text-fill: goldenrod;" />
+      <Label layoutX="388.0" layoutY="147.0" styleClass="standardLabel" text="Copyright" />
+      <TextField fx:id="textFieldCopyRight" editable="false" layoutX="452.0" layoutY="143.0" prefHeight="25.0" prefWidth="42.0" style="-fx-text-fill: goldenrod;" />
 
       <Label layoutX="68.0" layoutY="286.0" styleClass="standardLabel" text="Genre" />
       <TextField fx:id="textFieldGenre" editable="false" layoutX="112.0" layoutY="282.0" style="-fx-text-fill: goldenrod;" />
@@ -59,7 +59,7 @@
 
       <Label layoutX="48.0" layoutY="233.0" styleClass="standardLabel" text="Language" />
       <CustomTextField fx:id="textFieldLanguage" editable="false" layoutX="112.0" layoutY="229.0" prefHeight="25.0" prefWidth="77.0" style="-fx-text-fill: goldenrod;" />
-      <TextField fx:id="textFieldPageCount" editable="false" layoutX="303.0" layoutY="194.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
+      <TextField fx:id="textFieldPageCount" editable="false" layoutX="305.0" layoutY="194.0" prefHeight="25.0" prefWidth="47.0" style="-fx-text-fill: goldenrod;" />
       <Button fx:id="buttonEdit" layoutX="150.0" layoutY="470.0" mnemonicParsing="false" onAction="#enableFieldsEditable" prefHeight="35.0" prefWidth="61.0" text="Edit" />
       <Button fx:id="buttonSave" layoutX="181.0" layoutY="490.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="35.0" prefWidth="61.0" text="Save" visible="false" />
       <Button fx:id="buttonClose" layoutX="325.0" layoutY="470.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="35.0" prefWidth="66.0" text="Close" />
