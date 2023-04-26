@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="775.0" maxWidth="1075.0" minHeight="775.0" minWidth="1075.0" prefHeight="775.0" prefWidth="1075.0" styleClass="background" stylesheets="@../stylesheets/generalStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controllers.LoginController">
+   <children>
+      <TextField fx:id="NewBookSearchBar" layoutX="398.0" layoutY="376.0" prefHeight="33.0" prefWidth="280.0" promptText="Title, Author, ISBN, etc..." />
+      <Button layoutX="503.0" layoutY="417.0" mnemonicParsing="false" onAction="#lookupBooks" prefHeight="42.0" prefWidth="71.0" text="Search">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="385.0" layoutY="336.0" text="Enter Your Book Information Here">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
