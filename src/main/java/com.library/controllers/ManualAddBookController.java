@@ -1,10 +1,11 @@
 package com.library.controllers;
 import com.library.models.BookAttributes;
+import com.library.models.QueryFactory;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import com.library.models.QueryFactory;
 import org.controlsfx.control.textfield.TextFields;
 import java.util.ArrayList;
 

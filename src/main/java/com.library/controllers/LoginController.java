@@ -1,12 +1,11 @@
 package com.library.controllers;
 
+import com.library.models.ConnectionCommands;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
-
-import javafx.scene.control.TextField;
-import com.library.models.ConnectionCommands;
 
 public class LoginController {
     MainStageController mainStageController=MainStageController.getInstance();
@@ -27,4 +26,5 @@ public class LoginController {
         mainStageController.openScreenAdd();
         mainStageController.showLoginButton();
     }
+
 }
