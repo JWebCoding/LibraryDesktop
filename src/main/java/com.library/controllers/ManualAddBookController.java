@@ -389,8 +389,8 @@ public class ManualAddBookController {
     private boolean validateGenreInformation() {
         // Validate textField Contents
         int errorCount = 0;
-        if (textFieldGenreName.getText().isEmpty()) {
-            textFieldGenreName.setStyle(errorColor);
+        if (textFieldNewGenreName.getText().isEmpty()) {
+            textFieldNewGenreName.setStyle(errorColor);
             errorCount++;
         }
         if (errorCount > 0) {
@@ -400,7 +400,7 @@ public class ManualAddBookController {
     }
 
     private void emptyGenreInformation() {
-    	textFieldGenreName.setText("");
+    	textFieldNewGenreName.setText("");
         choiceBoxNewGenreType.setValue("Non-Fiction");
         textFieldSeriesName.setText("");
         resetNewGenreTextFieldEffects();
