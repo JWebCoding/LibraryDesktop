@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
-<Pane maxHeight="1075.0" maxWidth="1150.0" minHeight="775.0" minWidth="1075.0" prefHeight="775.0" prefWidth="1075.0" styleClass="background" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="1075.0" maxWidth="1150.0" minHeight="775.0" minWidth="1075.0" prefHeight="775.0" prefWidth="1075.0" styleClass="background" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controllers.AutomaticAddBookController">
    <stylesheets>
       <URL value="@../stylesheets/generalStyleSheet.css" />
       <URL value="@../stylesheets/addStylesheet.css" />
@@ -129,7 +129,7 @@
                   <Font name="Arundina Serif" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="buttonAddBook" layoutX="103.0" layoutY="595.0" mnemonicParsing="false" onAction="#addBook" text="Add Book" />
+<!--            <Button fx:id="buttonAddBook" layoutX="103.0" layoutY="595.0" mnemonicParsing="false" onAction="#addBook" text="Add Book" />-->
             <Label fx:id="labelPart" layoutX="190.0" layoutY="461.0" text="Series Part">
                <font>
                   <Font size="15.0" />

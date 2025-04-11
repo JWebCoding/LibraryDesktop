@@ -8,6 +8,8 @@
     <description>This is the desktop program for the library software suite.</description>
 
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>19</maven.compiler.release>
         <javafx.version>19</javafx.version>

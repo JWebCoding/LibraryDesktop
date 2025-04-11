@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="775.0" maxWidth="1075.0" minHeight="775.0" minWidth="1075.0" prefHeight="775.0" prefWidth="1075.0" styleClass="background" stylesheets="@../stylesheets/generalStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="scrollPanePreviewResults" hbarPolicy="NEVER" layoutX="85.0" layoutY="70.0" prefHeight="650.0" prefWidth="900.0" visible="false" />
+   </children>
+</Pane>

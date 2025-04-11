@@ -23,7 +23,7 @@ public class LoginController {
     public void attemptLogin() throws IOException {
     	commands.getConnectionSettings();
     	commands.testServerConnection();
-        mainStageController.openScreenAdd();
+        mainStageController.openScreenManualAdd();
         mainStageController.showLoginButton();
     }
 

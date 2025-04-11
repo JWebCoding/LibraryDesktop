@@ -11,7 +11,12 @@
    <top>
       <AnchorPane maxHeight="80.0" prefHeight="80.0" styleClass="top-banner" stylesheets="@stylesheets/generalStyleSheet.css" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="buttonAddBooks" layoutX="612.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenAdd" prefHeight="50.0" prefWidth="125.0" styleClass="top-banner-button" text="Add Books">
+            <Button fx:id="buttonAutoBooks" layoutX="455.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenAutoAdd" prefHeight="50.0" prefWidth="145.0" styleClass="top-banner-button" text="Auto Books">
+               <font>
+                  <Font name="SansSerif Regular" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonAddBooks" layoutX="612.0" layoutY="15.0" mnemonicParsing="false" onAction="#openScreenManualAdd" prefHeight="50.0" prefWidth="125.0" styleClass="top-banner-button" text="Add Books">
                <font>
                   <Font name="SansSerif Regular" size="13.0" />
                </font></Button>

@@ -24,3 +24,10 @@
     -fx-font-family: "PT Serif";
     -fx-font-size: 15px;
 }
+
+.previewPanel {
+    -fx-background-color: #57627a;
+    -fx-border-color: goldenrod;
+    -fx-border-radius: 15px;
+    -fx-border-width: 3px;
+}

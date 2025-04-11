@@ -23,10 +23,6 @@ public class GoogleBooksService {
 
     private static String constructURL(String bookInfo, String infoType){
 
-        if(infoType.equalsIgnoreCase("isbn")){
-
-        }
-
         String finalURL;
         String baseURL="https://www.googleapis.com/books/v1/volumes?q=";
         String APIKey="&key=AIzaSyDUvX51t5rWFW3zaWsnzK8y_rgJh_OZFOc";

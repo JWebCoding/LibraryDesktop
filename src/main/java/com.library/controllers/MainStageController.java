@@ -11,6 +11,7 @@ import java.io.IOException;
 public class MainStageController {
     static MainStageController instance=null;
 
+    @FXML Button buttonAutoBooks;
     @FXML Button buttonAddBooks;
     @FXML Button buttonSearchEdit;
     @FXML Button buttonLogout;
@@ -28,13 +29,32 @@ public class MainStageController {
     public static MainStageController getInstance(){
         return instance;
     }
-
-    public void openScreenAdd() throws IOException {
+    
+    public void openScreenAutoAdd() throws IOException {
+        buttonAutoBooks.setVisible(true);
         buttonAddBooks.setVisible(true);
         buttonSearchEdit.setVisible(true);
         buttonLogout.setVisible(true);
         labelTitle.setVisible(true);
 
+        buttonAutoBooks.setDisable(true);
+        buttonAddBooks.setDisable(false);
+        buttonSearchEdit.setDisable(false);
+
+        Pane paneAutoAdd=FXMLLoader.load(getClass().getResource("/fxml/Automatic/AutomaticAddBookSearchPane.fxml"));
+        panePrimary.getChildren().clear();
+        panePrimary.getChildren().add(paneAutoAdd);
+    }
+
+    public void openScreenManualAdd() throws IOException {
+        buttonAutoBooks.setVisible(true);
+        buttonAutoBooks.setVisible(true);
+        buttonAddBooks.setVisible(true);
+        buttonSearchEdit.setVisible(true);
+        buttonLogout.setVisible(true);
+        labelTitle.setVisible(true);
+
+        buttonAutoBooks.setDisable(false);
         buttonAddBooks.setDisable(true);
         buttonSearchEdit.setDisable(false);
 
@@ -44,6 +64,13 @@ public class MainStageController {
     }
 
     public void openScreenSearch() throws IOException {
+        buttonAutoBooks.setVisible(true);
+        buttonAddBooks.setVisible(true);
+        buttonSearchEdit.setVisible(true);
+        buttonLogout.setVisible(true);
+        labelTitle.setVisible(true);
+
+        buttonAutoBooks.setDisable(false);
         buttonAddBooks.setDisable(false);
         buttonSearchEdit.setDisable(true);
 //        loader.setLocation(getClass().getResource("/fxml/SearchPane.fxml"));
@@ -55,6 +82,7 @@ public class MainStageController {
     }
 
     public void openScreenLogin() throws IOException {
+        buttonAutoBooks.setVisible(false);
         buttonAddBooks.setVisible(false);
         buttonSearchEdit.setVisible(false);
         buttonLogout.setVisible(false);
